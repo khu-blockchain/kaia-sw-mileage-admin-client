@@ -8,9 +8,7 @@ type signInAPIRequest = {
 
 type signInAPIResponse = AdminWithToken;
 
-type refreshAPIRequest = {
-  refreshToken: string;
-};
+type refreshAPIRequest = void;
 
 type refreshAPIResponse = AdminWithToken;
 

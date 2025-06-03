@@ -29,18 +29,18 @@ export const SIDEBAR_MENU: SidebarMenu[] = [
   },
   {
     name: "신청 내역",
-    path: "/apply-request"
+    path: "/request"
   },
   {
     name: "지급 및 회수 내역",
     subMenu: [
       {
         name: "지급 내역",
-        path: "/payment-history",
+        path: "/mint-history",
       },
       {
         name: "회수 내역",
-        path: "/refund-history",
+        path: "/burn-history",
       },
     ],
   },

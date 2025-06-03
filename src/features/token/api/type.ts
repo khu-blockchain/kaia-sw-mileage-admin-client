@@ -5,7 +5,7 @@ type createTokenAPIRequest = {
   symbol: string;
   description: string;
   imageUrl: string;
-  rlpEncodingString: string;
+  rawTransaction: string;
 };
 
 type createTokenAPIResponse = {
@@ -39,6 +39,7 @@ type isRegisteredAdminAPIResponse = {
 
 type activateTokenAPIRequest = {
   swMileageTokenId: number;
+  rawTransaction: string;
 };
 
 type activateTokenAPIResponse = SwMileageToken;

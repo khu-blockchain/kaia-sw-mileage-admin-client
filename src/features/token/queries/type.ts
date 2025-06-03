@@ -1,12 +1,12 @@
 import { SwMileageToken } from "@/entities/token";
-import { ABI, Bytecode } from "@/shared/types";
+import { ContractAddress, EOA } from "@/shared/types";
 
 type useCreateTokenRequest = {
   swMileageTokenName: string;
   symbol: string;
   description: string;
   imageUrl: string;
-  rlpEncodingString: string;
+  rawTransaction: string;
 };
 
 type useCreateTokenResponse = {
@@ -30,8 +30,8 @@ type useGetSWMileageTokenRequest = void;
 type useGetSWMileageTokenResponse = SwMileageToken[];
 
 type useIsRegisteredAdminRequest = {
-  contractAddress: string;
-  targetAddress: string;
+  contractAddress: ContractAddress;
+  targetAddress: EOA;
 };
 
 type useIsRegisteredAdminResponse = {
@@ -41,13 +41,14 @@ type useIsRegisteredAdminResponse = {
 
 type useActivateTokenRequest = {
   swMileageTokenId: number;
+  rawTransaction: string;
 };
 
 type useActivateTokenResponse = SwMileageToken;
 
 type useRegisterAdminRequest = {
-  contractAddress: string;
-  targetAddress: string;
+  contractAddress: ContractAddress;
+  targetAddress: EOA;
   swMileageTokenId: number;
 }
 

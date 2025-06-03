@@ -1,5 +1,5 @@
 import ky, { KyInstance } from "ky";
-import { useAdminStore } from "@/features/admin/store";
+import { injectAccessHandler } from "@/features/_core/handler";
 const baseURL = "http://localhost:1987/v1/";
 
 const baseApi = ky.create();
@@ -8,14 +8,7 @@ const authApi = ky.create({
   timeout: 30000,
   hooks: {
     beforeRequest: [
-      (request) => {
-        // insert access token to header
-        const { getToken } = useAdminStore.getState().actions;
-        const token = getToken()[0].token;
-        if (token) {
-          request.headers.set("Authorization", `Bearer ${token}`);
-        }
-      },
+      (request) => injectAccessHandler(request),
     ],
   },
 });

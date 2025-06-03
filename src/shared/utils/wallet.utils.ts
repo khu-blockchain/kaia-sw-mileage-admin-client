@@ -1,4 +1,7 @@
-const sliceWalletAddress = (address: string) =>
-  address.slice(0, 6) + "..." + address.slice(-3);
+const sliceWalletAddress = (address: string, digits = 4) =>
+  address.slice(0, digits) + "..." + address.slice(-digits);
 
-export { sliceWalletAddress };
+const isSameAddress = (address1: string, address2: string) =>
+  address1.toLowerCase() === address2.toLowerCase();
+
+export { isSameAddress, sliceWalletAddress };

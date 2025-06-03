@@ -1,4 +1,4 @@
-import { AdminWithToken } from "@/entities/admin";
+import { Admin } from "@/entities/admin";
 
 type useSignUpRequest = {
   adminId: string;
@@ -9,7 +9,7 @@ type useSignUpRequest = {
   walletAddress: string;
 };
 
-type useSignUpResponse = AdminWithToken;
+type useSignUpResponse = Admin;
 
 export type {
   useSignUpRequest,

@@ -21,9 +21,14 @@ import {
 import {
   contractCall,
   encodeContractExecutionABI,
-  requestSignTransaction,
+  isSameAddress,
 } from "@/shared/utils";
-import { SW_MILEAGE_TOKEN_ABI } from "@/shared/constants";
+import {
+  kaia,
+  SW_MILEAGE_TOKEN_ABI,
+  STUDENT_MANAGER_ABI,
+} from "@/shared/constants";
+import { ContractAddress } from "@/shared/types";
 
 const useCreateToken: Mutation<
   useCreateTokenRequest,
@@ -49,7 +54,19 @@ const useGetSwMileageTokenList: SuspenseQuery<
     queryKey: ["get-sw-mileage-token-list"],
     queryFn: async () => {
       const result = await getSWMileageTokenAPI();
-      return result;
+      const data = (await contractCall(
+        import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
+        STUDENT_MANAGER_ABI,
+        "mileageToken",
+        []
+      )) as ContractAddress;
+
+      return result.map((token) => {
+        return {
+          ...token,
+          is_activated: isSameAddress(token.contract_address, data),
+        };
+      });
     },
   });
 };
@@ -79,7 +96,7 @@ const useIsRegisteredAdmin: SuspenseQuery<
   return useSuspenseQuery({
     queryKey: ["get-is-admin"],
     queryFn: async () => {
-      if (!targetAddress || targetAddress === "") {
+      if (!targetAddress) {
         return {
           isValidAddress: false,
           isAdmin: false,
@@ -114,14 +131,13 @@ const useRegisterAdmin: Mutation<
         [data.targetAddress]
       );
 
-      const { rawTransaction } = await requestSignTransaction({
+      const { rawTransaction } = await kaia.wallet.klaySignTransaction({
         type: "FEE_DELEGATED_SMART_CONTRACT_EXECUTION",
         from: data.targetAddress,
         to: data.contractAddress,
         gas: "0x4C4B40",
         data: input,
       });
-      console.log(data.swMileageTokenId);
 
       const result = await registerAdminAPI({
         swMileageTokenId: data.swMileageTokenId,

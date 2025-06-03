@@ -7,12 +7,12 @@ import {
 } from "./type";
 
 const signInAPI: API<signInAPIRequest, signInAPIResponse> = async (request) => {
-  const { loginType, id, password } = request;
+  const { id, password } = request;
 
   try {
     const result = await AuthServer.post("admin/login", {
+      credentials: "include",
       json: {
-        loginType,
         id,
         password,
       },
@@ -24,13 +24,11 @@ const signInAPI: API<signInAPIRequest, signInAPIResponse> = async (request) => {
 };
 
 const refreshAPI: API<refreshAPIRequest, refreshAPIResponse> = async (
-  request
 ) => {
-  const { refreshToken } = request;
 
   try {
-    const result = await AuthServer.post("refresh-token", {
-      json: { refreshToken },
+    const result = await AuthServer.post("admin/refresh-token", {
+      credentials: "include",
     }).json();
     return result as refreshAPIResponse;
   } catch (e) {

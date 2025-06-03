@@ -15,9 +15,11 @@ type MutationProps<TResponse> = {
 type Query<TRequest, TResponse> = (
   args: TRequest
 ) => UseQueryResult<TResponse, DefaultError>;
+
 type SuspenseQuery<TRequest, TResponse> = (
   args: TRequest
 ) => UseSuspenseQueryResult<TResponse, DefaultError>;
+
 type Mutation<TRequest, TResponse> = (
   args: MutationProps<TResponse>
 ) => UseMutationResult<TResponse, DefaultError, TRequest, unknown>;

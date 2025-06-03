@@ -5,9 +5,9 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  Table,
 } from "@/shared/ui";
 import { parseToFormattedDate } from "@/shared/utils";
-import { Table } from "lucide-react";
 import TokenActivationDialog from "@/widget/token/TokenActivateDialog";
 
 const TokenInfoTable = ({
@@ -41,8 +41,9 @@ const TokenInfoTable = ({
             </TableCell>
             <TableCell className="text-center">
               <TokenActivationDialog
-                isActive={swMileageToken.is_activated === 1}
-                swMileageTokenId={swMileageToken.sw_mileage_token_id}
+                isActive={swMileageToken.is_activated}
+                swMileageTokenId={Number(swMileageToken.sw_mileage_token_id)}
+                swMileageTokenContractAddress={swMileageToken.contract_address}
               />
             </TableCell>
           </TableRow>

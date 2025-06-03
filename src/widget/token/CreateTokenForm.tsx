@@ -3,11 +3,7 @@ import {
   ICreateTokenForm,
   useCreateToken,
 } from "@/features/token";
-import {
-  SW_MILEAGE_TOKEN_ABI,
-  SW_MILEAGE_TOKEN_BYTE,
-  provider,
-} from "@/shared/constants";
+import { kaia, SW_MILEAGE_FACTORY_ABI } from "@/shared/constants";
 import {
   Label,
   Input,
@@ -16,10 +12,7 @@ import {
   Button,
   Spinner,
 } from "@/shared/ui";
-import {
-  encodeContractDeployABI,
-  requestSignTransaction,
-} from "@/shared/utils";
+import { encodeContractExecutionABI } from "@/shared/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -31,23 +24,29 @@ const CreateTokenForm = () => {
   const { register, handleSubmit } = useCreateTokenForm();
 
   const onSubmit = async (createTokenForm: ICreateTokenForm) => {
-    const input = encodeContractDeployABI(
-      SW_MILEAGE_TOKEN_ABI,
-      SW_MILEAGE_TOKEN_BYTE,
-      [createTokenForm.swMileageTokenName, createTokenForm.symbol]
+    const data = encodeContractExecutionABI(
+      SW_MILEAGE_FACTORY_ABI,
+      "deployWithAdmin",
+      [
+        createTokenForm.swMileageTokenName,
+        createTokenForm.symbol,
+        import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
+      ]
     );
 
-    const { rawTransaction: rlpEncodedString } = await requestSignTransaction({
-      type: "FEE_DELEGATED_SMART_CONTRACT_DEPLOY",
-      from: provider.selectedAddress,
-      data: input,
+    const { rawTransaction } = await kaia.wallet.klaySignTransaction({
+      type: "FEE_DELEGATED_SMART_CONTRACT_EXECUTION",
+      to: import.meta.env.VITE_SW_MILEAGE_TOKEN_FACTORY_ADDRESS,
+      from: kaia.browserProvider.selectedAddress,
+      data: data,
+      value: "0x0",
       gas: "0x4C4B40",
     });
 
     mutate({
       ...createTokenForm,
       imageUrl: "https://i.ibb.co/mVbb4sV5/image.png",
-      rlpEncodingString: rlpEncodedString,
+      rawTransaction: rawTransaction,
     });
   };
 

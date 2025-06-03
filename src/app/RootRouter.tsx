@@ -4,13 +4,12 @@ import SignUp from "@/pages/auth/SignUp";
 import MainLayout from "../widget/_frgment/MainLayout";
 import CreateTokenPage from "@/pages/token/CreateToken";
 import ManageToken from "@/pages/token/ManageToken";
-import Student from "@/pages/student/Student";
-import ApplyRequest from "@/pages/apply/ApplyRequest";
-import PaymentHistory from "@/pages/history/PaymentHistory";
-import RefundHistory from "@/pages/history/RefundHistory";
+import ManageStudent from "@/pages/student/ManageStudent";
+import { MintHistory, BurnHistory } from "@/pages/history";
 import WalletChange from "@/pages/wallet-change/WalletChange";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import { Auth, Init } from "@/app/RouteGuard";
+import { MileageRequest, MileageRequestDetail } from "@/pages/request";
 
 const RootRouter = () => {
   return (
@@ -24,10 +23,13 @@ const RootRouter = () => {
           <Route index path={"/"} element={<Dashboard />} />
           <Route path="create-token" element={<CreateTokenPage />} />
           <Route path="manage-token" element={<ManageToken />} />
-          <Route path="student" element={<Student />} />
-          <Route path="apply-request" element={<ApplyRequest />} />
-          <Route path="payment-history" element={<PaymentHistory />} />
-          <Route path="refund-history" element={<RefundHistory />} />
+          <Route path="student" element={<ManageStudent />} />
+          <Route path="request">
+            <Route index element={<MileageRequest />} />
+            <Route path=":id" element={<MileageRequestDetail />} />
+          </Route>
+          <Route path="mint-history" element={<MintHistory />} />
+          <Route path="burn-history" element={<BurnHistory />} />
           <Route path="wallet-change" element={<WalletChange />} />
         </Route>
         <Route path="*" element={<Navigate to={"/"} />} />

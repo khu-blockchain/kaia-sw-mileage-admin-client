@@ -19,7 +19,7 @@ const SignUpForm = () => {
 
   const { mutate, isPending } = useSignUp({
     onSuccess: (response) => {
-      toast(`${response.admin.name}님, 회원가입이 완료되었습니다.`);
+      toast(`${response.name}님, 회원가입이 완료되었습니다.`);
       navigate("/sign-in");
     },
     onError: () => {},

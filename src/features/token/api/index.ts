@@ -19,7 +19,7 @@ const createTokenAPI: API<
     symbol,
     description,
     imageUrl,
-    rlpEncodingString,
+    rawTransaction,
   } = request;
 
   try {
@@ -29,7 +29,7 @@ const createTokenAPI: API<
         symbol,
         description,
         imageUrl,
-        rlpEncodingString,
+        rawTransaction,
       },
     }).json();
     return result as createTokenAPIResponse;
@@ -54,10 +54,11 @@ const activateSwMileageTokenAPI: API<
   activateTokenAPIRequest,
   activateTokenAPIResponse
 > = async (request) => {
-  const { swMileageTokenId } = request;
+  const { swMileageTokenId, rawTransaction } = request;
   try {
     const result = await SwMileageTokenServer.post(
-      `${swMileageTokenId}/activate`
+      `${swMileageTokenId}/activate`,
+      { json: { rawTransaction } }
     ).json();
     return result as activateTokenAPIResponse;
   } catch (e) {

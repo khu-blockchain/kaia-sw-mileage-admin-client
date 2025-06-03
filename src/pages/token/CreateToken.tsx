@@ -5,11 +5,7 @@ import { CreateTokenForm } from "@/widget/token";
 const CreateToken = () => {
   return (
     <PageBoundary>
-      <PageLayout
-        index="마일리지 토큰"
-        title="마일리지 토큰 배포"
-        className="max-w-[900px]"
-      >
+      <PageLayout index="마일리지 토큰" title="마일리지 토큰 배포">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-6">
             <p className="text-body">

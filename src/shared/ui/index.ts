@@ -9,3 +9,6 @@ export * from './table';
 export * from './alert';
 export * from './switch';
 export * from './alert-dialog';
+export * from './tabs';
+export * from './dialog';
+export * from './pagination';

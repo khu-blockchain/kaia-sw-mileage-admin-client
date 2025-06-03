@@ -1,4 +1,5 @@
 import { useActivateToken } from "@/features/token";
+import { kaia, STUDENT_MANAGER_ABI } from "@/shared/constants";
 import {
   Switch,
   AlertDialogHeader,
@@ -11,16 +12,20 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/shared/ui";
+import { encodeContractExecutionABI } from "@/shared/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
+import { toHex } from "viem";
 
 const TokenActivationDialog = ({
-  swMileageTokenId,
   isActive,
+  swMileageTokenContractAddress,
+  swMileageTokenId,
 }: {
-  swMileageTokenId: string;
+  swMileageTokenContractAddress: string;
   isActive: boolean;
+  swMileageTokenId: number;
 }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -46,8 +51,26 @@ const TokenActivationDialog = ({
     setOpen(true);
   };
 
-  const handleActivateToken = () => {
-    mutate({ swMileageTokenId: Number(swMileageTokenId) });
+  const handleActivateToken = async () => {
+    const data = encodeContractExecutionABI(
+      STUDENT_MANAGER_ABI,
+      "changeMileageToken",
+      [swMileageTokenContractAddress]
+    );
+
+    const { rawTransaction } = await kaia.wallet.klaySignTransaction({
+      type: "FEE_DELEGATED_SMART_CONTRACT_EXECUTION",
+      to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
+      from: kaia.browserProvider.selectedAddress,
+      data: data,
+      value: "0x0",
+      gas: "0x4C4B40",
+    });
+
+    mutate({
+      swMileageTokenId,
+      rawTransaction,
+    });
   };
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>

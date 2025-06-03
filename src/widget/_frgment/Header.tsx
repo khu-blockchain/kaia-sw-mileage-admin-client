@@ -20,7 +20,7 @@ const Header = () => {
       {walletAddress === "" ? (
         <ConnectButton.SmallButton/>
       ) : (
-        <div className="flex flex-row items-center h-8 gap-1 border border-kaia rounded-full p-1">
+        <div className="flex flex-row items-center h-8 gap-1 border border-kaia rounded-full py-1 pl-1 pr-2">
           <img src={KaiaLogo} alt="logo" className="w-6" />
           <span className="text-xs text-kaia font-bold">{sliceWalletAddress(walletAddress)}</span>
         </div>

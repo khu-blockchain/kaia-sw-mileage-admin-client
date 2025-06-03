@@ -15,11 +15,14 @@ const Sidebar = () => {
   );
 };
 
+//TODO: 하위 페이지 접속시에도 선택되었다는 UI 표시되도록 수정
 const Menu = ({ menu }: { menu: SidebarMenu }) => {
+  const pathname = useLocation().pathname;
+
   return (
     <div className="flex flex-col">
       {menu.path ? (
-        <Link className="text-sm font-semibold" to={menu.path}>
+        <Link className={cn("text-sm font-semibold", pathname.includes(menu.path) ? "text-index font-bold" : "text-black")} to={menu.path}>
           {menu.name}
         </Link>
       ) : (
