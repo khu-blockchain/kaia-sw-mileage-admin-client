@@ -6,8 +6,6 @@ import {
   getSwMileageByIdAPIResponse,
   approveSwMileageAPIRequest,
   approveSwMileageAPIResponse,
-  updateSwMileageStatusAPIRequest,
-  updateSwMileageStatusAPIResponse,
   rejectSwMileageAPIRequest,
   rejectSwMileageAPIResponse,
 } from "./type";
@@ -69,31 +67,9 @@ const rejectSwMileageAPI: API<
 };
 
 
-
-const updateSwMileageStatusAPI: API<
-  updateSwMileageStatusAPIRequest,
-  updateSwMileageStatusAPIResponse
-> = async (request) => {
-  try {
-    const result = await SwMileageServer.patch(
-      `${request.swMileageId}/status`,
-      {
-        json: {
-          status: request.status,
-          comment: request.comment,
-        },
-      }
-    ).json();
-    return result as updateSwMileageStatusAPIResponse;
-  } catch (e) {
-    throw e;
-  }
-};
-
 export {
   getSwMileageListAPI,
   getSwMileageByIdAPI,
-  updateSwMileageStatusAPI,
   approveSwMileageAPI,
   rejectSwMileageAPI,
 };

@@ -1,4 +1,5 @@
 import { SignUpForm } from "@/widget/admin";
+import Background from "@/shared/assets/images/main_visual_01.jpg";
 
 export default function SignUp() {
   return (
@@ -12,7 +13,7 @@ export default function SignUp() {
       </div>
       <div className="relative hidden bg-muted lg:block">
         <img
-          src="/placeholder.svg"
+          src={Background}
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />

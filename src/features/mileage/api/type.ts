@@ -33,13 +33,6 @@ type rejectSwMileageAPIResponse = {
   message: string;
 };
 
-type updateSwMileageStatusAPIRequest = {
-  swMileageId: number;
-  status: number;
-  comment: string;
-};
-
-type updateSwMileageStatusAPIResponse = SwMileage;
 
 export type {
   getSWMileageListAPIRequest,
@@ -50,6 +43,4 @@ export type {
   approveSwMileageAPIResponse,
   rejectSwMileageAPIRequest,
   rejectSwMileageAPIResponse,
-  updateSwMileageStatusAPIRequest,
-  updateSwMileageStatusAPIResponse,
 };

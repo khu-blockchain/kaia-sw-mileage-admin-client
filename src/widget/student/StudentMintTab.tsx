@@ -8,13 +8,40 @@ import {
 } from "@/shared/ui";
 import { CircleAlert } from "lucide-react";
 import { useState } from "react";
+import { Student } from "@/entities/student";
+import { encodeContractExecutionABI } from "@/shared/utils";
+import { kaia, STUDENT_MANAGER_ABI } from "@/shared/constants";
+import { useMintSwMileage } from "@/features/student/queries";
 
-const StudentMintTab = () => {
+const StudentMintTab = ({ student }: { student: Student }) => {
   const [mintAmount, setMintAmount] = useState(0);
+  const { mutate } = useMintSwMileage({
+    onSuccess: () => {
+      console.log("success");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const handleMint = async () => {
+    const data = encodeContractExecutionABI(STUDENT_MANAGER_ABI, "mint", [
+      student.student_hash,
+      student.wallet_address,
+      Number(mintAmount),
+    ]);
+    const { rawTransaction } = await kaia.wallet.klaySignTransaction({
+      type: "FEE_DELEGATED_SMART_CONTRACT_EXECUTION",
+      to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
+      from: kaia.browserProvider.selectedAddress,
+      data: data,
+      value: "0x0",
+      gas: "0x4C4B40",
+    });
 
-  const handleMint = () => {
-    console.log("토큰 지급:", mintAmount);
-    // TODO: 토큰 지급 로직 구현
+    mutate({
+      studentId: student.student_id,
+      rawTransaction: rawTransaction,
+    });
   };
   return (
     <div className="flex flex-col gap-4 mt-4">

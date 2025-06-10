@@ -4,7 +4,6 @@ import { usePagination } from "@/shared/hooks";
 import { Button } from "@/shared/ui";
 import HistoryTable from "./HistoryTable";
 import { SwMileageTokenHistory } from "@/entities/history";
-import TransactionStatusLabel from "./TransactionStatusLabel";
 import { parseToFormattedDate, sliceWalletAddress } from "@/shared/utils";
 
 // 테이블 헤더 정의
@@ -33,13 +32,7 @@ const MintHistoryContent = () => {
     { itemsPerPage: 10 },
     totalCount
   );
-
-  // 트랜잭션 해시 클릭 핸들러
-  const onClickTxHash = (hash: string) => {
-    // 블록체인 익스플로러로 이동하는 로직
-    window.open(`https://etherscan.io/tx/${hash}`, "_blank");
-  };
-
+  
   const typeMapper = (type: string) => {
     switch (type) {
       case "DOC_APPROVED":

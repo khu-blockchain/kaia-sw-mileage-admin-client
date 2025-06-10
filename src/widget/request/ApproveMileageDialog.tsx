@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import { useApproveSwMileage } from "@/features/mileage";
 import { kaia, STUDENT_MANAGER_ABI } from "@/shared/constants";
 import { encodeContractExecutionABI } from "@/shared/utils";
-import { toHex } from "viem";
 
 type ApproveMileageDialogProps = {
   swMileage: SwMileage;

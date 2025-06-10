@@ -16,14 +16,6 @@ type useGetSwMileageByIdResponse = {
   activityFieldList: Record<string, any>;
 };
 
-type useUpdateSwMileageStatusRequest = {
-  swMileageId: number;
-  status: number;
-  comment: string;
-};
-
-type useUpdateSwMileageStatusResponse = SwMileage;
-
 type useApproveSwMileageRequest = {
   swMileageId: number;
   rawTransaction: string;
@@ -48,8 +40,6 @@ export type {
   useGetSwMileageListResponse,
   useGetSwMileageByIdRequest,
   useGetSwMileageByIdResponse,
-  useUpdateSwMileageStatusRequest,
-  useUpdateSwMileageStatusResponse,
   useApproveSwMileageRequest,
   useApproveSwMileageResponse,
   useRejectSwMileageRequest,

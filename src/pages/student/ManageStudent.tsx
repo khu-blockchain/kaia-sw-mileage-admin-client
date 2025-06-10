@@ -95,10 +95,10 @@ const ManageStudent = () => {
                     />
                   </TabsContent>
                   <TabsContent value="mint">
-                    <StudentMintTab />
+                    <StudentMintTab student={data.student as Student} />
                   </TabsContent>
                   <TabsContent value="burn">
-                    <StudentBurnTab />
+                    <StudentBurnTab student={data.student as Student} />
                   </TabsContent>
                 </Tabs>
               )}

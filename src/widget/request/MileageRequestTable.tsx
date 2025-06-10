@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router";
 import { useGetSwMileageList } from "@/features/mileage";
 import { usePagination } from "@/shared/hooks";
-import { PaginationControls } from "@/shared/component";
+import { PaginationControls, SwMileageStatusBadge } from "@/shared/component";
 import { SwMileage } from "@/entities/mileage";
 import { ACTIVITY_CATEGORIES } from "@/shared/constants";
 import { parseToFormattedDate } from "@/shared/utils";
@@ -126,23 +126,3 @@ const MileageRequestTable = () => {
 };
 
 export default MileageRequestTable;
-
-const SwMileageStatusBadge = ({ status }: { status: 0 | 1 | 2 }) => {
-  const statusText = {
-    2: {
-      text: "제출됨",
-      color: "text-body",
-    },
-    1: {
-      text: "승인",
-      color: "text-approved",
-    },
-    0: {
-      text: "반려",
-      color: "text-destructive",
-    },
-  };
-  return (
-    <p className={`${statusText[status].color}`}>{statusText[status].text}</p>
-  );
-};

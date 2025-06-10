@@ -2,7 +2,6 @@ import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import {
   getSwMileageListAPI,
   getSwMileageByIdAPI,
-  updateSwMileageStatusAPI,
   approveSwMileageAPI,
   rejectSwMileageAPI,
 } from "../api";
@@ -12,8 +11,6 @@ import {
   useGetSwMileageListResponse,
   useGetSwMileageByIdRequest,
   useGetSwMileageByIdResponse,
-  useUpdateSwMileageStatusRequest,
-  useUpdateSwMileageStatusResponse,
   useApproveSwMileageRequest,
   useApproveSwMileageResponse,
   useRejectSwMileageRequest,
@@ -42,19 +39,6 @@ const useGetSwMileageById: SuspenseQuery<
       const activityFieldList = await getActivityFieldListAPI();
       return { swMileageDetail, activityFieldList };
     },
-  });
-};
-
-const useUpdateSwMileageStatus: Mutation<
-  useUpdateSwMileageStatusRequest,
-  useUpdateSwMileageStatusResponse
-> = (args) => {
-  const { onSuccess, onError } = args;
-
-  return useMutation({
-    mutationFn: async (data) => await updateSwMileageStatusAPI(data),
-    ...(onSuccess && { onSuccess: (res: any) => onSuccess(res) }),
-    ...(onError && { onError: (res) => onError(res) }),
   });
 };
 
@@ -87,7 +71,6 @@ const useRejectSwMileage: Mutation<
 export {
   useGetSwMileageList,
   useGetSwMileageById,
-  useUpdateSwMileageStatus,
   useApproveSwMileage,
   useRejectSwMileage,
 };

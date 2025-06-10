@@ -1,11 +1,20 @@
 import {
   useGetStudentByStudentIdRequest,
   useGetStudentByStudentIdResponse,
+  useMintSwMileageRequest,
+  useMintSwMileageResponse,
+  useBurnSwMileageRequest,
+  useBurnSwMileageResponse,
 } from "./type";
-import { getStudentByStudentIdAPI } from "../api";
-import { useQuery } from "@tanstack/react-query";
+import {
+  getStudentByStudentIdAPI,
+  mintSwMileageAPI,
+  burnSwMileageAPI,
+} from "../api";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Query } from "@/features/_core/api";
 import { getSwMileageTokenHistoriesAPI } from "@/features/history/api";
+import { Mutation } from "@/features/_core/api";
 
 const useGetStudentInfo: Query<
   useGetStudentByStudentIdRequest,
@@ -17,12 +26,18 @@ const useGetStudentInfo: Query<
       try {
         const student = await getStudentByStudentIdAPI(args);
         const mileageHistory = await getSwMileageTokenHistoriesAPI({
-          isCount: 0,
+          isCount: 1,
           studentId: args.student_id,
+          type: [
+            "DOC_APPROVED",
+            "DIRECT_MINT",
+            "DIRECT_BURN",
+            "ACCOUNT_CHANGE",
+          ],
         });
         return {
           student: student,
-          mileageHistory: mileageHistory,
+          mileageHistory: mileageHistory.list,
         };
       } catch (error) {
         return null;
@@ -33,15 +48,28 @@ const useGetStudentInfo: Query<
   });
 };
 
-const useGetStudentByStudentId: Query<
-  useGetStudentByStudentIdRequest,
-  useGetStudentByStudentIdResponse
+const useMintSwMileage: Mutation<
+  useMintSwMileageRequest,
+  useMintSwMileageResponse
 > = (args) => {
-  return useQuery({
-    queryKey: ["get-student-by-student-id", args.student_id],
-    queryFn: async () => await getStudentByStudentIdAPI(args),
-    enabled: false,
+  const { onSuccess, onError } = args;
+  return useMutation({
+    mutationFn: async (data) => await mintSwMileageAPI(data),
+    ...(onSuccess && { onSuccess: (res: any) => onSuccess(res) }),
+    ...(onError && { onError: (res) => onError(res) }),
   });
 };
 
-export { useGetStudentInfo };
+const useBurnSwMileage: Mutation<
+  useBurnSwMileageRequest,
+  useBurnSwMileageResponse
+> = (args) => {
+  const { onSuccess, onError } = args;
+  return useMutation({
+    mutationFn: async (data) => await burnSwMileageAPI(data),
+    ...(onSuccess && { onSuccess: (res: any) => onSuccess(res) }),
+    ...(onError && { onError: (res) => onError(res) }),
+  });
+};
+
+export { useGetStudentInfo, useMintSwMileage, useBurnSwMileage };
