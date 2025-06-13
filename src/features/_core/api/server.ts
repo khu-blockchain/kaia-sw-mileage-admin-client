@@ -1,6 +1,7 @@
 import ky, { KyInstance } from "ky";
 import { injectAccessHandler } from "@/features/_core/handler";
-const baseURL = "http://localhost:1987/v1/";
+// const baseURL = 'http://khunggum.khu.ac.kr:8080/v1/';
+const baseURL = '/api/';
 
 const baseApi = ky.create();
 

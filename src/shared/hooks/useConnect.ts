@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { kaia } from "@/shared/constants";
 
-
 //TODO: 연결된 지갑 주소와 계정에 등록된 지갑 주소 일치 여부 확인 및 피드백
 const useConnect = () => {
   // Global Level에서의 wallet address 관리
@@ -27,16 +26,20 @@ const useConnect = () => {
       window.location.reload();
     };
     // 이벤트 리스너 등록
-    kaia.browserProvider.on("accountsChanged", handleAccountsChanged);
-    kaia.browserProvider.on("disconnected", handleDisconnect);
+    if (kaia.browserProvider) {
+      kaia.browserProvider.on("accountsChanged", handleAccountsChanged);
+      kaia.browserProvider.on("disconnected", handleDisconnect);
+    }
 
     // 클린업 함수
     return () => {
-      kaia.browserProvider.removeListener(
-        "accountsChanged",
-        handleAccountsChanged
-      );
-      kaia.browserProvider.removeListener("disconnected", handleDisconnect);
+      if (kaia.browserProvider) {
+        kaia.browserProvider.removeListener(
+          "accountsChanged",
+          handleAccountsChanged
+        );
+        kaia.browserProvider.removeListener("disconnected", handleDisconnect);
+      }
     };
   }, []);
 

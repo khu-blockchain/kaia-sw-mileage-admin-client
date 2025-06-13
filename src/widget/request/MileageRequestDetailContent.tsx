@@ -16,7 +16,7 @@ const MileageRequestDetailContent = () => {
   const handleFileDownload = (fileUrl: string, fileName: string) => {
     // 새 탭에서 파일 URL 열기 (브라우저에서 자동으로 다운로드 처리)
     const link = document.createElement("a");
-    link.href = fileUrl;
+    link.href = `http://khunggum.khu.ac.kr${fileUrl}`;
     link.download = fileName;
     link.target = "_blank";
     document.body.appendChild(link);
