@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useApproveSwMileage } from "@/features/mileage";
 import { kaia, STUDENT_MANAGER_ABI } from "@/shared/constants";
 import { encodeContractExecutionABI } from "@/shared/utils";
+import { toast } from "sonner";
 
 type ApproveMileageDialogProps = {
   swMileage: SwMileage;
@@ -37,6 +38,7 @@ function ApproveMileageDialog({
     onSuccess: () => {
       console.log("success");
       setOpen(false);
+      toast.success("SW 마일리지 승인이 완료되었습니다.");
     },
   });
 

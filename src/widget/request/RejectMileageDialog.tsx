@@ -17,6 +17,7 @@ import { kaia, STUDENT_MANAGER_ABI } from "@/shared/constants";
 import { encodeContractExecutionABI } from "@/shared/utils";
 import { encodePacked, keccak256 } from "viem";
 import { SwMileage } from "@/entities/mileage";
+import { toast } from "sonner";
 
 type RejectMileageDialogProps = {
   children: React.ReactNode;
@@ -34,6 +35,7 @@ function RejectMileageDialog({
     onSuccess: () => {
       console.log("success");
       setOpen(false);
+      toast.success("SW 마일리지 반려가 완료되었습니다.");
     },
   });
 

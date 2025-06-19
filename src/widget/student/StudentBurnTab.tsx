@@ -12,11 +12,13 @@ import { Student } from "@/entities/student";
 import { encodeContractExecutionABI } from "@/shared/utils";
 import { kaia, STUDENT_MANAGER_ABI } from "@/shared/constants";
 import { useBurnSwMileage } from "@/features/student/queries";
+import { toast } from "sonner";
 
 const StudentBurnTab = ({ student }: { student: Student }) => {
   const [burnAmount, setBurnAmount] = useState(0);
   const { mutate } = useBurnSwMileage({
     onSuccess: () => {
+      toast.success("마일리지 회수가 완료되었습니다.");
       console.log("success");
     },
   });

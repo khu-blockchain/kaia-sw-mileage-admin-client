@@ -12,11 +12,13 @@ import { Student } from "@/entities/student";
 import { encodeContractExecutionABI } from "@/shared/utils";
 import { kaia, STUDENT_MANAGER_ABI } from "@/shared/constants";
 import { useMintSwMileage } from "@/features/student/queries";
+import { toast } from "sonner";
 
 const StudentMintTab = ({ student }: { student: Student }) => {
   const [mintAmount, setMintAmount] = useState(0);
   const { mutate } = useMintSwMileage({
     onSuccess: () => {
+      toast.success("마일리지 지급이 완료되었습니다.");
       console.log("success");
     },
     onError: (error) => {

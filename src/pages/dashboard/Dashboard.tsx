@@ -139,9 +139,9 @@ const StatCard = ({
         <p className="text-sm text-gray-500">{title}</p>
         <p className="text-2xl font-bold text-gray-900">{value}</p>
       </div>
-      <div className={`rounded-lg p-3 ${color}`}>
+      {/* <div className={`rounded-lg p-3 ${color}`}>
         <div className={iconColor}>{icon}</div>
-      </div>
+      </div> */}
     </div>
   </div>
 );
@@ -239,9 +239,9 @@ const RecentMileageRequestSection = () => {
     <div className="bg-white rounded-lg border p-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="bg-blue-100 p-2 rounded-lg">
-            <Users className="h-5 w-5 text-blue-600" />
-          </div>
+              {/* <div className="bg-blue-100 p-2 rounded-lg">
+                <Users className="h-5 w-5 text-blue-600" />
+              </div> */}
           <div>
             <h2 className="text-lg font-semibold text-body">
               최근 마일리지 신청
@@ -325,9 +325,9 @@ const RecentWalletLostSection = () => {
     <div className="bg-white rounded-lg border p-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="bg-purple-100 p-2 rounded-lg">
+          {/* <div className="bg-purple-100 p-2 rounded-lg">
             <Wallet className="h-5 w-5 text-purple-600" />
-          </div>
+          </div> */}
           <div>
             <h2 className="text-lg font-semibold text-body">
               최근 지갑 변경 요청

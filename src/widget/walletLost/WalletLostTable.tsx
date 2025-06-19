@@ -20,7 +20,7 @@ import {
   parseToFormattedDateTime,
   sliceWalletAddress,
 } from "@/shared/utils";
-import { toHex } from "viem";
+import { toast } from "sonner";
 
 const tableHeaders = [
   { key: "student_id", label: "학번" },
@@ -40,7 +40,7 @@ const WalletLostTable = () => {
 
   const { mutate } = useApproveWalletLost({
     onSuccess: (res) => {
-      console.log(res);
+      toast.success("요청이 승인되었습니다. 잠시 후 새로고침 해주세요.");
     },
   });
 
@@ -51,7 +51,6 @@ const WalletLostTable = () => {
   );
 
   const approveWalletLost = async (walletLost: WalletLost) => {
-    console.log(walletLost);
     const data = encodeContractExecutionABI(
       STUDENT_MANAGER_ABI,
       "changeAccount",
