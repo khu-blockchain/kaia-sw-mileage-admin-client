@@ -61,8 +61,6 @@ const useGetSwMileageTokenList: SuspenseQuery<
         []
       )) as ContractAddress;
 
-      console.log(data);
-
       return result.map((token) => {
         return {
           ...token,
