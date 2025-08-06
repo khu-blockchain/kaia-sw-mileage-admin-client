@@ -51,7 +51,7 @@
 	--kaia-dark: #99c007;
 	--index: #4c69ef;
 	--text-body: #314158;
-	--background-gray: #fdfdfd;
+	--background-gray: #f6f7f9;
 }
 
 html,
@@ -159,7 +159,7 @@ button {
 	--kaia-dark: #99c007;
 	--index: #4c69ef;
 	--text-body: #314158;
-	--background-gray: #fdfdfd;
+	--background-gray: #f6f7f9;
 }
 
 @layer base {
