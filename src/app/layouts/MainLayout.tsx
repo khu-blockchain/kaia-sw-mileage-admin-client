@@ -7,9 +7,9 @@ function MainLayout() {
 	return (
 		<div className="flex flex-col w-full">
 			<Header />
-			<div className="flex w-full min-w-[1200px] bg-background-gray">
+			<div className="flex w-full min-w-[1440px] bg-background-gray">
 				<Sidebar />
-				<main className="relative flex flex-1 flex-col w-full px-10 py-16">
+				<main className="relative flex flex-1 flex-col w-full px-10 py-12">
 					<Outlet />
 				</main>
 			</div>

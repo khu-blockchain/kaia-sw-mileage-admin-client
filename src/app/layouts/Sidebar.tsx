@@ -8,8 +8,8 @@ import { SIDEBAR_MENU } from "./config";
 
 export function Sidebar() {
 	return (
-		<div className="sticky top-[73px] z-40 w-60 h-[calc(100vh-73px)] px-6 pt-16 overflow-x-hidden overflow-y-auto border-r border-slate-200 bg-white">
-			<div className="flex flex-col gap-8">
+		<div className="sticky top-[73px] z-40 w-50 h-[calc(100vh-73px)] px-6 pt-12 overflow-x-hidden overflow-y-auto border-r border-slate-200 bg-white">
+			<div className="flex flex-col gap-6">
 				{SIDEBAR_MENU.map((menu) => (
 					<Menu menu={menu} />
 				))}

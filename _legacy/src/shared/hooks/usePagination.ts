@@ -73,7 +73,7 @@ const usePagination = <T>(
         1,
         currentPage - Math.floor(maxVisiblePages / 2)
       );
-      let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+      const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
       // 끝쪽에 도달했을 때 시작 페이지 조정
       if (endPage - startPage < maxVisiblePages - 1) {

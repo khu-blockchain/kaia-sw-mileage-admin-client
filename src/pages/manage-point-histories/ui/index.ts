@@ -1,0 +1,1 @@
+export { default as ManagePointHistoriesPage } from "./ManagePointHistoriesPage";

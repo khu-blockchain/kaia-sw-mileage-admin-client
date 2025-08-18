@@ -1,0 +1,1 @@
+export { ManageRubricPage } from "./ui";

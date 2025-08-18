@@ -32,5 +32,7 @@ export const mileageTokenQueries = {
 						),
 					);
 			},
+			staleTime: 0,
+			gcTime: 0,
 		}),
 };

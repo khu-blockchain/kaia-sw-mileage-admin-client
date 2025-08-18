@@ -1,11 +1,13 @@
 import { Navigate, Route, Routes } from "react-router";
 
+import { ManagePointHistoriesPage } from "@pages/manage-point-histories";
+import { ManageRubricPage } from "@pages/manage-rubric";
+import { MileageRequestPage } from "@pages/mileage-request";
+import { MileageRequestDetailPage } from "@pages/mileage-request-detail";
 import { CreateTokenPage } from "@/pages/create-token";
 import { DashboardPage } from "@/pages/dashboard";
 import { ManageStudentPage } from "@/pages/manage-student";
 import { ManageTokenPage } from "@/pages/manage-token";
-import { MileageRequestPage } from "@/pages/mileage-request";
-import { MileageRequestDetailPage } from "@/pages/mileage-request-detail";
 import { SignInPage } from "@/pages/sign-in";
 import { SignUpPage } from "@/pages/sign-up";
 import { WalletLostRequestPage } from "@/pages/wallet-lost-request";
@@ -25,13 +27,16 @@ export default function RootRouter() {
 					<Route index path={"/"} element={<DashboardPage />} />
 					<Route path="create-token" element={<CreateTokenPage />} />
 					<Route path="manage-token" element={<ManageTokenPage />} />
+					<Route path="manage-rubric" element={<ManageRubricPage />} />
 					<Route path="student" element={<ManageStudentPage />} />
 					<Route path="request">
 						<Route index element={<MileageRequestPage />} />
 						<Route path=":id" element={<MileageRequestDetailPage />} />
 					</Route>
-					{/* <Route path="mint-history" element={<MintHistoryPage />} /> */}
-					{/* <Route path="burn-history" element={<BurnHistoryPage />} /> */}
+					<Route
+						path="point-histories"
+						element={<ManagePointHistoriesPage />}
+					/>
 					<Route path="wallet-change" element={<WalletLostRequestPage />} />
 				</Route>
 				<Route path="*" element={<Navigate to={"/"} />} />

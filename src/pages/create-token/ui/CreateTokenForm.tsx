@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-import { SW_MILEAGE_FACTORY_ABI } from "@shared/config";
+import { STUDENT_MANAGER_ABI } from "@shared/config";
 import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import {
 	Button,
@@ -34,7 +34,7 @@ export default function CreateTokenForm() {
 
 	const onSubmit = async (createTokenForm: ICreateTokenForm) => {
 		const data = encodeContractExecutionABI(
-			SW_MILEAGE_FACTORY_ABI,
+			STUDENT_MANAGER_ABI,
 			"deployWithAdmin",
 			[
 				createTokenForm.name,
@@ -45,7 +45,7 @@ export default function CreateTokenForm() {
 
 		const rawTransaction = (await kaia.wallet.signTransaction({
 			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_SW_MILEAGE_TOKEN_FACTORY_ADDRESS,
+			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
 			from: kaia.browserProvider.selectedAddress,
 			data: data,
 			value: "0x0",
@@ -59,7 +59,9 @@ export default function CreateTokenForm() {
         rawTransaction: rawTransaction,
       });
       navigate(`/manage-token`);
-      toast.success("토큰 배포가 완료되었습니다.");
+      toast.success("토큰 배포가 완료되었습니다.", {
+        description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
+      });
 		} catch (error) {
 			toast.error("토큰 배포에 실패했습니다.");
 		}
@@ -72,13 +74,13 @@ export default function CreateTokenForm() {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="content-container">
 			<p className="text-xl font-semibold text-body">토큰 정보</p>
-			<div className="flex w-full justify-between">
-				<div className="grid gap-2">
+			<div className="grid grid-cols-2 w-ful gap-6">
+				<div className="grid col-span-1 gap-2">
 					<div className="flex justify-between w-60">
 						<Label htmlFor="password">이름</Label>
 					</div>
 					<Input
-						className="w-100"
+						className="w-full"
 						id="name"
 						type="text"
 						maxLength={20}
@@ -87,12 +89,12 @@ export default function CreateTokenForm() {
 						{...register("name")}
 					/>
 				</div>
-				<div className="grid gap-2">
+				<div className="grid col-span-1 gap-2">
 					<div className="flex justify-between w-60">
 						<Label htmlFor="password">심볼</Label>
 					</div>
 					<Input
-						className="w-100"
+						className="w-full"
 						id="name"
 						type="text"
 						maxLength={10}
@@ -115,7 +117,7 @@ export default function CreateTokenForm() {
 					{...register("description")}
 				/>
 			</div>
-			<Separator className="my-4" />
+			<Separator />
 			<Button type="submit" className="w-min" disabled={isPending}>
 				{isPending ? (
 					<div className="flex items-center gap-1">

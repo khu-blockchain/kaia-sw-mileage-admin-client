@@ -1,1 +1,1 @@
-export { default as MileageRequestPage } from "./ui/MileageRequestPage";
+export { MileageRequestPage } from "./ui";

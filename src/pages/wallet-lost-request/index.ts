@@ -1,1 +1,1 @@
-export { default as WalletLostRequestPage } from "./ui/WalletLostRequestPage";
+export { WalletLostRequestPage } from "./ui";

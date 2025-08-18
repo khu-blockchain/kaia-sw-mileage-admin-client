@@ -1,0 +1,46 @@
+import type { GetMileagePointHistoryListRequest } from "@shared/api/mileage-point-history";
+
+import { mileagePointHistoryApi } from "@/shared/api/mileage-point-history";
+
+import { mapMileagePointHistory } from "./mapper";
+
+export const mileagePointHistoryQueries = {
+	all: () => ["mileage-point-history"] as const,
+	list: (
+		page: number,
+		limit: number,
+		mileageId?: number,
+		all?: boolean,
+		type?: string,
+		studentName?: string,
+	) =>
+		[
+			...mileagePointHistoryQueries.all(),
+			"list",
+			page,
+			limit,
+			mileageId,
+			all,
+			type,
+			studentName,
+		] as const,
+
+	getMileagePointHistoryList: (request: GetMileagePointHistoryListRequest) => ({
+		queryKey: mileagePointHistoryQueries.list(
+			request.page,
+			request.limit,
+			request.mileageId,
+			request.all,
+			request.type,
+			request.studentName,
+		),
+		queryFn: async () => {
+			const { data, meta } =
+				await mileagePointHistoryApi.getMileagePointHistoryList(request);
+			return {
+				data: data.map(mapMileagePointHistory),
+				meta,
+			};
+		},
+	}),
+};

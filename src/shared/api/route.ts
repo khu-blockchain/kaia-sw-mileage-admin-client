@@ -14,15 +14,17 @@ const baseServer = server(apiClient);
 const authServer = server(authClient);
 
 const AuthServer = baseServer("auth");
+const StudentServer = authServer("student");
 const AdminServer = authServer("admin");
 const MileageServer = authServer("mileage");
 const MileageTokenServer = authServer("mileage-token");
-const MileageRubricServer = baseServer("mileage-rubric");
+const MileageRubricServer = authServer("mileage-rubric");
 const MileagePointHistoryServer = authServer("mileage-point-history");
 const WalletLostServer = authServer("wallet-lost");
 
 export {
 	AuthServer,
+	StudentServer,
 	AdminServer,
 	MileageServer,
 	MileageTokenServer,

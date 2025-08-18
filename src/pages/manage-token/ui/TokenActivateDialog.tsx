@@ -60,20 +60,29 @@ export function TokenActivationDialog({
 		});
 
 		try {
-			await mutateAsync({
-				mileageTokenId,
-				rawTransaction,
-			});
-			toast.success("토큰이 활성화되었습니다.");
-			setOpen(false);
+			toast.promise(
+				mutateAsync({
+					mileageTokenId,
+					rawTransaction,
+				}),
+				{
+					loading: "토큰 활성화 중...",
+					success: {
+						message: "토큰이 활성화되었습니다.",
+						description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
+					},
+					error: "에러가 발생했습니다. 다시 시도해주세요.",
+				},
+			);
 		} catch (error) {
-			toast.error("토큰 활성화에 실패했습니다.");
 			console.error(error);
+		} finally {
+			setOpen(false);
 		}
 	};
 	return (
 		<AlertDialog open={open} onOpenChange={setOpen}>
-			<AlertDialogTrigger asChild onClick={(e) => handleOpen(e)}>
+			<AlertDialogTrigger onClick={(e) => handleOpen(e)}>
 				<div className="cursor-pointer">
 					<Switch id="activate-token" checked={isActive} />
 				</div>

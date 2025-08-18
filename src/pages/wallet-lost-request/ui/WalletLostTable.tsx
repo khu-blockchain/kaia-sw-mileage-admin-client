@@ -1,0 +1,107 @@
+import type { Address } from "@shared/lib/web3";
+
+import { useMemo, useState } from "react";
+
+import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+	getCoreRowModel,
+	getPaginationRowModel,
+	useReactTable,
+} from "@tanstack/react-table";
+import { toast } from "sonner";
+
+import { walletLostQueries } from "@entities/wallet-lost";
+import { STUDENT_MANAGER_ABI } from "@shared/config";
+import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
+import { DataTable } from "@/shared/ui";
+
+import { useApproveWalletLost } from "../api";
+import { createColumns } from "./columns";
+
+const MileageRequestTable = () => {
+	const [pagination, setPagination] = useState({
+		pageIndex: 0, //initial page index
+		pageSize: 10, //default page size
+	});
+
+	const {
+		data: { data, meta },
+	} = useSuspenseQuery(
+		walletLostQueries.getWalletLostList({
+			page: pagination.pageIndex + 1,
+			limit: pagination.pageSize,
+		}),
+	);
+
+	const { mutateAsync } = useApproveWalletLost();
+
+	const transformedData = useMemo(
+		() =>
+			data.map((walletLost) => ({
+				id: walletLost.id,
+				studentId: walletLost.studentId,
+				studentName: walletLost.studentName,
+				studentHash: walletLost.studentHash,
+				status: walletLost.status,
+				previousWalletAddress: walletLost.previousWalletAddress,
+				requestWalletAddress: walletLost.requestWalletAddress,
+				createdAt: walletLost.createdAt,
+			})),
+		[data],
+	);
+
+	const approveWalletLost = async (
+		id: number,
+		studentHash: string,
+		targetAddress: Address,
+	) => {
+		const data = encodeContractExecutionABI(
+			STUDENT_MANAGER_ABI,
+			"changeAccount",
+			[studentHash, targetAddress],
+		);
+		const rawTransaction = await kaia.wallet.signTransaction({
+			type: KaiaTxType.FeeDelegatedSmartContractExecution,
+			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
+			from: kaia.browserProvider.selectedAddress,
+			data: data,
+			value: "0x0",
+			gas: "0x4C4B42",
+		});
+		toast.promise(mutateAsync({ id, rawTransaction }), {
+			loading: "승인 중...",
+			success: {
+				message: "지갑 분실 처리가 완료되었습니다.",
+				description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
+			},
+			error: {
+				message: "지갑 분실 처리에 실패했습니다.",
+				description: "다시 시도해주세요.",
+			},
+		});
+	};
+
+	const columns = createColumns(approveWalletLost);
+
+	const table = useReactTable({
+		data: transformedData,
+		columns,
+		pageCount: Math.ceil((meta.total ?? 0) / pagination.pageSize),
+		manualPagination: true,
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		onPaginationChange: setPagination, //update the pagination state when internal APIs mutate the pagination state
+		state: {
+			pagination,
+		},
+		debugTable: true,
+	});
+
+	return (
+		<div className="flex flex-col gap-6">
+			<DataTable table={table} />
+		</div>
+	);
+};
+
+export default MileageRequestTable;

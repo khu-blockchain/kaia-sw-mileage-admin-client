@@ -1,0 +1,1 @@
+export { ManagePointHistoriesPage } from "./ui";
