@@ -1,4 +1,4 @@
-import type { MileageTokenWithActivateStatus } from "@shared/api/mileage-token";
+import type { MileageTokenWithActivateStatus } from "@shared/api";
 
 import { parseToFormattedDate } from "@shared/lib";
 import {

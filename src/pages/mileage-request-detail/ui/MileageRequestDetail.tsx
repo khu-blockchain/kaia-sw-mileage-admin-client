@@ -1,4 +1,4 @@
-import type { MileageFile } from "@shared/api/mileage";
+import type { MileageFile } from "@shared/api";
 
 import { useMemo } from "react";
 

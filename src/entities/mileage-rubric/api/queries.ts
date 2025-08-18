@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { mileageRubricApi } from "@shared/api/mileage-rubric";
+import { mileageRubricApi } from "@shared/api";
 
 export const mileageRubricQueries = {
 	all: () => ["mileage-rubric"] as const,

@@ -1,9 +1,9 @@
-import type { CreateMileageTokenRequest } from "@shared/api/mileage-token";
+import type { CreateMileageTokenRequest } from "@shared/api";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { mileageTokenQueries } from "@entities/mileage-token";
-import { mileageTokenApi } from "@shared/api/mileage-token";
+import { mileageTokenApi } from "@shared/api";
 
 export const useCreateMileageToken = () => {
 	const queryClient = useQueryClient();

@@ -1,4 +1,4 @@
-import { studentApi } from "@/shared/api/student";
+import { studentApi } from "@/shared/api";
 
 export const studentQueries = {
 	all: () => ["student"] as const,

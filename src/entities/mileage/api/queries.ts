@@ -1,6 +1,6 @@
-import type { GetMileageListRequest } from "@shared/api/mileage";
+import type { GetMileageListRequest } from "@shared/api";
 
-import { mileageApi } from "@/shared/api/mileage";
+import { mileageApi } from "@/shared/api";
 
 export const mileageQueries = {
 	all: () => ["mileage"] as const,

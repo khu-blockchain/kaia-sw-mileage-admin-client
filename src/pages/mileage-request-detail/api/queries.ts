@@ -3,13 +3,13 @@ import type {
 	BurnMileageRequest,
 	MintMileageRequest,
 	RejectMileageRequest,
-} from "@shared/api/mileage";
+} from "@shared/api";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { mileageQueries } from "@entities/mileage";
 import { mileagePointHistoryQueries } from "@entities/mileage-point-history";
-import { mileageApi } from "@shared/api/mileage";
+import { mileageApi } from "@shared/api";
 
 export const useRejectMileage = () => {
 	const queryClient = useQueryClient();

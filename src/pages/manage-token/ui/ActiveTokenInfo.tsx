@@ -1,4 +1,4 @@
-import type { MileageToken } from "@shared/api/mileage-token";
+import type { MileageToken } from "@shared/api";
 
 interface ActiveTokenInfoProps {
 	activeToken: MileageToken;

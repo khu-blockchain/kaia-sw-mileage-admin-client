@@ -1,4 +1,4 @@
-import type { Mileage } from "@shared/api/mileage";
+import type { Mileage } from "@shared/api";
 
 import { useEffect, useState } from "react";
 

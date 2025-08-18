@@ -2,7 +2,7 @@ import type { ContractAddress } from "@shared/lib/web3";
 
 import { queryOptions } from "@tanstack/react-query";
 
-import { mileageTokenApi } from "@shared/api/mileage-token";
+import { mileageTokenApi } from "@shared/api";
 import { STUDENT_MANAGER_ABI } from "@shared/config";
 import { contractCall, isSameAddress } from "@shared/lib/web3";
 

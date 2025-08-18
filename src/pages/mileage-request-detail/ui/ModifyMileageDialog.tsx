@@ -1,4 +1,4 @@
-import type { MileagePointHistory } from "@shared/api/mileage-point-history";
+import type { MileagePointHistory } from "@shared/api";
 import type { Hex } from "@kaiachain/viem-ext";
 
 import { useEffect, useMemo, useState } from "react";
@@ -131,7 +131,7 @@ function ModifyMileageDialog({
 				mileagePoint: amount,
 				note,
 				rawTransaction,
-			}),
+			}),   
 			{
 				loading: "마일리지 추가 지급 중...",
 				success: () => {

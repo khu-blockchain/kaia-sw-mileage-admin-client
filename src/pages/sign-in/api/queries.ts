@@ -1,8 +1,8 @@
-import type { SignInRequest } from "@/shared/api/auth";
+import type { SignInRequest } from "@/shared/api";
 
 import { useMutation } from "@tanstack/react-query";
 
-import { authApi } from "@/shared/api/auth";
+import { authApi } from "@/shared/api";
 import { useAuthStore } from "@/shared/authorize";
 
 export const useAdminSignIn = () => {

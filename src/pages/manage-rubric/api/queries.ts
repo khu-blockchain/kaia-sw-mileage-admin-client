@@ -5,12 +5,12 @@ import type {
 	DeleteMileageCategoryRequest,
 	UpdateMileageActivityRequest,
 	UpdateMileageCategoryRequest,
-} from "@/shared/api/mileage-rubric";
+} from "@/shared/api";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { mileageRubricQueries } from "@entities/mileage-rubric";
-import { mileageRubricApi } from "@/shared/api/mileage-rubric";
+import { mileageRubricApi } from "@/shared/api";
 
 export const useCreateMileageCategory = () => {
 	const queryClient = useQueryClient();

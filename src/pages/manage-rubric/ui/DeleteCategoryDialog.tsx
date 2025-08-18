@@ -1,4 +1,4 @@
-import type { MileageCategory } from "@shared/api/mileage-rubric";
+import type { MileageCategory } from "@shared/api";
 
 import { useState } from "react";
 

@@ -1,8 +1,8 @@
-import type { ApproveWalletLostRequest } from "@shared/api/wallet-lost";
+import type { ApproveWalletLostRequest } from "@shared/api";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { walletLostApi } from "@shared/api/wallet-lost";
+import { walletLostApi } from "@shared/api";
 
 export const useApproveWalletLost = () => {
 	const queryClient = useQueryClient();

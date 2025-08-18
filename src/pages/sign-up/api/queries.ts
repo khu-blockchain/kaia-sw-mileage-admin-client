@@ -1,8 +1,8 @@
-import type { SignUpRequest } from "@/shared/api/admin";
+import type { SignUpRequest } from "@/shared/api";
 
 import { useMutation } from "@tanstack/react-query";
 
-import { adminApi } from "@/shared/api/admin";
+import { adminApi } from "@/shared/api";
 
 export const useAdminSignUp = () => {
 	return useMutation({

@@ -1,4 +1,4 @@
-import type { MileageActivity } from "@shared/api/mileage-rubric";
+import type { MileageActivity } from "@shared/api";
 import type { FieldErrors, SubmitHandler } from "react-hook-form";
 import type { IUpdateActivityForm } from "../model";
 

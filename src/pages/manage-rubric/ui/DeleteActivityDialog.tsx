@@ -16,7 +16,7 @@ import {
 } from "@/shared/ui";
 
 import { useDeleteMileageActivity } from "../api";
-import type { MileageActivity } from "@shared/api/mileage-rubric";
+import type { MileageActivity } from "@shared/api";
 
 interface DeleteActivityDialogProps {
 	activity: MileageActivity;

@@ -1,6 +1,6 @@
-import type { GetMileagePointHistoryListRequest } from "@shared/api/mileage-point-history";
+import type { GetMileagePointHistoryListRequest } from "@shared/api";
 
-import { mileagePointHistoryApi } from "@/shared/api/mileage-point-history";
+import { mileagePointHistoryApi } from "@/shared/api";
 
 export const mileagePointHistoryQueries = {
 	all: () => ["mileage-point-history"] as const,

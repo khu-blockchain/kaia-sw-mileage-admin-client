@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Navigate, Outlet } from "react-router";
 
-import { authApi } from "@/shared/api/auth";
+import { authApi } from "@/shared/api";
 import { useAuthStore } from "@/shared/authorize";
 
 const useRefresh = () => {

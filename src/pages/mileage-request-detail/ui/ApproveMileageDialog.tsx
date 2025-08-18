@@ -1,4 +1,4 @@
-import type { Mileage } from "@shared/api/mileage";
+import type { Mileage, MileageActivity } from "@shared/api";
 
 import { useMemo, useState } from "react";
 
@@ -6,7 +6,6 @@ import { toast } from "sonner";
 
 import { mileageActivityPointTypeParser } from "@entities/mileage-rubric";
 import { POINT_TYPE } from "@shared/api";
-import { type MileageActivity } from "@shared/api/mileage-rubric";
 import { STUDENT_MANAGER_ABI } from "@shared/config";
 import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import {

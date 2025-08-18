@@ -1,7 +1,7 @@
 import type {
 	MileageActivity,
 	MileageRubric,
-} from "@shared/api/mileage-rubric";
+} from "@shared/api";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
