@@ -25,4 +25,16 @@ type GetStudentListRequest = {
 
 type GetStudentListResponse = StudentResponse[];
 
-export type { StudentResponse, GetStudentListRequest, GetStudentListResponse };
+type GetStudentDetailRequest = {
+	studentId: number;
+};
+
+type GetStudentDetailResponse = StudentResponse;
+
+export type {
+	StudentResponse,
+	GetStudentListRequest,
+	GetStudentListResponse,
+	GetStudentDetailRequest,
+	GetStudentDetailResponse,
+};

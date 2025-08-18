@@ -1,1 +1,1 @@
-export { default as ManageStudentPage } from "./ui/ManageStudentPage";
+export { ManageStudentPage } from "./ui";

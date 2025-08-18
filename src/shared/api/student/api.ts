@@ -1,8 +1,13 @@
-import type { PaginationAPIPromise } from "../types";
-import type { GetStudentListRequest, GetStudentListResponse } from "./dto";
+import type { APIPromise, PaginationAPIPromise } from "../types";
+import type {
+	GetStudentDetailRequest,
+	GetStudentDetailResponse,
+	GetStudentListRequest,
+	GetStudentListResponse,
+} from "./dto";
 
-import { StudentServer } from "../route";
 import { makeQuery } from "../parse-query";
+import { StudentServer } from "../route";
 
 export const studentApi = {
 	getStudentList: (
@@ -11,4 +16,8 @@ export const studentApi = {
 		StudentServer.get("", {
 			searchParams: makeQuery(request),
 		}).json(),
+	getStudentDetail: (
+		request: GetStudentDetailRequest,
+	): APIPromise<GetStudentDetailResponse> =>
+		StudentServer.get(`${request.studentId}`).json(),
 };

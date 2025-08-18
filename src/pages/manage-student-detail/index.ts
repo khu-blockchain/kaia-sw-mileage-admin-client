@@ -1,0 +1,1 @@
+export { ManageStudentDetailPage } from "./ui";

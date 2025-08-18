@@ -36,7 +36,7 @@ export const SIDEBAR_MENU: SidebarMenu[] = [
 		path: "/request",
 	},
 	{
-		name: "지급 및 회수 내역",
+		name: "마일리지 지급 내역",
 		path: "/point-histories",
 	},
 	{

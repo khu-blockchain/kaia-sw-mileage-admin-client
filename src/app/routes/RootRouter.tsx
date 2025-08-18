@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router";
 
 import { ManagePointHistoriesPage } from "@pages/manage-point-histories";
 import { ManageRubricPage } from "@pages/manage-rubric";
+import { ManageStudentDetailPage } from "@pages/manage-student-detail";
 import { MileageRequestPage } from "@pages/mileage-request";
 import { MileageRequestDetailPage } from "@pages/mileage-request-detail";
 import { CreateTokenPage } from "@/pages/create-token";
@@ -29,6 +30,7 @@ export default function RootRouter() {
 					<Route path="manage-token" element={<ManageTokenPage />} />
 					<Route path="manage-rubric" element={<ManageRubricPage />} />
 					<Route path="student" element={<ManageStudentPage />} />
+					<Route path="student/:id" element={<ManageStudentDetailPage />} />
 					<Route path="request">
 						<Route index element={<MileageRequestPage />} />
 						<Route path=":id" element={<MileageRequestDetailPage />} />

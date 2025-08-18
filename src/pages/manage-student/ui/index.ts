@@ -1,1 +1,1 @@
-export { default as MileageRequestPage } from "./MileageRequestPage";
+export { default as ManageStudentPage } from "./ManageStudentPage";

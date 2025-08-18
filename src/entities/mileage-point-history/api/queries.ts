@@ -13,6 +13,7 @@ export const mileagePointHistoryQueries = {
 		all?: boolean,
 		type?: string,
 		studentName?: string,
+		studentId?:   string,
 	) =>
 		[
 			...mileagePointHistoryQueries.all(),
@@ -23,6 +24,7 @@ export const mileagePointHistoryQueries = {
 			all,
 			type,
 			studentName,
+			studentId,
 		] as const,
 
 	getMileagePointHistoryList: (request: GetMileagePointHistoryListRequest) => ({
@@ -33,6 +35,7 @@ export const mileagePointHistoryQueries = {
 			request.all,
 			request.type,
 			request.studentName,
+			request.studentId,
 		),
 		queryFn: async () => {
 			const { data, meta } =
