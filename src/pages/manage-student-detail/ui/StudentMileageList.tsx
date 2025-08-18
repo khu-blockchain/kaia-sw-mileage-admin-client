@@ -12,7 +12,7 @@ import {
 import { useNavigate, useParams } from "react-router";
 
 import { parseToFormattedDate } from "@shared/lib";
-import { mileageQueries } from "@/entities/mileage/api/queries";
+import { mileageQueries } from "@/entities/mileage";
 import { DataTable } from "@/shared/ui";
 
 import { columns } from "./mileage-request-columns";
@@ -40,10 +40,10 @@ const StudentMileageList = () => {
 		() =>
 			data.map((mileage) => ({
 				id: mileage.id,
-				mileageCategoryName: mileage.mileageCategoryName,
-				mileageActivityName: mileage.mileageActivityName,
+				mileageCategoryName: mileage.mileage_category_name,
+				mileageActivityName: mileage.mileage_activity_name,
 				status: mileage.status,
-				createdAt: parseToFormattedDate(mileage.createdAt.toISOString()),
+				createdAt: parseToFormattedDate(mileage.created_at),
 			})),
 		[data],
 	);

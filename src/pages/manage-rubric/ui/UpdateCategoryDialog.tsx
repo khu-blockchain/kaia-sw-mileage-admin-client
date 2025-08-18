@@ -1,3 +1,4 @@
+import type { MileageCategory } from "@shared/api/mileage-rubric";
 import type { FieldErrors, SubmitHandler } from "react-hook-form";
 import type { IUpdateCategoryForm } from "../model";
 
@@ -7,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { type MileageCategory } from "@entities/mileage-rubric";
 import {
 	AlertDialog,
 	AlertDialogCancel,

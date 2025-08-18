@@ -10,12 +10,11 @@ import {
 } from "@tanstack/react-table";
 import { toast } from "sonner";
 
-import { walletLostQueries } from "@entities/wallet-lost";
 import { STUDENT_MANAGER_ABI } from "@shared/config";
 import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import { DataTable } from "@/shared/ui";
 
-import { useApproveWalletLost } from "../api";
+import { useApproveWalletLost, walletLostQueries } from "../api";
 import { createColumns } from "./columns";
 
 const MileageRequestTable = () => {
@@ -39,13 +38,13 @@ const MileageRequestTable = () => {
 		() =>
 			data.map((walletLost) => ({
 				id: walletLost.id,
-				studentId: walletLost.studentId,
-				studentName: walletLost.studentName,
-				studentHash: walletLost.studentHash,
+				studentId: walletLost.student_id,
+				studentName: walletLost.student_name,
+				studentHash: walletLost.student_hash,
 				status: walletLost.status,
-				previousWalletAddress: walletLost.previousWalletAddress,
-				requestWalletAddress: walletLost.requestWalletAddress,
-				createdAt: walletLost.createdAt,
+				previousWalletAddress: walletLost.previous_wallet_address,
+				requestWalletAddress: walletLost.request_wallet_address,
+				createdAt: walletLost.created_at,
 			})),
 		[data],
 	);

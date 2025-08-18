@@ -4,5 +4,5 @@ export type {
 	GetStudentListResponse,
 	GetStudentDetailRequest,
 	GetStudentDetailResponse,
-	StudentResponse,
 } from "./dto";
+export type { Student } from "./types";

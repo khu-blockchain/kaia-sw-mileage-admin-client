@@ -1,8 +1,3 @@
 export { adminApi } from "./api";
-export type {
-	AdminResponse,
-	SignUpRequest,
-	SignUpResponse,
-	UpdateEmailRequest,
-	UpdateEmailResponse,
-} from "./dto";
+export type { SignUpRequest, SignUpResponse } from "./dto";
+export type { Admin } from "./types";

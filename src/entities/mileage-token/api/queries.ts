@@ -1,12 +1,10 @@
+import type { ContractAddress } from "@shared/lib/web3";
+
 import { queryOptions } from "@tanstack/react-query";
 
 import { mileageTokenApi } from "@shared/api/mileage-token";
 import { STUDENT_MANAGER_ABI } from "@shared/config";
-import { contractCall } from "@shared/lib/web3";
-
-import { mapMileageToken, mapMileageTokenWithActivateStatus } from "./mapper";
-
-type ContractAddress = string;
+import { contractCall, isSameAddress } from "@shared/lib/web3";
 
 export const mileageTokenQueries = {
 	all: () => ["mileage-token"] as const,
@@ -23,14 +21,13 @@ export const mileageTokenQueries = {
 					[],
 				)) as ContractAddress;
 
-				return data
-					.map((token) => mapMileageToken(token))
-					.map((token) =>
-						mapMileageTokenWithActivateStatus(
-							token,
-							currentActivateTokenAddress,
-						),
-					);
+				return data.map((token) => ({
+					...token,
+					is_active: isSameAddress(
+						token.contract_address,
+						currentActivateTokenAddress,
+					),
+				}));
 			},
 			staleTime: 0,
 			gcTime: 0,

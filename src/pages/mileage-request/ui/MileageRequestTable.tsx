@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router";
 
 import { parseToFormattedDate } from "@shared/lib";
-import { mileageQueries } from "@/entities/mileage/api/queries";
+import { mileageQueries } from "@/entities/mileage";
 import { DataTable } from "@/shared/ui";
 
 import { columns } from "./columns.tsx";
@@ -40,11 +40,11 @@ const MileageRequestTable = () => {
 				id: mileage.id,
 				studentName: mileage.student?.name ?? "",
 				department: mileage.student?.department ?? "",
-				studentId: mileage.student?.studentId ?? "",
-				mileageCategoryName: mileage.mileageCategoryName,
-				mileageActivityName: mileage.mileageActivityName,
+				studentId: mileage.student?.student_id ?? "",
+				mileageCategoryName: mileage.mileage_category_name,
+				mileageActivityName: mileage.mileage_activity_name,
 				status: mileage.status,
-				createdAt: parseToFormattedDate(mileage.createdAt.toISOString()),
+				createdAt: parseToFormattedDate(mileage.created_at),
 			})),
 		[data],
 	);

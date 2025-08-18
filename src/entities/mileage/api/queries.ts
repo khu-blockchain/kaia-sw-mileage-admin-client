@@ -1,8 +1,6 @@
-import type { GetMileageListRequest } from "@shared/api/mileage/dto";
+import type { GetMileageListRequest } from "@shared/api/mileage";
 
 import { mileageApi } from "@/shared/api/mileage";
-
-import { mapMileage } from "./mapper";
 
 export const mileageQueries = {
 	all: () => ["mileage"] as const,
@@ -20,7 +18,7 @@ export const mileageQueries = {
 		queryFn: async () => {
 			const { data, meta } = await mileageApi.getMileageList(request);
 			return {
-				data: data.map(mapMileage),
+				data,
 				meta,
 			};
 		},
@@ -30,7 +28,7 @@ export const mileageQueries = {
 		queryKey: mileageQueries.mileageDetail(id),
 		queryFn: async () => {
 			const { data } = await mileageApi.getMileageDetail({ id });
-			return mapMileage(data);
+			return data;
 		},
 	}),
 };

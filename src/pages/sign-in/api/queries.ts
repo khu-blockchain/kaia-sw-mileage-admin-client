@@ -1,15 +1,12 @@
 import type { SignInRequest } from "@/shared/api/auth";
 
 import { useMutation } from "@tanstack/react-query";
-import { useSetRecoilState } from "recoil";
 
-import { adminState, mapAdmin } from "@entities/admin";
 import { authApi } from "@/shared/api/auth";
-import { accessTokenState } from "@/shared/authorize/store";
+import { useAuthStore } from "@/shared/authorize";
 
 export const useAdminSignIn = () => {
-	const setAccessToken = useSetRecoilState(accessTokenState);
-	const setAdmin = useSetRecoilState(adminState);
+	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
 	return useMutation({
 		mutationFn: async (request: SignInRequest) => {
@@ -17,9 +14,8 @@ export const useAdminSignIn = () => {
 			const { access_token, ...admin } = data;
 
 			setAccessToken(access_token);
-			setAdmin(mapAdmin(admin));
 
-			return mapAdmin(admin);
+			return admin;
 		},
 	});
 };

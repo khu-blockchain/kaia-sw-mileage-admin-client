@@ -1,4 +1,4 @@
-import type { MileageFile } from "@entities/mileage";
+import type { MileageFile } from "@shared/api/mileage";
 
 import { useMemo } from "react";
 
@@ -26,7 +26,7 @@ const MileageRequestDetail = () => {
 			{
 				...mileagePointHistoryQueries.getMileagePointHistoryList({
 					mileageId: Number(swMileageId),
-          all: true,
+					all: true,
 					page: 1,
 					limit: 1,
 				}),
@@ -38,7 +38,7 @@ const MileageRequestDetail = () => {
 	const mileagePointHistories = mileagePointHistoryData.data.data;
 
 	const mileageFiles = useMemo(
-		() => mileageDetail.mileageFiles,
+		() => mileageDetail.mileage_files,
 		[mileageDetail],
 	) as MileageFile[];
 
@@ -58,7 +58,7 @@ const MileageRequestDetail = () => {
 			student: {
 				studentId: {
 					label: "학번",
-					value: mileageDetail.student?.studentId,
+					value: mileageDetail.student?.student_id,
 				},
 				name: {
 					label: "이름",
@@ -71,7 +71,7 @@ const MileageRequestDetail = () => {
 				walletAddress: {
 					label: "지갑 주소",
 					value: sliceWalletAddress(
-						mileageDetail.student?.walletAddress ?? "",
+						mileageDetail.student?.wallet_address ?? "",
 						6,
 					),
 				},
@@ -83,23 +83,23 @@ const MileageRequestDetail = () => {
 			document: {
 				mileageActivityName: {
 					label: "활동 분야",
-					value: mileageDetail.mileageActivityName,
+					value: mileageDetail.mileage_activity_name,
 				},
 				mileageCategoryName: {
 					label: "비교과 활동",
-					value: mileageDetail.mileageCategoryName,
+					value: mileageDetail.mileage_category_name,
 				},
 				createdAt: {
 					label: "신청 일시",
-					value: parseToFormattedDate(mileageDetail.createdAt.toISOString()),
+					value: parseToFormattedDate(mileageDetail.created_at),
 				},
 				mileageDescription: {
 					label: "활동 내용",
-					value: mileageDetail.mileageDescription,
+					value: mileageDetail.mileage_description,
 				},
 			},
 			status: mileageDetail.status,
-			comment: mileageDetail.adminComment ?? "-",
+			comment: mileageDetail.admin_comment ?? "-",
 		};
 	}, [mileageDetail]);
 	return (
@@ -171,11 +171,14 @@ const MileageRequestDetail = () => {
 											<div key={file.id} className="flex gap-1">
 												<button
 													onClick={() =>
-														handleFileDownload(file.url, file.originalFileName)
+														handleFileDownload(
+															file.url,
+															file.original_file_name,
+														)
 													}
 													className="text-sm text-blue-600 hover:text-blue-800 hover:underline break-all text-left cursor-pointer transition-colors"
 												>
-													{file.originalFileName}
+													{file.original_file_name}
 												</button>
 											</div>
 										))
@@ -195,8 +198,8 @@ const MileageRequestDetail = () => {
 			{mileageDetail.status === MILEAGE_STATUS.APPROVED && (
 				<div className="flex w-full justify-end items-center gap-4">
 					<ModifyMileageDialog
-						studentHash={mileageDetail.student?.studentHash ?? ""}
-						walletAddress={mileageDetail.student?.walletAddress ?? ""}
+						studentHash={mileageDetail.student?.student_hash ?? ""}
+						walletAddress={mileageDetail.student?.wallet_address ?? ""}
 						mileageId={mileageDetail.id}
 						mileagePointHistories={mileagePointHistories}
 					/>

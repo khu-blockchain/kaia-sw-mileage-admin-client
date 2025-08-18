@@ -9,11 +9,7 @@ import type {
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import {
-	mapMileageActivity,
-	mapMileageCategory,
-	mileageRubricQueries,
-} from "@entities/mileage-rubric";
+import { mileageRubricQueries } from "@entities/mileage-rubric";
 import { mileageRubricApi } from "@/shared/api/mileage-rubric";
 
 export const useCreateMileageCategory = () => {
@@ -24,7 +20,7 @@ export const useCreateMileageCategory = () => {
 			queryClient.invalidateQueries({
 				queryKey: mileageRubricQueries.getRubrics(),
 			});
-			return mapMileageCategory(data);
+			return data;
 		},
 	});
 };
@@ -37,7 +33,7 @@ export const useCreateMileageActivity = () => {
 			queryClient.invalidateQueries({
 				queryKey: mileageRubricQueries.getRubrics(),
 			});
-			return mapMileageActivity(data);
+			return data;
 		},
 	});
 };
@@ -50,7 +46,7 @@ export const useUpdateMileageCategory = () => {
 			queryClient.invalidateQueries({
 				queryKey: mileageRubricQueries.getRubrics(),
 			});
-			return mapMileageCategory(data);
+			return data;
 		},
 	});
 };
@@ -63,7 +59,7 @@ export const useUpdateMileageActivity = () => {
 			queryClient.invalidateQueries({
 				queryKey: mileageRubricQueries.getRubrics(),
 			});
-			return mapMileageActivity(data);
+			return data;
 		},
 	});
 };

@@ -1,12 +1,12 @@
-import type { Mileage } from "@entities/mileage";
-import type { MileageActivity } from "@entities/mileage-rubric";
+import type { Mileage } from "@shared/api/mileage";
 
 import { useMemo, useState } from "react";
 
 import { toast } from "sonner";
 
-import { mapMileageActivityPointType } from "@entities/mileage-rubric";
+import { mileageActivityPointTypeParser } from "@entities/mileage-rubric";
 import { POINT_TYPE } from "@shared/api";
+import { type MileageActivity } from "@shared/api/mileage-rubric";
 import { STUDENT_MANAGER_ABI } from "@shared/config";
 import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import {
@@ -37,7 +37,7 @@ function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 	const { mutateAsync } = useApproveMileage();
 
 	const mileageActivity = useMemo(
-		() => mileageDetail.mileageActivity,
+		() => mileageDetail.mileage_activity,
 		[mileageDetail],
 	) as MileageActivity;
 
@@ -50,8 +50,8 @@ function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 		mileageActivity: MileageActivity,
 		extraScore: number,
 	) => {
-		if (mileageActivity.pointType === POINT_TYPE.FIXED) {
-			return mileageActivity.fixedPoint;
+		if (mileageActivity.point_type === POINT_TYPE.FIXED) {
+			return mileageActivity.fixed_point;
 		}
 		return extraScore;
 	};
@@ -68,7 +68,7 @@ function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 			STUDENT_MANAGER_ABI,
 			"approveDocument",
 			[
-				mileageDetail.docIndex,
+				mileageDetail.doc_index,
 				amount,
 				"0x0000000000000000000000000000000000000000000000000000000000000000",
 			],
@@ -130,36 +130,36 @@ function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 					<div className="flex items-center justify-between">
 						<Label className="text-sm text-muted-foreground">학번</Label>
 						<span className="font-semibold text-sm">
-							{mileageDetail.student?.studentId}
+							{mileageDetail.student?.student_id}
 						</span>
 					</div>
 					<div className="flex items-center justify-between">
 						<Label className="text-sm text-muted-foreground">활동 분야</Label>
 						<span className="font-semibold text-sm">
-							{mileageDetail.mileageCategoryName}
+							{mileageDetail.mileage_category_name}
 						</span>
 					</div>
 					<div className="flex items-center justify-between">
 						<Label className="text-sm text-muted-foreground">비교과 활동</Label>
 						<span className="font-semibold text-sm">
-							{mileageDetail.mileageActivityName}
+							{mileageDetail.mileage_activity_name}
 						</span>
 					</div>
 					<div className="flex items-center justify-between">
 						<Label className="text-sm text-muted-foreground">배점 방식</Label>
 						<Label className="font-semibold text-sm">
-							{mapMileageActivityPointType(mileageActivity.pointType)}
+							{mileageActivityPointTypeParser(mileageActivity.point_type)}
 						</Label>
 					</div>
-					{mileageActivity.pointType === POINT_TYPE.FIXED && (
+					{mileageActivity.point_type === POINT_TYPE.FIXED && (
 						<div className="flex items-center justify-between">
 							<Label className="text-sm text-muted-foreground">지급 수량</Label>
 							<span className="font-semibold text-sm">
-								{mileageActivity.fixedPoint ?? 0}
+								{mileageActivity.fixed_point ?? 0}
 							</span>
 						</div>
 					)}
-					{mileageActivity.pointType === POINT_TYPE.OPTIONAL && (
+					{mileageActivity.point_type === POINT_TYPE.OPTIONAL && (
 						<div className="flex items-center justify-between gap-6">
 							<Label
 								htmlFor="extra-mileage"

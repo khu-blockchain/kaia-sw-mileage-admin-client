@@ -1,18 +1,5 @@
 import type { RawTransaction } from "@shared/lib/web3";
-import type { TRANSACTION_STATUS } from "../enum";
-
-type MileageTokenResponse = {
-	id: number;
-	name: string;
-	description: string;
-	contract_address: string;
-	symbol: string;
-	image_url: string;
-	transaction_status: TRANSACTION_STATUS;
-	transaction_hash: string;
-	created_at: Date;
-	updated_at: Date;
-};
+import type { MileageToken } from "./types";
 
 type CreateMileageTokenRequest = {
 	name: string;
@@ -22,9 +9,9 @@ type CreateMileageTokenRequest = {
 	rawTransaction: RawTransaction;
 };
 
-type CreateMileageTokenResponse = MileageTokenResponse;
+type CreateMileageTokenResponse = MileageToken;
 
-type GetMileageTokenListResponse = MileageTokenResponse[];
+type GetMileageTokenListResponse = MileageToken[];
 
 type ActivateMileageTokenRequest = {
 	mileageTokenId: number;
@@ -36,7 +23,6 @@ type ActivateMileageTokenResponse = {
 };
 
 export type {
-	MileageTokenResponse,
 	CreateMileageTokenRequest,
 	CreateMileageTokenResponse,
 	GetMileageTokenListResponse,

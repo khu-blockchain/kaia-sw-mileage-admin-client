@@ -37,12 +37,12 @@ const InpagePointHistoryTable = () => {
 			data.map((mileage) => ({
 				id: mileage.id,
 				type: mileage.type,
-				mileageTokenName: mileage.mileageTokenName,
+				mileageTokenName: mileage.mileage_token_name,
 				studentName: mileage.mileage.student?.name ?? "-",
-				walletAddress: mileage.mileage.student?.walletAddress ?? "-",
-				mileagePoint: mileage.mileagePoint,
+				walletAddress: mileage.mileage.student?.wallet_address ?? "-",
+				mileagePoint: mileage.mileage_point,
 				note: mileage.note,
-				createdAt: parseToFormattedDate(mileage.createdAt.toISOString()),
+				createdAt: parseToFormattedDate(mileage.created_at),
 			})),
 		[data],
 	);

@@ -1,7 +1,2 @@
-export {
-	mileageRubricQueries,
-	mapMileageCategory,
-	mapMileageActivity,
-	mapMileageActivityPointType,
-} from "./api";
-export { type MileageCategory, type MileageActivity, type MileageRubric } from "./model";
+export { mileageRubricQueries } from "./api";
+export { mileageActivityPointTypeParser } from "./lib";

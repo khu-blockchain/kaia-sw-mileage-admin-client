@@ -1,4 +1,4 @@
-import type { MileageActivity } from "@entities/mileage-rubric";
+import type { MileageActivity } from "@shared/api/mileage-rubric";
 import type { FieldErrors, SubmitHandler } from "react-hook-form";
 import type { IUpdateActivityForm } from "../model";
 
@@ -11,7 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import {
-	mapMileageActivityPointType,
+	mileageActivityPointTypeParser,
 	mileageRubricQueries,
 } from "@entities/mileage-rubric";
 import { POINT_TYPE } from "@shared/api";
@@ -66,12 +66,10 @@ function UpdateActivityDialog({
 			resolver: zodResolver(updateActivitySchema),
 			values: {
 				name: activity.name,
-				pointDescription: activity.pointDescription,
+				pointDescription: activity.point_description,
 				mileageCategoryId: mileageCategoryId.toString(),
-				pointType: activity.pointType,
-				fixedPoint: activity.fixedPoint
-					? activity.fixedPoint.toString()
-					: undefined,
+				pointType: activity.point_type,
+				fixedPoint: activity.fixed_point?.toString() ?? undefined,
 				activityId: activity.id,
 			},
 			resetOptions: {
@@ -182,7 +180,7 @@ function UpdateActivityDialog({
 									<SelectContent className="w-full">
 										{Object.values(POINT_TYPE).map((type) => (
 											<SelectItem key={type} value={type}>
-												{mapMileageActivityPointType(type)}
+												{mileageActivityPointTypeParser(type)}
 											</SelectItem>
 										))}
 									</SelectContent>

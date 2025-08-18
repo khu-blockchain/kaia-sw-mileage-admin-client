@@ -1,15 +1,5 @@
 import type { Address } from "@/shared/lib/web3";
-import type { TRANSACTION_STATUS } from "../enum";
-
-type AdminResponse = {
-	admin_id: string;
-	name: string;
-	email: string;
-	wallet_address: string;
-	transaction_status: TRANSACTION_STATUS;
-	created_at: Date;
-	updated_at: Date;
-};
+import type { Admin } from "./types";
 
 type SignUpRequest = {
 	adminId: string;
@@ -20,18 +10,6 @@ type SignUpRequest = {
 	walletAddress: Address;
 };
 
-type SignUpResponse = AdminResponse;
+type SignUpResponse = Admin;
 
-type UpdateEmailRequest = {
-	email: string;
-};
-
-type UpdateEmailResponse = AdminResponse;
-
-export type {
-	AdminResponse,
-	SignUpRequest,
-	SignUpResponse,
-	UpdateEmailRequest,
-	UpdateEmailResponse,
-};
+export type { SignUpRequest, SignUpResponse };

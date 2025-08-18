@@ -1,6 +1,6 @@
 export { mileagePointHistoryApi } from "./api";
 export type {
-	MileagePointHistoryResponse,
 	GetMileagePointHistoryListRequest,
 	GetMileagePointHistoryListResponse,
 } from "./dto";
+export type { MileagePointHistory } from "./types";

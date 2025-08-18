@@ -1,9 +1,12 @@
-import type { MileageActivity, MileageRubric } from "@entities/mileage-rubric";
+import type {
+	MileageActivity,
+	MileageRubric,
+} from "@shared/api/mileage-rubric";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import {
-	mapMileageActivityPointType,
+	mileageActivityPointTypeParser,
 	mileageRubricQueries,
 } from "@entities/mileage-rubric";
 import { Badge, ContentContainer, Separator } from "@/shared/ui";
@@ -37,7 +40,7 @@ function MileageRubricItem({ rubric }: { rubric: MileageRubric }) {
 				<div className="flex items-center gap-2">
 					<p className="text-lg font-semibold text-black">{rubric.name}</p>
 					<Badge variant="outline" className="rounded-full font-semibold">
-						{`${rubric.mileageActivities.length} 개`}
+						{`${rubric.mileage_activities.length} 개`}
 					</Badge>
 				</div>
 				<div className="flex gap-2">
@@ -46,7 +49,7 @@ function MileageRubricItem({ rubric }: { rubric: MileageRubric }) {
 				</div>
 			</div>
 			<MileageRubricActivityItem
-				activities={rubric.mileageActivities}
+				activities={rubric.mileage_activities}
 				mileageCategoryId={rubric.id}
 			/>
 			<Separator />
@@ -90,22 +93,22 @@ function MileageRubricActivityItem({
 								variant="blue"
 								className="text-xs font-semibold rounded-full"
 							>
-								{mapMileageActivityPointType(activity.pointType)}
+								{mileageActivityPointTypeParser(activity.point_type)}
 							</Badge>
 						</div>
 
 						<div className="col-span-1">
 							<span className="text-xs font-semibold">
-								{activity.fixedPoint ? `${activity.fixedPoint}점` : "-"}
+								{activity.fixed_point ? `${activity.fixed_point}점` : "-"}
 							</span>
 						</div>
 
 						<div className="col-span-4">
 							<span
 								className="text-xs text-gray-600 truncate block"
-								title={activity.pointDescription}
+								title={activity.point_description}
 							>
-								{activity.pointDescription}
+								{activity.point_description}
 							</span>
 						</div>
 

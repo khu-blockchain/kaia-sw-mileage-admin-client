@@ -10,7 +10,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import {
-	mapMileageActivityPointType,
+	mileageActivityPointTypeParser,
 	mileageRubricQueries,
 } from "@entities/mileage-rubric";
 import { POINT_TYPE } from "@shared/api";
@@ -178,7 +178,7 @@ function CreateActivityDialog() {
 									<SelectContent className="w-full">
 										{Object.values(POINT_TYPE).map((type) => (
 											<SelectItem key={type} value={type}>
-												{mapMileageActivityPointType(type)}
+												{mileageActivityPointTypeParser(type)}
 											</SelectItem>
 										))}
 									</SelectContent>

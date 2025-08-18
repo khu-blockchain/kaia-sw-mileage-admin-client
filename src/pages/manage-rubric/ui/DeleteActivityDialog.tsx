@@ -1,4 +1,3 @@
-import type { MileageActivity } from "@entities/mileage-rubric";
 
 import { useState } from "react";
 
@@ -17,6 +16,7 @@ import {
 } from "@/shared/ui";
 
 import { useDeleteMileageActivity } from "../api";
+import type { MileageActivity } from "@shared/api/mileage-rubric";
 
 interface DeleteActivityDialogProps {
 	activity: MileageActivity;

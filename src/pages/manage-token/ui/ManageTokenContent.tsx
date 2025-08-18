@@ -13,7 +13,7 @@ const ManageTokenContent = () => {
 	const { data } = useSuspenseQuery(mileageTokenQueries.list());
 
 	const activeToken = useMemo(
-		() => data.find((token) => token.isActivate),
+		() => data.find((token) => token.is_active),
 		[data],
 	);
 	return (

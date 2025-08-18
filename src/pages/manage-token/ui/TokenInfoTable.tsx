@@ -1,4 +1,4 @@
-import type { MileageTokenWithActivateStatus } from "@entities/mileage-token";
+import type { MileageTokenWithActivateStatus } from "@shared/api/mileage-token";
 
 import { parseToFormattedDate } from "@shared/lib";
 import {
@@ -33,15 +33,15 @@ function TokenInfoTable({ mileageTokenList }: TokenInfoTableProps) {
 					<TableRow key={mileageToken.id}>
 						<TableCell className="font-medium">{mileageToken.name}</TableCell>
 						<TableCell className="w-[100px]">{mileageToken.symbol}</TableCell>
-						<TableCell>{mileageToken.contractAddress}</TableCell>
+						<TableCell>{mileageToken.contract_address}</TableCell>
 						<TableCell>
-							{parseToFormattedDate(mileageToken.createdAt.toString())}
+							{parseToFormattedDate(mileageToken.created_at)}
 						</TableCell>
 						<TableCell className="text-center">
 							<TokenActivationDialog
-								isActive={mileageToken.isActivate}
+								isActive={mileageToken.is_active}
 								mileageTokenId={Number(mileageToken.id)}
-								contractAddress={mileageToken.contractAddress}
+								contractAddress={mileageToken.contract_address}
 							/>
 						</TableCell>
 					</TableRow>

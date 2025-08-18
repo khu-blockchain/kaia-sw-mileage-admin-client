@@ -1,19 +1,4 @@
-import type { Address } from "@shared/lib/web3";
-
-import { TRANSACTION_STATUS, WALLET_LOST_STATUS } from "../enum";
-
-type WalletLostResponse = {
-	id: number;
-	student_id: string;
-	student_name: string;
-	student_hash: string;
-	status: WALLET_LOST_STATUS;
-	transaction_status: TRANSACTION_STATUS;
-	previous_wallet_address: Address;
-	request_wallet_address: Address;
-	created_at: string;
-	updated_at: string;
-};
+import type { WalletLost } from "./types";
 
 type GetWalletLostListRequest = {
 	page: number;
@@ -21,17 +6,16 @@ type GetWalletLostListRequest = {
 	studentId?: string;
 };
 
-type GetWalletLostListResponse = WalletLostResponse[];
+type GetWalletLostListResponse = WalletLost[];
 
 type ApproveWalletLostRequest = {
 	id: number;
 	rawTransaction: string;
 };
 
-type ApproveWalletLostResponse = WalletLostResponse;
+type ApproveWalletLostResponse = WalletLost;
 
 export type {
-	WalletLostResponse,
 	GetWalletLostListRequest,
 	GetWalletLostListResponse,
 	ApproveWalletLostRequest,

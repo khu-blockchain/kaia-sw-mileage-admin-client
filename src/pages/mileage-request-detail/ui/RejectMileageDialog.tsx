@@ -1,4 +1,4 @@
-import type { Mileage } from "@entities/mileage";
+import type { Mileage } from "@shared/api/mileage";
 
 import { useEffect, useState } from "react";
 
@@ -45,7 +45,7 @@ function RejectMileageDialog({ mileageDetail }: RejectMileageDialogProps) {
 		const data = encodeContractExecutionABI(
 			STUDENT_MANAGER_ABI,
 			"approveDocument",
-			[mileageDetail.docIndex, 0, reasonHash],
+			[mileageDetail.doc_index, 0, reasonHash],
 		);
 
 		const rawTransaction = await kaia.wallet.signTransaction({

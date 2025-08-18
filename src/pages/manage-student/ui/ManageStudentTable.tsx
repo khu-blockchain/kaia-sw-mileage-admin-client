@@ -42,11 +42,11 @@ const ManageStudentTable = () => {
 	const transformedData = useMemo(
 		() =>
 			data.map((student) => ({
-				studentId: student.studentId,
+				studentId: student.student_id,
 				studentName: student.name,
 				department: student.department,
 				email: student.email,
-				walletAddress: student.walletAddress,
+				walletAddress: student.wallet_address,
 			})),
 		[data],
 	);

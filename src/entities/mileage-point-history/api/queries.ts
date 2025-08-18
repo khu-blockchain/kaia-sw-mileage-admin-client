@@ -2,8 +2,6 @@ import type { GetMileagePointHistoryListRequest } from "@shared/api/mileage-poin
 
 import { mileagePointHistoryApi } from "@/shared/api/mileage-point-history";
 
-import { mapMileagePointHistory } from "./mapper";
-
 export const mileagePointHistoryQueries = {
 	all: () => ["mileage-point-history"] as const,
 	list: (
@@ -13,7 +11,7 @@ export const mileagePointHistoryQueries = {
 		all?: boolean,
 		type?: string,
 		studentName?: string,
-		studentId?:   string,
+		studentId?: string,
 	) =>
 		[
 			...mileagePointHistoryQueries.all(),
@@ -41,7 +39,7 @@ export const mileagePointHistoryQueries = {
 			const { data, meta } =
 				await mileagePointHistoryApi.getMileagePointHistoryList(request);
 			return {
-				data: data.map(mapMileagePointHistory),
+				data,
 				meta,
 			};
 		},

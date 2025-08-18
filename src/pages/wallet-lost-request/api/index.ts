@@ -1,1 +1,1 @@
-export { useApproveWalletLost } from "./queries";
+export { useApproveWalletLost, walletLostQueries } from "./queries";

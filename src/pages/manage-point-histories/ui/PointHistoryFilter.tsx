@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { MILEAGE_POINT_HISTORY_TYPE } from "@shared/api/enum";
+import { MILEAGE_POINT_HISTORY_TYPE } from "@shared/api";
 import {
 	Button,
 	Input,

@@ -11,9 +11,9 @@ import {
 } from "@tanstack/react-table";
 import { useNavigate } from "react-router";
 
+import { MILEAGE_POINT_HISTORY_TYPE } from "@shared/api";
 import { parseToFormattedDate } from "@shared/lib";
-import { MILEAGE_POINT_HISTORY_TYPE } from "@shared/api/enum";
-import { mileagePointHistoryQueries } from "@/entities/mileage-point-history/api/queries";
+import { mileagePointHistoryQueries } from "@/entities/mileage-point-history";
 import { DataTable } from "@/shared/ui";
 
 import { columns } from "./columns";
@@ -49,17 +49,15 @@ const ManagePointHistoriesTable = () => {
 				id: mileagePointHistory.id,
 				mileageId: mileagePointHistory?.mileage?.id,
 				studentName: mileagePointHistory?.mileage?.student?.name ?? "",
-				studentId: mileagePointHistory?.mileage?.student?.studentId ?? "",
+				studentId: mileagePointHistory?.mileage?.student?.student_id ?? "",
 				walletAddress:
-					mileagePointHistory?.mileage?.student?.walletAddress ?? "",
+					mileagePointHistory?.mileage?.student?.wallet_address ?? "",
 				type: mileagePointHistory.type,
-				mileageTokenName: mileagePointHistory.mileageTokenName,
-				mileageCategoryName: mileagePointHistory.mileageCategoryName,
-				mileageActivityName: mileagePointHistory.mileageActivityName,
-				mileagePoint: mileagePointHistory.mileagePoint,
-				createdAt: parseToFormattedDate(
-					mileagePointHistory.createdAt.toISOString(),
-				),
+				mileageTokenName: mileagePointHistory.mileage_token_name,
+				mileageCategoryName: mileagePointHistory.mileage_category_name,
+				mileageActivityName: mileagePointHistory.mileage_activity_name,
+				mileagePoint: mileagePointHistory.mileage_point,
+				createdAt: parseToFormattedDate(mileagePointHistory.created_at),
 			})),
 		[data],
 	);
@@ -68,17 +66,24 @@ const ManagePointHistoriesTable = () => {
 		navigate(`/request/${row.original.mileageId}`);
 	};
 
-	const handleFilter = (filterValues: { type: MILEAGE_POINT_HISTORY_TYPE | ""; studentName: string }) => {
+	const handleFilter = (filterValues: {
+		type: MILEAGE_POINT_HISTORY_TYPE | "";
+		studentName: string;
+	}) => {
 		setFilters({
-			...(filterValues.type && { type: filterValues.type as MILEAGE_POINT_HISTORY_TYPE }),
-			...(filterValues.studentName && { studentName: filterValues.studentName }),
+			...(filterValues.type && {
+				type: filterValues.type as MILEAGE_POINT_HISTORY_TYPE,
+			}),
+			...(filterValues.studentName && {
+				studentName: filterValues.studentName,
+			}),
 		});
-		setPagination(prev => ({ ...prev, pageIndex: 0 }));
+		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
 	};
 
 	const handleResetFilter = () => {
 		setFilters({});
-		setPagination(prev => ({ ...prev, pageIndex: 0 }));
+		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
 	};
 
 	const table = useReactTable({

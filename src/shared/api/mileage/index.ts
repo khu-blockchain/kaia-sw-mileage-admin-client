@@ -1,7 +1,5 @@
 export { mileageApi } from "./api";
 export type {
-	MileageResponse,
-	MileageFileResponse,
 	GetMileageListRequest,
 	GetMileageListResponse,
 	GetMileageDetailRequest,
@@ -15,3 +13,4 @@ export type {
 	BurnMileageRequest,
 	BurnMileageResponse,
 } from "./dto";
+export type { Mileage, MileageFile } from "./types";

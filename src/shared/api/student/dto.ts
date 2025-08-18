@@ -1,20 +1,4 @@
-import type { TRANSACTION_STATUS } from "../enum";
-
-type StudentResponse = {
-	student_id: string;
-	name: string;
-	department: string;
-	wallet_address: string;
-	email: string;
-	transaction_status: TRANSACTION_STATUS;
-	bank_code: string;
-	bank_account_number: string;
-	student_hash: string;
-	personal_information_consent: boolean;
-	personal_information_consent_date: Date;
-	created_at: Date;
-	updated_at: Date;
-};
+import type { Student } from "./types";
 
 type GetStudentListRequest = {
 	page: number;
@@ -23,16 +7,15 @@ type GetStudentListRequest = {
 	all?: boolean;
 };
 
-type GetStudentListResponse = StudentResponse[];
+type GetStudentListResponse = Student[];
 
 type GetStudentDetailRequest = {
 	studentId: number;
 };
 
-type GetStudentDetailResponse = StudentResponse;
+type GetStudentDetailResponse = Student;
 
 export type {
-	StudentResponse,
 	GetStudentListRequest,
 	GetStudentListResponse,
 	GetStudentDetailRequest,

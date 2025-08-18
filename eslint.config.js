@@ -20,8 +20,27 @@ export default tseslint.config([
 			globals: globals.browser,
 		},
 		rules: {
+			...reactHooks.configs.recommended.rules,
+
+			// React Refresh 규칙
+			"react-refresh/only-export-components": [
+				"warn",
+				{ allowConstantExport: true },
+			],
+
+			// TypeScript 규칙 커스터마이징
 			"@typescript-eslint/no-explicit-any": "off",
 			"@typescript-eslint/no-unused-vars": "off",
+
+			// 💡 문제가 되는 규칙 명시적으로 설정
+			"@typescript-eslint/no-unused-expressions": [
+				"error",
+				{
+					allowShortCircuit: true,
+					allowTernary: true,
+					allowTaggedTemplates: true,
+				},
+			],
 		},
 	},
 ]);

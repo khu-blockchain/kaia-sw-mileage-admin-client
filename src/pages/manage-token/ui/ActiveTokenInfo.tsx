@@ -1,4 +1,4 @@
-import type { MileageToken } from "@entities/mileage-token";
+import type { MileageToken } from "@shared/api/mileage-token";
 
 interface ActiveTokenInfoProps {
 	activeToken: MileageToken;
@@ -9,7 +9,7 @@ const ActiveTokenInfo = ({ activeToken }: ActiveTokenInfoProps) => {
 		<div className="flex flex-col gap-6">
 			<div className="flex justify-start items-center gap-4">
 				<img
-					src={activeToken.imageUrl}
+					src={activeToken.image_url}
 					alt="logo"
 					className="w-12 h-12 p-1 border border-border rounded-full object-contain"
 				/>

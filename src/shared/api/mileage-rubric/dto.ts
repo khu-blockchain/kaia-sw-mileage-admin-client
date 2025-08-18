@@ -1,22 +1,5 @@
 import type { POINT_TYPE } from "../enum";
-
-type MileageCategoryResponse = {
-	id: number;
-	name: string;
-	description: string;
-};
-
-type MileageActivityResponse = {
-	id: number;
-	name: string;
-	point_type: POINT_TYPE;
-	point_description: string;
-	fixed_point: number;
-};
-
-type MileageRubricResponse = MileageCategoryResponse & {
-	mileage_activities: MileageActivityResponse[];
-};
+import type { MileageActivity, MileageCategory, MileageRubric } from "./types";
 
 type CreateMileageCategoryRequest = {
 	name: string;
@@ -46,13 +29,13 @@ type UpdateMileageActivityRequest = {
 	fixedPoint?: number;
 };
 
-type UpdateMileageActivityResponse = MileageActivityResponse;
+type UpdateMileageActivityResponse = MileageActivity;
 
-type UpdateMileageCategoryResponse = MileageCategoryResponse;
+type UpdateMileageCategoryResponse = MileageCategory;
 
-type CreateMileageActivityResponse = MileageActivityResponse;
+type CreateMileageActivityResponse = MileageActivity;
 
-type CreateMileageCategoryResponse = MileageCategoryResponse;
+type CreateMileageCategoryResponse = MileageCategory;
 
 type DeleteMileageCategoryRequest = {
 	categoryId: number;
@@ -70,12 +53,9 @@ type DeleteMileageActivityResponse = {
 	success: boolean;
 };
 
-type GetRubricsResponse = MileageRubricResponse[];
+type GetRubricsResponse = MileageRubric[];
 
 export type {
-	MileageCategoryResponse,
-	MileageActivityResponse,
-	MileageRubricResponse,
 	CreateMileageCategoryRequest,
 	CreateMileageActivityRequest,
 	CreateMileageActivityResponse,

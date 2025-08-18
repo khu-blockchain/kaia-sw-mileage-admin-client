@@ -2,7 +2,7 @@ import type { CreateMileageTokenRequest } from "@shared/api/mileage-token";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { mapMileageToken, mileageTokenQueries } from "@entities/mileage-token";
+import { mileageTokenQueries } from "@entities/mileage-token";
 import { mileageTokenApi } from "@shared/api/mileage-token";
 
 export const useCreateMileageToken = () => {
@@ -13,7 +13,7 @@ export const useCreateMileageToken = () => {
 			await queryClient.invalidateQueries({
 				queryKey: mileageTokenQueries.lists(),
 			});
-			return mapMileageToken(data);
+			return data;
 		},
 	});
 };

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 
-import { studentQueries } from "@entities/student/api/queries";
+import { studentQueries } from "@entities/student";
 import { BANK_CODE } from "@shared/config";
 import { ContentContainer, Separator } from "@shared/ui";
 
@@ -21,7 +21,7 @@ export default function StudentInfo() {
 			},
 			studentId: {
 				label: "학번",
-				value: data.studentId,
+				value: data.student_id,
 			},
 			department: {
 				label: "학과",
@@ -33,15 +33,15 @@ export default function StudentInfo() {
 			},
 			walletAddress: {
 				label: "지갑 주소",
-				value: data.walletAddress,
+				value: data.wallet_address,
 			},
 			bankCode: {
 				label: "은행",
-				value: BANK_CODE[data.bankCode],
+				value: BANK_CODE[data.bank_code],
 			},
 			bankAccountNumber: {
 				label: "계좌 번호",
-				value: data.bankAccountNumber,
+				value: data.bank_account_number,
 			},
 		};
 	}, [data]);

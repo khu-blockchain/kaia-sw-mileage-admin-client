@@ -1,4 +1,4 @@
-import type { MileagePointHistory } from "@entities/mileage-point-history";
+import type { MileagePointHistory } from "@shared/api/mileage-point-history";
 import type { Hex } from "@kaiachain/viem-ext";
 
 import { useEffect, useMemo, useState } from "react";
@@ -55,9 +55,9 @@ function ModifyMileageDialog({
 				curr.type === MILEAGE_POINT_HISTORY_TYPE.MILEAGE_APPROVED ||
 				curr.type === MILEAGE_POINT_HISTORY_TYPE.MILEAGE_MINTED
 			) {
-				return acc + curr.mileagePoint;
+				return acc + curr.mileage_point;
 			}
-			return acc - curr.mileagePoint;
+			return acc - curr.mileage_point;
 		}, 0);
 	}, [mileagePointHistories]);
 
