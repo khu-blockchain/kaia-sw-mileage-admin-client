@@ -82,9 +82,13 @@ export function TokenActivationDialog({
 	};
 	return (
 		<AlertDialog open={open} onOpenChange={setOpen}>
-			<AlertDialogTrigger onClick={(e) => handleOpen(e)}>
+			<AlertDialogTrigger asChild>
 				<div className="cursor-pointer">
-					<Switch id="activate-token" checked={isActive} />
+					<Switch
+						id="activate-token"
+						onClick={(e) => handleOpen(e)}
+						checked={isActive}
+					/>
 				</div>
 			</AlertDialogTrigger>
 			<AlertDialogContent>

@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 import { STUDENT_MANAGER_ABI } from "@shared/config";
 import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
+import { ContentContainer } from "@shared/ui";
 import {
 	Button,
 	Input,
@@ -53,81 +54,80 @@ export default function CreateTokenForm() {
 		})) as RawTransaction;
 
 		try {
-      await mutateAsync({
-        ...createTokenForm,
-        imageUrl: "https://i.ibb.co/mVbb4sV5/image.png",
-        rawTransaction: rawTransaction,
-      });
-      navigate(`/manage-token`);
-      toast.success("토큰 배포가 완료되었습니다.", {
-        description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
-      });
+			await mutateAsync({
+				...createTokenForm,
+				imageUrl: "https://i.ibb.co/mVbb4sV5/image.png",
+				rawTransaction: rawTransaction,
+			});
+			navigate(`/manage-token`);
+			toast.success("토큰 배포가 완료되었습니다.", {
+				description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
+			});
 		} catch (error) {
 			toast.error("토큰 배포에 실패했습니다.");
 		}
-
-	
 	};
 
 	const { mutateAsync, isPending } = useCreateMileageToken();
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="content-container">
-			<p className="text-xl font-semibold text-body">토큰 정보</p>
-			<div className="grid grid-cols-2 w-ful gap-6">
-				<div className="grid col-span-1 gap-2">
-					<div className="flex justify-between w-60">
-						<Label htmlFor="password">이름</Label>
+		<ContentContainer title="토큰 정보" description="토큰 정보를 입력하세요.">
+			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+				<div className="grid grid-cols-2 gap-6">
+					<div className="grid col-span-1 gap-2">
+						<div className="flex justify-between">
+							<Label htmlFor="name">이름</Label>
+						</div>
+						<Input
+							className="w-full"
+							id="name"
+							type="text"
+							maxLength={20}
+							required
+							placeholder="토큰의 이름을 입력하세요. (최대 20자)"
+							{...register("name")}
+						/>
 					</div>
-					<Input
-						className="w-full"
-						id="name"
-						type="text"
-						maxLength={20}
+					<div className="grid col-span-1 gap-2">
+						<div className="flex justify-between">
+							<Label htmlFor="symbol">심볼</Label>
+						</div>
+						<Input
+							className="w-full"
+							id="name"
+							type="text"
+							maxLength={10}
+							required
+							placeholder="토큰의 심볼을 입력하세요. (최대 10자)"
+							{...register("symbol")}
+						/>
+					</div>
+				</div>
+				<div className="grid gap-2">
+					<div className="flex justify-between">
+						<Label htmlFor="description">설명</Label>
+					</div>
+					<Textarea
+						className="resize-none h-20"
+						id="description"
+						maxLength={80}
 						required
-						placeholder="토큰의 이름을 입력하세요. (최대 20자)"
-						{...register("name")}
+						placeholder="토큰에 대한 설명을 작성해주세요. (최대 80자)"
+						{...register("description")}
 					/>
 				</div>
-				<div className="grid col-span-1 gap-2">
-					<div className="flex justify-between w-60">
-						<Label htmlFor="password">심볼</Label>
-					</div>
-					<Input
-						className="w-full"
-						id="name"
-						type="text"
-						maxLength={10}
-						required
-						placeholder="토큰의 심볼을 입력하세요. (최대 10자)"
-						{...register("symbol")}
-					/>
-				</div>
-			</div>
-			<div className="grid gap-2">
-				<div className="flex justify-between w-60">
-					<Label htmlFor="password">설명</Label>
-				</div>
-				<Textarea
-					className="resize-none h-20"
-					id="name"
-					maxLength={80}
-					required
-					placeholder="토큰에 대한 설명을 작성해주세요. (최대 80자)"
-					{...register("description")}
-				/>
-			</div>
-			<Separator />
-			<Button type="submit" className="w-min" disabled={isPending}>
-				{isPending ? (
-					<div className="flex items-center gap-1">
-						<Spinner />
-						<span>배포중...</span>
-					</div>
-				) : (
-					"배포하기"
-				)}
-			</Button>
-		</form>
+				<Separator />
+				<Button type="submit" className="w-min" disabled={isPending}>
+					{isPending ? (
+						<div className="flex items-center gap-1">
+							<Spinner />
+							<span>배포중...</span>
+						</div>
+					) : (
+						"배포하기"
+					)}
+				</Button>
+			</form>
+		</ContentContainer>
 	);
 }

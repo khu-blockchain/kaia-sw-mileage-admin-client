@@ -4,6 +4,7 @@ function Spinner({ className }: { className?: string }) {
 	return (
 		<svg
 			aria-hidden="true"
+			role="presentation"
 			className={cn("w-20 h-20 animate-spin", className)}
 			viewBox="0 0 32 32"
 			fill="none"
@@ -17,14 +18,14 @@ function Spinner({ className }: { className?: string }) {
 				height="29"
 				rx="14.5"
 				stroke="#CDD1D5"
-				stroke-width="3"
+				strokeWidth="3"
 			/>
 			<path
 				xmlns="http://www.w3.org/2000/svg"
 				d="M18.5179 30.2797C15.5023 30.8114 12.3958 30.3748 9.64362 29.0325C6.89142 27.6902 4.63483 25.511 3.19726 22.8073"
 				stroke="#535BF2"
-				stroke-width="3"
-				stroke-linecap="round"
+				strokeWidth="3"
+				strokeLinecap="round"
 			/>
 		</svg>
 	);

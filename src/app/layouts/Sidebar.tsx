@@ -1,10 +1,10 @@
-import type { SidebarMenu, SubMenu } from "./config";
+import type { SidebarMenu, SubMenu } from "./configuration";
 
 import { Link, useLocation } from "react-router";
 
 import { cn } from "@/shared/lib/style";
 
-import { SIDEBAR_MENU } from "./config";
+import { SIDEBAR_MENU } from "./configuration";
 
 export function Sidebar() {
 	return (
