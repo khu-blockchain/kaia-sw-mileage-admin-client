@@ -68,7 +68,7 @@ const MileageRequestTable = () => {
 	});
 
 	return (
-		<div className="flex flex-col gap-6">
+		<div className="block max-w-full">
 			<DataTable table={table} onRowClick={onRowClick} />
 		</div>
 	);

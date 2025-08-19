@@ -117,16 +117,18 @@ export default function CreateTokenForm() {
 					/>
 				</div>
 				<Separator />
-				<Button type="submit" className="w-min" disabled={isPending}>
-					{isPending ? (
-						<div className="flex items-center gap-1">
-							<Spinner />
-							<span>배포중...</span>
-						</div>
-					) : (
-						"배포하기"
-					)}
-				</Button>
+				<div className="flex w-full justify-end">
+					<Button type="submit" className="w-min" disabled={isPending}>
+						{isPending ? (
+							<div className="flex items-center gap-1">
+								<Spinner />
+								<span>배포중...</span>
+							</div>
+						) : (
+							"배포하기"
+						)}
+					</Button>
+				</div>
 			</form>
 		</ContentContainer>
 	);

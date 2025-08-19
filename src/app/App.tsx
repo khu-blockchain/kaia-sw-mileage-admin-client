@@ -5,6 +5,9 @@ import { Toaster } from "@shared/ui/sonner";
 import { QueryProvider } from "./providers";
 import { RootRouter } from "./routes";
 
+const kaia = window.klaytn;
+console.log(kaia);
+
 function App() {
 	return (
 		<QueryProvider>

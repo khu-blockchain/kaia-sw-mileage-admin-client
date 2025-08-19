@@ -15,8 +15,9 @@ import { parseToFormattedDate } from "@shared/lib";
 import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import { DataTable } from "@/shared/ui";
 
-import { useApproveWalletLost, walletLostQueries } from "../api";
+import { useApproveWalletLost } from "../api";
 import { createColumns } from "./columns";
+import { walletLostQueries } from "@entities/wallet-lost";
 
 const MileageRequestTable = () => {
 	const [pagination, setPagination] = useState({

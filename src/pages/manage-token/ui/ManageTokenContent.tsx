@@ -17,7 +17,7 @@ import TokenInfoTable from "./TokenInfoTable";
 import { getToday, parseToFormattedDate } from "@shared/lib";
 
 const ManageTokenContent = () => {
-	const { data } = useSuspenseQuery(mileageTokenQueries.list());
+	const { data } = useSuspenseQuery(mileageTokenQueries.getList());
 
 	const activeToken = useMemo(
 		() => data.find((token) => token.is_active),

@@ -11,7 +11,7 @@ export const useActivateMileageToken = () => {
 		mutationFn: async (request: ActivateMileageTokenRequest) => {
 			const { data } = await mileageTokenApi.activateMileageToken(request);
 			await queryClient.invalidateQueries({
-				queryKey: mileageTokenQueries.lists(),
+				queryKey: mileageTokenQueries.list(),
 			});
 			return data;
 		},

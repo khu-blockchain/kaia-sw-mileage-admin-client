@@ -8,10 +8,10 @@ import { contractCall, isSameAddress } from "@shared/lib/web3";
 
 export const mileageTokenQueries = {
 	all: () => ["mileage-token"] as const,
-	lists: () => [...mileageTokenQueries.all(), "list"] as const,
-	list: () =>
+	list: () => [...mileageTokenQueries.all(), "list"] as const,
+	getList: () =>
 		queryOptions({
-			queryKey: [...mileageTokenQueries.lists()],
+			queryKey: [...mileageTokenQueries.list()],
 			queryFn: async () => {
 				const { data } = await mileageTokenApi.getMileageTokenList();
 				const currentActivateTokenAddress = (await contractCall(
