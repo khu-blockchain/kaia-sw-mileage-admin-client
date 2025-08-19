@@ -11,6 +11,7 @@ import {
 import { toast } from "sonner";
 
 import { STUDENT_MANAGER_ABI } from "@shared/config";
+import { parseToFormattedDate } from "@shared/lib";
 import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import { DataTable } from "@/shared/ui";
 
@@ -44,7 +45,7 @@ const MileageRequestTable = () => {
 				status: walletLost.status,
 				previousWalletAddress: walletLost.previous_wallet_address,
 				requestWalletAddress: walletLost.request_wallet_address,
-				createdAt: walletLost.created_at,
+				createdAt: parseToFormattedDate(walletLost.created_at),
 			})),
 		[data],
 	);

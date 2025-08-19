@@ -5,6 +5,7 @@ import {
 	mileagePointAmountParser,
 } from "@entities/mileage-point-history";
 import { MILEAGE_POINT_HISTORY_TYPE } from "@shared/api";
+import { cn } from "@shared/lib/style";
 import { sliceWalletAddress } from "@shared/lib/web3";
 import {
 	Tooltip,
@@ -26,6 +27,25 @@ export type MileagePointHistoryColumns = {
 	createdAt: string;
 };
 
+const typeConfig = (type: MILEAGE_POINT_HISTORY_TYPE) => {
+	const config = {
+		[MILEAGE_POINT_HISTORY_TYPE.MILEAGE_APPROVED]: {
+			text: mileageHistoryTypeParser(type),
+			textColor: "text-approved",
+		},
+		[MILEAGE_POINT_HISTORY_TYPE.MILEAGE_BURNED]: {
+			text: mileageHistoryTypeParser(type),
+			textColor: "text-destructive",
+		},
+		[MILEAGE_POINT_HISTORY_TYPE.MILEAGE_MINTED]: {
+			text: mileageHistoryTypeParser(type),
+			textColor: "text-index",
+		},
+	};
+
+	return config[type];
+};
+
 export const columns: ColumnDef<MileagePointHistoryColumns>[] = [
 	{
 		accessorKey: "mileageTokenName",
@@ -43,7 +63,16 @@ export const columns: ColumnDef<MileagePointHistoryColumns>[] = [
 		accessorKey: "type",
 		header: "지급 유형",
 		cell: ({ row }) => {
-			return <span>{mileageHistoryTypeParser(row.original.type)}</span>;
+			return (
+				<span
+					className={cn(
+						typeConfig(row.original.type).textColor,
+						"font-semibold",
+					)}
+				>
+					{typeConfig(row.original.type).text}
+				</span>
+			);
 		},
 	},
 	{

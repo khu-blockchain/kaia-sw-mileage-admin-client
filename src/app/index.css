@@ -31,6 +31,8 @@
 	--destructive: #de3412;
 	--approved: #228738;
 	--pending: #FFB114;
+  --surface: #EEF2F7;
+  --surface-border: #D6E0EB;
 	--border: oklch(0.922 0 0);
 	--input: oklch(0.922 0 0);
 	--ring: oklch(0.708 0 0);
@@ -121,6 +123,8 @@ button {
 	--color-index: var(--index);
 	--color-body: var(--text-body);
 	--color-background-gray: var(--background-gray);
+	--color-surface: var(--surface);
+	--color-surface-border: var(--surface-border);
 }
 
 .dark {
@@ -162,6 +166,8 @@ button {
 	--index: #4c69ef;
 	--text-body: #314158;
 	--background-gray: #f6f7f9;
+  --surface: #EEF2F7;
+  --surface-border: #D6E0EB;
 }
 
 @layer base {
