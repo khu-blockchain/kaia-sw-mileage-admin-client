@@ -1,4 +1,3 @@
-import type { RawTransaction } from "@shared/lib/web3";
 import type { ICreateTokenForm } from "../model";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,8 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-import { STUDENT_MANAGER_ABI } from "@shared/config";
-import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
+import { CONTRACT, ContractEnum, useStudentManager } from "@features/kaia";
 import { ContentContainer } from "@shared/ui";
 import {
 	Button,
@@ -24,6 +22,8 @@ import { createTokenSchema } from "../model";
 export default function CreateTokenForm() {
 	const navigate = useNavigate();
 
+	const { encodeAbi, requestSignTransaction } = useStudentManager();
+
 	const { register, handleSubmit } = useForm<ICreateTokenForm>({
 		resolver: zodResolver(createTokenSchema),
 		defaultValues: {
@@ -34,30 +34,22 @@ export default function CreateTokenForm() {
 	});
 
 	const onSubmit = async (createTokenForm: ICreateTokenForm) => {
-		const data = encodeContractExecutionABI(
-			STUDENT_MANAGER_ABI,
-			"deployWithAdmin",
-			[
+		try {
+      console.log(111111)
+			const data = encodeAbi("deployWithAdmin", [
 				createTokenForm.name,
 				createTokenForm.symbol,
-				import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			],
-		);
+				CONTRACT[ContractEnum.STUDENT_MANAGER].address,
+			]);
+      console.log(222222)
 
-		const rawTransaction = (await kaia.wallet.signTransaction({
-			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			from: kaia.browserProvider.selectedAddress,
-			data: data,
-			value: "0x0",
-			gas: "0x4C4B40",
-		})) as RawTransaction;
+			const rawTransaction = await requestSignTransaction({ data });
+      console.log(333333)
 
-		try {
 			await mutateAsync({
 				...createTokenForm,
 				imageUrl: "https://i.ibb.co/mVbb4sV5/image.png",
-				rawTransaction: rawTransaction,
+				rawTransaction,
 			});
 			navigate(`/manage-token`);
 			toast.success("토큰 배포가 완료되었습니다.", {
