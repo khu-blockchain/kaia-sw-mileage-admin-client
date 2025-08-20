@@ -27,7 +27,7 @@ function AuthGuardInner() {
 }
 
 function AuthGuardFallback() {
-	return <Navigate to="/sign-in" />;
+	return <Navigate to="/admin/sign-in" />;
 }
 
 export default function AuthGuard() {
