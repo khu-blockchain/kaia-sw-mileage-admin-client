@@ -41,7 +41,7 @@ export default function RootRouter() {
 					/>
 					<Route path="wallet-change" element={<WalletLostRequestPage />} />
 				</Route>
-				<Route path="*" element={<Navigate to={"/"} />} />
+				<Route path="*" element={<Navigate to={"/admin"} />} />
 			</Route>
 		</Routes>
 	);

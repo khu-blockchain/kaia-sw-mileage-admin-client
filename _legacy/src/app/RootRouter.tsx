@@ -32,7 +32,7 @@ const RootRouter = () => {
           <Route path="burn-history" element={<BurnHistory />} />
           <Route path="wallet-change" element={<ManageWalletLost />} />
         </Route>
-        <Route path="*" element={<Navigate to={"/"} />} />
+        <Route path="*" element={<Navigate to={"/admin"} />} />
       </Route>
     </Routes>
   );
