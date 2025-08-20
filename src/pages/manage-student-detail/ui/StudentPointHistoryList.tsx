@@ -68,7 +68,7 @@ const StudentPointHistoryList = () => {
 	});
 
 	const onRowClick = (row: Row<MileagePointHistoryColumns>) => {
-		navigate(`/admin/request/${row.original.mileageId}`);
+		navigate(`/request/${row.original.mileageId}`);
 	};
 
 	return (

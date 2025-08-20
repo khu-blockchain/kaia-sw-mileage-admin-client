@@ -17,7 +17,7 @@ export function Header() {
 			<img
 				src="https://swedu.khu.ac.kr/images/logo_swedu.png"
 				alt="logo"
-				onClick={() => navigate("/admin")}
+				onClick={() => navigate("/")}
 				className="h-8 object-contain cursor-pointer"
 			/>
 			{/* {walletAddress === "" ? (

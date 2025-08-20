@@ -44,7 +44,7 @@ export default function ActiveTokenSection() {
 					variant="outline"
 					size="sm"
 					className="w-20 h-8 text-sm"
-					onClick={() => navigate("/admin/manage-token")}
+					onClick={() => navigate("/manage-token")}
 				>
 					토큰 관리
 				</Button>
