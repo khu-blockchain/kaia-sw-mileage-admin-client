@@ -12,7 +12,7 @@ function App() {
 	return (
 		<QueryProvider>
 			<Toaster />
-			<BrowserRouter basename="/admin">
+			<BrowserRouter>
 				<RootRouter />
 			</BrowserRouter>
 		</QueryProvider>

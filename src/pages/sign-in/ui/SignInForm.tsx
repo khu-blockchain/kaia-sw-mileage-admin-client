@@ -36,7 +36,7 @@ const SignInForm = () => {
 			});
 
 			toast.success(`${response.name}님, 로그인되었습니다.`);
-			navigate("/admin");
+			navigate("/");
 			window.location.reload();
 		} catch (error) {
 			console.log(error);
