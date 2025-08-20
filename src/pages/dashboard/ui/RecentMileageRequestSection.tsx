@@ -63,7 +63,7 @@ export default function RecentMileageRequestSection() {
 	);
 
 	const onRowClick = (row: Row<DashboardMileageColumns>) => {
-		navigate(`/request/${row.original.id}`);
+		navigate(`/admin/request/${row.original.id}`);
 	};
 
 	const table = useReactTable({
@@ -86,7 +86,7 @@ export default function RecentMileageRequestSection() {
 				<Button
 					variant="outline"
 					size="sm"
-					onClick={() => navigate("/request")}
+					onClick={() => navigate("/admin/request")}
 				>
 					전체보기
 				</Button>

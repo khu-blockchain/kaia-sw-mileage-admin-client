@@ -14,7 +14,7 @@ const Header = () => {
       <img
         src="https://swedu.khu.ac.kr/images/logo_swedu.png"
         alt="logo"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/admin")}
         className="h-8 object-contain cursor-pointer"
       />
       {walletAddress === "" ? (

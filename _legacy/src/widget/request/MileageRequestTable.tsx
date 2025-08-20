@@ -94,7 +94,7 @@ const MileageRequestTable = () => {
                 <TableRow
                   key={row.id}
                   className="cursor-pointer"
-                  onClick={() => navigate(`/request/${row.id}`)}
+                  onClick={() => navigate(`/admin/request/${row.id}`)}
                 >
                   {tableHeaders.map((col) => (
                     <TableCell key={`${row.id}-${col.key}`}>

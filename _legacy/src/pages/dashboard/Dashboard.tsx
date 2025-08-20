@@ -170,7 +170,7 @@ const ActiveTokenSection = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => navigate("/manage-token")}
+            onClick={() => navigate("/admin/manage-token")}
           >
             토큰 관리하기
           </Button>
@@ -211,7 +211,7 @@ const ActiveTokenSection = () => {
             variant="outline"
             size="sm"
             className="w-full"
-            onClick={() => navigate("/manage-token")}
+            onClick={() => navigate("/admin/manage-token")}
           >
             토큰 관리하기
           </Button>
@@ -241,7 +241,7 @@ const RecentMileageRequestSection = () => {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => navigate("/request")}
+          onClick={() => navigate("/admin/request")}
         >
           전체보기
         </Button>
@@ -264,7 +264,7 @@ const RecentMileageRequestSection = () => {
                 <TableRow
                   key={request.sw_mileage_id}
                   className="cursor-pointer"
-                  onClick={() => navigate(`/request/${request.sw_mileage_id}`)}
+                  onClick={() => navigate(`/admin/request/${request.sw_mileage_id}`)}
                 >
                   <TableCell className="py-2 text-sm">
                     {parseToFormattedDate(request.created_at)}
@@ -327,7 +327,7 @@ const RecentWalletLostSection = () => {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => navigate("/wallet-change")}
+          onClick={() => navigate("/admin/wallet-change")}
         >
           전체보기
         </Button>

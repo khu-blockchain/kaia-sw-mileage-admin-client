@@ -49,7 +49,7 @@ const StudentMileageList = () => {
 	);
 
 	const onRowClick = (row: Row<MileageRequestColumns>) => {
-		navigate(`/request/${row.original.id}`);
+		navigate(`/admin/request/${row.original.id}`);
 	};
 
 	const table = useReactTable({

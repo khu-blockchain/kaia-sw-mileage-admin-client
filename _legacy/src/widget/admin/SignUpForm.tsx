@@ -20,7 +20,7 @@ const SignUpForm = () => {
   const { mutate, isPending } = useSignUp({
     onSuccess: (response) => {
       toast(`${response.name}님, 회원가입이 완료되었습니다.`);
-      navigate("/sign-in");
+      navigate("/admin/sign-in");
     },
     onError: () => {},
   });
@@ -165,7 +165,7 @@ const SignUpForm = () => {
       )}
       <div className="text-center text-sm">
         계정이 이미 존재하나요?{" "}
-        <a href="/sign-in" className="text-link">
+        <a href="/admin/sign-in" className="text-link">
           로그인
         </a>
       </div>

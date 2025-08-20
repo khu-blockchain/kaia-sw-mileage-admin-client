@@ -63,7 +63,7 @@ const ManagePointHistoriesTable = () => {
 	);
 
 	const onRowClick = (row: Row<MileagePointHistoryColumns>) => {
-		navigate(`/request/${row.original.mileageId}`);
+		navigate(`/admin/request/${row.original.mileageId}`);
 	};
 
 	const handleFilter = (filterValues: {

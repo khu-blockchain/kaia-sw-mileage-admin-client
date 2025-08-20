@@ -87,7 +87,7 @@ export default function RecentWalletLostSection() {
 				<Button
 					variant="outline"
 					size="sm"
-					onClick={() => navigate("/wallet-change")}
+					onClick={() => navigate("/admin/wallet-change")}
 				>
 					전체보기
 				</Button>

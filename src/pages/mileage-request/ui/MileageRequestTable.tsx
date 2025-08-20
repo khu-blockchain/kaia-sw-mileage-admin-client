@@ -50,7 +50,7 @@ const MileageRequestTable = () => {
 	);
 
 	const onRowClick = (row: Row<MileageColumns>) => {
-		navigate(`/request/${row.original.id}`);
+		navigate(`/admin/request/${row.original.id}`);
 	};
 
 	const table = useReactTable({
