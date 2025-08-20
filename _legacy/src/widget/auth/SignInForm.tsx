@@ -15,7 +15,7 @@ const SignInForm = () => {
   const { mutate } = useSignIn({
     onSuccess: (response) => {
       toast(`${response.admin.name}님, 로그인되었습니다.`);
-      navigate("/");
+      navigate("/admin");
     },
     onError: () => {},
   });

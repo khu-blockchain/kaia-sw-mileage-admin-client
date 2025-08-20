@@ -56,7 +56,7 @@ const CreateTokenForm = () => {
         queryKey: ["get-sw-mileage-token-list"],
         refetchType: "all",
       });
-      navigate("/manage-token");
+      navigate("/admin/manage-token");
       toast.success("토큰 배포가 완료되었습니다.");
     },
     onError: () => {

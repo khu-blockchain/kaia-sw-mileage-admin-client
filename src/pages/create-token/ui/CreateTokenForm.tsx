@@ -51,7 +51,7 @@ export default function CreateTokenForm() {
 				imageUrl: "https://i.ibb.co/mVbb4sV5/image.png",
 				rawTransaction,
 			});
-			navigate(`/manage-token`);
+			navigate(`/admin/manage-token`);
 			toast.success("토큰 배포가 완료되었습니다.", {
 				description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
 			});

@@ -52,7 +52,7 @@ const ManageStudentTable = () => {
 	);
 
 	const onRowClick = (row: Row<StudentColumns>) => {
-		navigate(`/student/${row.original.studentId}`);
+		navigate(`/admin/student/${row.original.studentId}`);
 	};
 
 	const table = useReactTable({
