@@ -1,11 +1,14 @@
 import { PageBoundary } from "@widgets/page-boundary";
 import { PageLayout } from "@widgets/page-layout";
+import { useKaiaWallet } from "@features/kaia";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@shared/ui";
 
-import MileageRequestDetail from "./MileageRequestDetail";
 import InpagePointHistoryTable from "./InpagePointHistoryTable";
+import MileageRequestDetail from "./MileageRequestDetail";
 
 export default function MileageRequestDetailPage() {
+	const { connectKaiaWallet } = useKaiaWallet();
+	connectKaiaWallet();
 	return (
 		<PageBoundary>
 			<PageLayout

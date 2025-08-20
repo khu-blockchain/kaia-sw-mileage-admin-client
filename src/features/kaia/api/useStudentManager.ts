@@ -13,10 +13,8 @@ import {
 import { CONTRACT, ContractEnum } from "../contract";
 import { useKaiaAccount } from "./useKaiaAccount";
 import { useKaiaClient } from "./useKaiaClient";
-import { useKaiaWallet } from "./useKaiaWallet";
 
 export const useStudentManager = () => {
-	const { connectKaiaWallet } = useKaiaWallet();
 	const { currentAccount } = useKaiaAccount();
 	const { publicClient, walletClient } = useKaiaClient();
 	const studentManager = CONTRACT[ContractEnum.STUDENT_MANAGER];
@@ -40,8 +38,6 @@ export const useStudentManager = () => {
 			args,
 		});
 
-	// const estimateGas =
-
 	const requestSignTransaction = async (
 		data: KaiaTransactionRequest,
 	): Promise<Hex> => {
@@ -49,7 +45,7 @@ export const useStudentManager = () => {
 			throw new Error("Kaia Wallet Extension이 설치되어 있지 않습니다.");
 		}
 		if (!currentAccount) {
-			await connectKaiaWallet();
+			throw new Error("지갑이 연결되어 있지 않습니다.");
 		}
 		const rawTransaction = await walletClient.signTransaction({
 			...data,

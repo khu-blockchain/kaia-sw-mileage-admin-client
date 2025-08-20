@@ -1,8 +1,14 @@
 import { PageBoundary } from "@widgets/page-boundary";
 import { PageLayout } from "@widgets/page-layout";
+import { useKaiaWallet } from "@features/kaia";
+
 import WalletLostTable from "./WalletLostTable";
 
 export default function WalletLostRequestPage() {
+	const { connectKaiaWallet } = useKaiaWallet();
+
+	connectKaiaWallet();
+
 	return (
 		<PageBoundary>
 			<PageLayout

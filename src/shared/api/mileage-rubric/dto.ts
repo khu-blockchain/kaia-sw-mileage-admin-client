@@ -11,7 +11,7 @@ type CreateMileageActivityRequest = {
 	pointDescription: string;
 	mileageCategoryId: number;
 	pointType: POINT_TYPE;
-	fixedPoint?: number;
+	fixedPoint: number | null;
 };
 
 type UpdateMileageCategoryRequest = {
@@ -26,7 +26,7 @@ type UpdateMileageActivityRequest = {
 	mileageCategoryId: number;
 	activityId: number;
 	pointType: POINT_TYPE;
-	fixedPoint?: number;
+	fixedPoint: number | null;
 };
 
 type UpdateMileageActivityResponse = MileageActivity;

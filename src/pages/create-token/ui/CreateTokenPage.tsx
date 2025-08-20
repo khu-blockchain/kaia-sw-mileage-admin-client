@@ -1,9 +1,13 @@
 import { PageBoundary } from "@widgets/page-boundary";
 import { PageLayout } from "@widgets/page-layout";
+import { useKaiaWallet } from "@features/kaia";
 
 import CreateTokenForm from "./CreateTokenForm";
 
 export default function CreateTokenPage() {
+	const { connectKaiaWallet } = useKaiaWallet();
+	connectKaiaWallet();
+
 	return (
 		<PageBoundary>
 			<PageLayout

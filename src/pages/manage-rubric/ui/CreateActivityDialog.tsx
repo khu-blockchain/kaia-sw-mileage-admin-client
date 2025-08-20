@@ -100,7 +100,7 @@ function CreateActivityDialog() {
 				pointDescription: data.pointDescription,
 				mileageCategoryId: Number(data.mileageCategoryId),
 				pointType: data.pointType,
-				...(data.fixedPoint && { fixedPoint: Number(data.fixedPoint) }),
+				fixedPoint: data.fixedPoint ? Number(data.fixedPoint) : null,
 			}),
 			{
 				loading: "비교과 활동 생성 중...",

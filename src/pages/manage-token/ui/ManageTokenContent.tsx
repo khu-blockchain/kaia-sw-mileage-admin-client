@@ -1,11 +1,14 @@
 import type { MileageToken } from "@shared/api";
-
-import { useMemo } from "react";
+import type { ContractAddress } from "@shared/lib/web3";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { CircleAlert, CircleCheck } from "lucide-react";
 
+import { useStudentManager } from "@features/kaia";
 import { mileageTokenQueries } from "@entities/mileage-token";
+import { mileageTokenApi } from "@shared/api";
+import { getToday, parseToFormattedDate } from "@shared/lib";
+import { isSameAddress } from "@shared/lib/web3";
 import {
 	Alert,
 	AlertDescription,
@@ -14,15 +17,26 @@ import {
 } from "@/shared/ui";
 
 import TokenInfoTable from "./TokenInfoTable";
-import { getToday, parseToFormattedDate } from "@shared/lib";
 
 const ManageTokenContent = () => {
-	const { data } = useSuspenseQuery(mileageTokenQueries.getList());
+	const { call } = useStudentManager();
+	const { data: swMileageTokenList } = useSuspenseQuery({
+		queryKey: [...mileageTokenQueries.list()],
+		queryFn: async () => {
+			const { data } = await mileageTokenApi.getMileageTokenList();
+			const activeTokenAddress = (await call(
+				"mileageToken",
+				[],
+			)) as ContractAddress;
+			return data.map((token) => ({
+				...token,
+				is_active: isSameAddress(token.contract_address, activeTokenAddress),
+			}));
+		},
+	});
 
-	const activeToken = useMemo(
-		() => data.find((token) => token.is_active),
-		[data],
-	);
+	const activeToken = swMileageTokenList.find((token) => token.is_active);
+
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex flex-col gap-4">
@@ -33,7 +47,7 @@ const ManageTokenContent = () => {
 				title="토큰 목록"
 				description="생성된 토큰 목록입니다. 운영 학기에 맞는 마일리지 토큰을 활성화 하세요."
 			>
-				<TokenInfoTable mileageTokenList={data} />
+				<TokenInfoTable mileageTokenList={swMileageTokenList} />
 			</ContentContainer>
 		</div>
 	);

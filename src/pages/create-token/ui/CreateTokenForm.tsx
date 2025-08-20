@@ -35,16 +35,13 @@ export default function CreateTokenForm() {
 
 	const onSubmit = async (createTokenForm: ICreateTokenForm) => {
 		try {
-      console.log(111111)
 			const data = encodeAbi("deployWithAdmin", [
 				createTokenForm.name,
 				createTokenForm.symbol,
 				CONTRACT[ContractEnum.STUDENT_MANAGER].address,
 			]);
-      console.log(222222)
 
 			const rawTransaction = await requestSignTransaction({ data });
-      console.log(333333)
 
 			await mutateAsync({
 				...createTokenForm,

@@ -10,14 +10,13 @@ import {
 } from "@tanstack/react-table";
 import { toast } from "sonner";
 
-import { STUDENT_MANAGER_ABI } from "@shared/config";
+import { useStudentManager } from "@features/kaia";
+import { walletLostQueries } from "@entities/wallet-lost";
 import { parseToFormattedDate } from "@shared/lib";
-import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import { DataTable } from "@/shared/ui";
 
 import { useApproveWalletLost } from "../api";
 import { createColumns } from "./columns";
-import { walletLostQueries } from "@entities/wallet-lost";
 
 const MileageRequestTable = () => {
 	const [pagination, setPagination] = useState({
@@ -33,6 +32,8 @@ const MileageRequestTable = () => {
 			limit: pagination.pageSize,
 		}),
 	);
+
+	const { encodeAbi, requestSignTransaction } = useStudentManager();
 
 	const { mutateAsync } = useApproveWalletLost();
 
@@ -56,19 +57,8 @@ const MileageRequestTable = () => {
 		studentHash: string,
 		targetAddress: Address,
 	) => {
-		const data = encodeContractExecutionABI(
-			STUDENT_MANAGER_ABI,
-			"changeAccount",
-			[studentHash, targetAddress],
-		);
-		const rawTransaction = await kaia.wallet.signTransaction({
-			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			from: kaia.browserProvider.selectedAddress,
-			data: data,
-			value: "0x0",
-			gas: "0x4C4B42",
-		});
+		const data = encodeAbi("changeAccount", [studentHash, targetAddress]);
+		const rawTransaction = await requestSignTransaction({ data });
 		toast.promise(mutateAsync({ id, rawTransaction }), {
 			loading: "승인 중...",
 			success: {

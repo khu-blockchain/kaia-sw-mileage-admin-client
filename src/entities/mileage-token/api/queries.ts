@@ -12,7 +12,5 @@ export const mileageTokenQueries = {
 				const { data } = await mileageTokenApi.getMileageTokenList();
 				return data;
 			},
-			staleTime: 0,
-			gcTime: 0,
 		}),
 };

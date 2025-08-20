@@ -1,13 +1,12 @@
 import type { ContractAddress } from "@shared/lib/web3";
 
-import { useMemo } from "react";
-
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 
 import { useStudentManager } from "@features/kaia";
 import { mileageTokenQueries } from "@entities/mileage-token";
+import { mileageTokenApi } from "@shared/api";
 import { parseToFormattedDate } from "@shared/lib";
 import { isSameAddress } from "@shared/lib/web3";
 import { Button } from "@shared/ui";
@@ -16,8 +15,9 @@ export default function ActiveTokenSection() {
 	const navigate = useNavigate();
 	const { call } = useStudentManager();
 	const { data: swMileageTokenList } = useSuspenseQuery({
-		...mileageTokenQueries.getList(),
-		select: async (data) => {
+		queryKey: [...mileageTokenQueries.list()],
+		queryFn: async () => {
+			const { data } = await mileageTokenApi.getMileageTokenList();
 			const activeTokenAddress = (await call(
 				"mileageToken",
 				[],
@@ -29,10 +29,7 @@ export default function ActiveTokenSection() {
 		},
 	});
 
-	const activeToken = useMemo(
-		() => swMileageTokenList.find((token) => token.is_active),
-		[swMileageTokenList],
-	);
+	const activeToken = swMileageTokenList.find((token) => token.is_active);
 
 	return (
 		<div className="bg-white rounded-md border p-4 h-fit">
@@ -50,7 +47,7 @@ export default function ActiveTokenSection() {
 				</Button>
 			</div>
 
-			{/* {!activeToken ? (
+			{!activeToken ? (
 				<div className="text-center py-8">
 					<p className="text-gray-500 text-sm mb-4">
 						활성화된 마일리지 토큰이 없습니다.
@@ -86,7 +83,7 @@ export default function ActiveTokenSection() {
 						</div>
 					</div>
 				</div>
-			)} */}
+			)}
 		</div>
 	);
 }

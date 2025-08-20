@@ -4,10 +4,9 @@ import { useMemo, useState } from "react";
 
 import { toast } from "sonner";
 
+import { useStudentManager } from "@features/kaia";
 import { mileageActivityPointTypeParser } from "@entities/mileage-rubric";
 import { POINT_TYPE } from "@shared/api";
-import { STUDENT_MANAGER_ABI } from "@shared/config";
-import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -32,6 +31,7 @@ type ApproveMileageDialogProps = {
 function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 	const [open, setOpen] = useState(false);
 	const [extraScore, setExtraScore] = useState("");
+	const { encodeAbi, requestSignTransaction } = useStudentManager();
 
 	const { mutateAsync } = useApproveMileage();
 
@@ -63,24 +63,13 @@ function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 
 		const amount = calculateAmount(mileageActivity, Number(extraScore));
 
-		const data = encodeContractExecutionABI(
-			STUDENT_MANAGER_ABI,
-			"approveDocument",
-			[
-				mileageDetail.doc_index,
-				amount,
-				"0x0000000000000000000000000000000000000000000000000000000000000000",
-			],
-		);
+		const data = encodeAbi("approveDocument", [
+			mileageDetail.doc_index,
+			amount,
+			"0x0000000000000000000000000000000000000000000000000000000000000000",
+		]);
 
-		const rawTransaction = await kaia.wallet.signTransaction({
-			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			from: kaia.browserProvider.selectedAddress,
-			data: data,
-			value: "0x0",
-			gas: "0x4C4B40",
-		});
+		const rawTransaction = await requestSignTransaction({ data });
 
 		toast.promise(
 			mutateAsync({

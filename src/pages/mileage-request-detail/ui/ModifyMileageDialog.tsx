@@ -1,15 +1,14 @@
-import type { MileagePointHistory } from "@shared/api";
 import type { Hex } from "@kaiachain/viem-ext";
+import type { MileagePointHistory } from "@shared/api";
 
 import { useEffect, useMemo, useState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+import { useStudentManager } from "@features/kaia";
 import { mileagePointHistoryQueries } from "@entities/mileage-point-history";
 import { MILEAGE_POINT_HISTORY_TYPE } from "@shared/api";
-import { STUDENT_MANAGER_ABI } from "@shared/config";
-import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -49,6 +48,8 @@ function ModifyMileageDialog({
 	const { mutateAsync: mutateBurn } = useBurnMileage();
 	const { mutateAsync: mutateMint } = useMintMileage();
 
+	const { encodeAbi, requestSignTransaction } = useStudentManager();
+
 	const totalAmount = useMemo(() => {
 		return mileagePointHistories.reduce((acc, curr) => {
 			if (
@@ -80,11 +81,7 @@ function ModifyMileageDialog({
 		walletAddress: string,
 		amount: number,
 	) => {
-		return encodeContractExecutionABI(STUDENT_MANAGER_ABI, "mint", [
-			studentHash,
-			walletAddress,
-			amount,
-		]);
+		return encodeAbi("mint", [studentHash, walletAddress, amount]);
 	};
 
 	const encodeBurn = (
@@ -92,11 +89,7 @@ function ModifyMileageDialog({
 		walletAddress: string,
 		amount: number,
 	): Hex => {
-		return encodeContractExecutionABI(STUDENT_MANAGER_ABI, "burnFrom", [
-			studentHash,
-			walletAddress,
-			amount,
-		]);
+		return encodeAbi("burnFrom", [studentHash, walletAddress, amount]);
 	};
 
 	const handleModify = async () => {
@@ -117,21 +110,14 @@ function ModifyMileageDialog({
 
 	const handleMint = async (amount: number) => {
 		const encodeData = encodeMint(studentHash, walletAddress, amount);
-		const rawTransaction = await kaia.wallet.signTransaction({
-			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			from: kaia.browserProvider.selectedAddress,
-			data: encodeData,
-			value: "0x0",
-			gas: "0x4C4B40",
-		});
+		const rawTransaction = await requestSignTransaction({ data: encodeData });
 		toast.promise(
 			mutateMint({
 				id: mileageId,
 				mileagePoint: amount,
 				note,
 				rawTransaction,
-			}),   
+			}),
 			{
 				loading: "마일리지 추가 지급 중...",
 				success: () => {
@@ -148,19 +134,12 @@ function ModifyMileageDialog({
 
 	const handleBurn = async (amount: number) => {
 		const encodeData = encodeBurn(studentHash, walletAddress, amount);
-		const rawTransaction = await kaia.wallet.signTransaction({
-			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			from: kaia.browserProvider.selectedAddress,
-			data: encodeData,
-			value: "0x0",
-			gas: "0x4C4B40",
-		});
+		const rawTransaction = await requestSignTransaction({ data: encodeData });
 		toast.promise(
 			mutateBurn({
 				id: mileageId,
 				mileagePoint: amount,
-				note: note,
+				note,
 				rawTransaction,
 			}),
 			{

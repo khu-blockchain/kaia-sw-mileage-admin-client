@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { encodePacked, keccak256 } from "viem";
 
-import { STUDENT_MANAGER_ABI } from "@shared/config";
-import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
+import { useStudentManager } from "@features/kaia";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -32,6 +31,8 @@ function RejectMileageDialog({ mileageDetail }: RejectMileageDialogProps) {
 	const [open, setOpen] = useState(false);
 	const [reason, setReason] = useState("");
 
+	const { encodeAbi, requestSignTransaction } = useStudentManager();
+
 	const { mutateAsync } = useRejectMileage();
 
 	const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,20 +43,13 @@ function RejectMileageDialog({ mileageDetail }: RejectMileageDialogProps) {
 	const handleConfirm = async () => {
 		const reasonHash = keccak256(encodePacked(["string"], [reason]));
 
-		const data = encodeContractExecutionABI(
-			STUDENT_MANAGER_ABI,
-			"approveDocument",
-			[mileageDetail.doc_index, 0, reasonHash],
-		);
+		const data = encodeAbi("approveDocument", [
+			mileageDetail.doc_index,
+			0,
+			reasonHash,
+		]);
 
-		const rawTransaction = await kaia.wallet.signTransaction({
-			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			from: kaia.browserProvider.selectedAddress,
-			data: data,
-			value: "0x0",
-			gas: "0x4C4B40",
-		});
+		const rawTransaction = await requestSignTransaction({ data });
 
 		toast.promise(
 			mutateAsync({

@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import { toast } from "sonner";
 
-import { STUDENT_MANAGER_ABI } from "@shared/config";
-import { encodeContractExecutionABI, kaia, KaiaTxType } from "@shared/lib/web3";
+import { useStudentManager } from "@features/kaia";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -32,6 +31,8 @@ export function TokenActivationDialog({
 }: TokenActivationDialogProps) {
 	const [open, setOpen] = useState(false);
 
+	const { encodeAbi, requestSignTransaction } = useStudentManager();
+
 	const { mutateAsync } = useActivateMileageToken();
 
 	const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,20 +45,9 @@ export function TokenActivationDialog({
 	};
 
 	const handleActivateToken = async () => {
-		const data = encodeContractExecutionABI(
-			STUDENT_MANAGER_ABI,
-			"changeMileageToken",
-			[contractAddress],
-		);
+		const data = encodeAbi("changeMileageToken", [contractAddress]);
 
-		const rawTransaction = await kaia.wallet.signTransaction({
-			type: KaiaTxType.FeeDelegatedSmartContractExecution,
-			to: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
-			from: kaia.browserProvider.selectedAddress,
-			data: data,
-			value: "0x0",
-			gas: "0x4C4B40",
-		});
+		const rawTransaction = await requestSignTransaction({ data });
 
 		try {
 			toast.promise(

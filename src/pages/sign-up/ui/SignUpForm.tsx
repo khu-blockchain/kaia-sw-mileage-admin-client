@@ -2,12 +2,14 @@ import type { Address } from "@shared/lib/web3";
 import type { SubmitHandler } from "react-hook-form";
 import type { ISignUpForm } from "../model";
 
+import { useEffect } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-import { ConnectButton } from "@features/connect-wallet";
+import { KaiaButton, useKaiaAccount, useKaiaWallet } from "@features/kaia";
 import { Button, ErrorMessage, Separator } from "@/shared/ui";
 
 import { useAdminSignUp } from "../api";
@@ -16,12 +18,13 @@ import SignUpFormInput from "./SignUpFormInput";
 
 const SignUpForm = () => {
 	const navigate = useNavigate();
+	const { currentAccount } = useKaiaAccount();
+	const { connectKaiaWallet } = useKaiaWallet();
+
 	const {
 		register,
 		handleSubmit,
 		setValue,
-		clearErrors,
-		watch,
 		formState: { errors },
 	} = useForm<ISignUpForm>({
 		resolver: zodResolver(signUpSchema),
@@ -55,10 +58,11 @@ const SignUpForm = () => {
 		}
 	};
 
-	const setWalletAddress = (address: string[]) => {
-		clearErrors("walletAddress");
-		setValue("walletAddress", address[0]);
-	};
+	useEffect(() => {
+		if (currentAccount) {
+			setValue("walletAddress", currentAccount);
+		}
+	}, [currentAccount, setValue]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -173,9 +177,9 @@ const SignUpForm = () => {
 				</div>
 			</div>
 			<Separator />
-			{!watch("walletAddress") ? (
-				<ConnectButton.DefaultButton
-					connectCallback={setWalletAddress}
+			{!currentAccount ? (
+				<KaiaButton.DefaultButton
+					onClick={() => connectKaiaWallet()}
 					className="w-full"
 				/>
 			) : (

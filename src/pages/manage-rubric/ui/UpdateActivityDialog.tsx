@@ -2,7 +2,7 @@ import type { MileageActivity } from "@shared/api";
 import type { FieldErrors, SubmitHandler } from "react-hook-form";
 import type { IUpdateActivityForm } from "../model";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
@@ -61,19 +61,16 @@ function UpdateActivityDialog({
 
 	const { mutateAsync } = useUpdateMileageActivity();
 
-	const { register, handleSubmit, reset, control, watch } =
+	const { register, handleSubmit, reset, control, watch, setValue } =
 		useForm<IUpdateActivityForm>({
 			resolver: zodResolver(updateActivitySchema),
-			values: {
+			defaultValues: {
 				name: activity.name,
 				pointDescription: activity.point_description,
 				mileageCategoryId: mileageCategoryId.toString(),
 				pointType: activity.point_type,
 				fixedPoint: activity.fixed_point?.toString() ?? undefined,
 				activityId: activity.id,
-			},
-			resetOptions: {
-				keepDirtyValues: false,
 			},
 		});
 
@@ -89,6 +86,7 @@ function UpdateActivityDialog({
 	};
 
 	const onSubmit: SubmitHandler<IUpdateActivityForm> = async (data) => {
+		console.log(data);
 		toast.promise(
 			mutateAsync({
 				name: data.name,
@@ -96,7 +94,7 @@ function UpdateActivityDialog({
 				mileageCategoryId: Number(data.mileageCategoryId),
 				activityId: data.activityId,
 				pointType: data.pointType,
-				...(data.fixedPoint && { fixedPoint: Number(data.fixedPoint) }),
+				fixedPoint: data.pointType === POINT_TYPE.FIXED ? Number(data.fixedPoint) : null,
 			}),
 			{
 				loading: "비교과 활동 수정 중...",
@@ -109,12 +107,19 @@ function UpdateActivityDialog({
 			},
 		);
 	};
+
 	const handleOpenChange = (isOpen: boolean) => {
 		setOpen(isOpen);
 		if (!isOpen) {
 			reset();
 		}
 	};
+
+	useEffect(() => {
+		if (watch("pointType") === POINT_TYPE.OPTIONAL) {
+			setValue("fixedPoint", undefined);
+		}
+	}, [watch, setValue]);
 
 	return (
 		<AlertDialog open={open} onOpenChange={handleOpenChange}>
@@ -159,9 +164,9 @@ function UpdateActivityDialog({
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
-						<Label htmlFor="category-name">활동명</Label>
+						<Label htmlFor="name">활동명</Label>
 						<Input
-							id="category-name"
+							id="name"
 							maxLength={50}
 							placeholder="예) 창업 공모전 수상"
 							{...register("name")}
@@ -190,9 +195,9 @@ function UpdateActivityDialog({
 					</div>
 					{watch("pointType") === POINT_TYPE.FIXED && (
 						<div className="flex flex-col gap-2">
-							<Label htmlFor="category-description">배점</Label>
+							<Label htmlFor="fixed-point">배점</Label>
 							<Input
-								id="category-description"
+								id="fixed-point"
 								placeholder="예) 20"
 								{...register("fixedPoint")}
 							/>
@@ -201,7 +206,7 @@ function UpdateActivityDialog({
 					<div className="flex flex-col gap-2">
 						<Label htmlFor="category-description">설명</Label>
 						<Textarea
-							id="category-description"
+							id="point-description"
 							placeholder="예) 클릭당 1건 (최대 200 / 팀원수로 동일 분배)"
 							{...register("pointDescription")}
 						/>

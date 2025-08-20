@@ -4,9 +4,13 @@ export const useKaiaWallet = () => {
 	const provider = window.klaytn;
 	const isInstalled = useMemo(() => !!provider, [provider]);
 
+	const currentNetwork = useMemo(() => {
+		return provider?.networkVersion;
+	}, [provider]);
+
 	const switchToKairosNetwork = async () => {
 		try {
-			await provider.request({
+			return await provider.request({
 				method: "wallet_switchKlaytnChain",
 				params: [{ chainId: "0x3e9" }],
 			});
@@ -19,9 +23,12 @@ export const useKaiaWallet = () => {
 		await provider.enable();
 	};
 
+  
+
 	return {
 		provider,
 		isInstalled,
+		currentNetwork,
 		switchToKairosNetwork,
 		connectKaiaWallet,
 	};

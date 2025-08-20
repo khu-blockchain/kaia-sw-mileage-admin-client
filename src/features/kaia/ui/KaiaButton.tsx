@@ -1,20 +1,17 @@
 import { KaiaIcon } from "@/shared/assets";
 import { cn } from "@/shared/lib/style";
 
-import { useConnect } from "../model";
-
 const DefaultButton = ({
 	className,
-	connectCallback,
+	onClick,
 }: {
 	className?: string;
-	connectCallback?: (address: string[]) => void;
+	onClick: () => void;
 }) => {
-	const { onConnect } = useConnect();
 	return (
 		<button
 			type="button"
-			onClick={() => onConnect(connectCallback)}
+			onClick={onClick}
 			className={cn(
 				"flex justify-center items-center gap-2 min-w-56 h-10 rounded-md text-sm text-white font-semibold bg-black",
 				className,
@@ -28,16 +25,15 @@ const DefaultButton = ({
 
 const SmallButton = ({
 	className,
-	connectCallback,
+	onClick,
 }: {
 	className?: string;
-	connectCallback?: (address: string[]) => void;
+	onClick: () => void;
 }) => {
-	const { onConnect } = useConnect();
 	return (
 		<button
 			type="button"
-			onClick={() => onConnect(connectCallback)}
+			onClick={onClick}
 			className={cn(
 				"flex justify-center items-center p-2 w-min h-8 rounded-full bg-transparent border border-kaia text-xs text-kaia font-semibold whitespace-nowrap",
 				className,
@@ -48,9 +44,9 @@ const SmallButton = ({
 	);
 };
 
-const ConnectButton = {
+const KaiaButton = {
 	DefaultButton: DefaultButton,
 	SmallButton: SmallButton,
 };
 
-export default ConnectButton;
+export default KaiaButton;
