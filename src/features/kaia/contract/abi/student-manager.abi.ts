@@ -1,6 +1,6 @@
-import type { ABI } from "@/shared/lib/web3";
+import type { Abi } from "@kaiachain/viem-ext";
 
-export const STUDENT_MANAGER_ABI: ABI = [
+export const STUDENT_MANAGER_ABI: Abi = [
 	{
 		type: "constructor",
 		inputs: [

@@ -1,4 +1,4 @@
-import type { Address } from "@shared/lib/web3";
+import type { Address } from "@kaiachain/viem-ext";
 
 import { useMemo, useState } from "react";
 

@@ -1,6 +1,6 @@
-import type { ABI } from "@/shared/lib/web3";
+import type { Abi } from "@kaiachain/viem-ext";
 
-export const SW_MILEAGE_TOKEN_ABI: ABI = [
+export const SW_MILEAGE_TOKEN_ABI: Abi = [
 	{
 		type: "constructor",
 		inputs: [

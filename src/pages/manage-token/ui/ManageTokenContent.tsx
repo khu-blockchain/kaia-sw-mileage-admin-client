@@ -1,5 +1,5 @@
 import type { MileageToken } from "@shared/api";
-import type { ContractAddress } from "@shared/lib/web3";
+import type { Address } from "@kaiachain/viem-ext";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { CircleAlert, CircleCheck } from "lucide-react";
@@ -27,7 +27,7 @@ const ManageTokenContent = () => {
 			const activeTokenAddress = (await call(
 				"mileageToken",
 				[],
-			)) as ContractAddress;
+			)) as Address;
 			return data.map((token) => ({
 				...token,
 				is_active: isSameAddress(token.contract_address, activeTokenAddress),
