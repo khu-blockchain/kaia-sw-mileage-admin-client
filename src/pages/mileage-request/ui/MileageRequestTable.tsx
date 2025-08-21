@@ -11,11 +11,13 @@ import {
 } from "@tanstack/react-table";
 import { useNavigate } from "react-router";
 
+import { MILEAGE_STATUS } from "@shared/api";
 import { parseToFormattedDate } from "@shared/lib";
 import { mileageQueries } from "@/entities/mileage";
 import { DataTable } from "@/shared/ui";
 
 import { columns } from "./columns.tsx";
+import MileageFilter from "./MileageFilter.tsx";
 
 const MileageRequestTable = () => {
 	const navigate = useNavigate();
@@ -25,12 +27,19 @@ const MileageRequestTable = () => {
 		pageSize: 10, //default page size
 	});
 
+	const [filters, setFilters] = useState<{
+		status?: MILEAGE_STATUS;
+		studentId?: string;
+	}>({});
+
 	const {
 		data: { data, meta },
 	} = useSuspenseQuery(
 		mileageQueries.getMileageList({
 			page: pagination.pageIndex + 1,
 			limit: pagination.pageSize,
+			...(filters.status && { status: filters.status }),
+			...(filters.studentId && { studentId: filters.studentId }),
 		}),
 	);
 
@@ -53,6 +62,26 @@ const MileageRequestTable = () => {
 		navigate(`/request/${row.original.id}`);
 	};
 
+	const handleFilter = (filterValues: {
+		status: MILEAGE_STATUS | "";
+		studentId: string;
+	}) => {
+		setFilters({
+			...(filterValues.status && {
+				status: filterValues.status as MILEAGE_STATUS,
+			}),
+			...(filterValues.studentId && {
+				studentId: filterValues.studentId,
+			}),
+		});
+		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+	};
+
+	const handleResetFilter = () => {
+		setFilters({});
+		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+	};
+
 	const table = useReactTable({
 		data: transformedData,
 		columns,
@@ -68,7 +97,8 @@ const MileageRequestTable = () => {
 	});
 
 	return (
-		<div className="block max-w-full">
+		<div className="flex flex-col gap-4">
+			<MileageFilter onFilter={handleFilter} onReset={handleResetFilter} />
 			<DataTable table={table} onRowClick={onRowClick} />
 		</div>
 	);

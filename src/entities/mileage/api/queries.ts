@@ -1,11 +1,16 @@
-import type { GetMileageListRequest } from "@shared/api";
+import type { GetMileageListRequest, MILEAGE_STATUS } from "@shared/api";
 
 import { mileageApi } from "@/shared/api";
 
 export const mileageQueries = {
 	all: () => ["mileage"] as const,
-	list: (page: number, limit: number, studentId?: string) =>
-		[...mileageQueries.all(), "list", page, limit, studentId] as const,
+	list: (
+		page: number,
+		limit: number,
+		studentId?: string,
+		status?: MILEAGE_STATUS,
+	) =>
+		[...mileageQueries.all(), "list", page, limit, studentId, status] as const,
 	mileageDetail: (id: number) =>
 		[...mileageQueries.all(), "detail", id] as const,
 
@@ -14,6 +19,7 @@ export const mileageQueries = {
 			request.page,
 			request.limit,
 			request.studentId,
+			request.status,
 		),
 		queryFn: async () => {
 			const { data, meta } = await mileageApi.getMileageList(request);
