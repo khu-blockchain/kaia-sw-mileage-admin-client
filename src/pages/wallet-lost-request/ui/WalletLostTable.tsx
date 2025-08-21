@@ -58,16 +58,18 @@ const MileageRequestTable = () => {
 		targetAddress: Address,
 	) => {
 		const data = encodeAbi("changeAccount", [studentHash, targetAddress]);
-		const rawTransaction = await requestSignTransaction({ data });
+		const rawTransaction = await requestSignTransaction(data);
 		toast.promise(mutateAsync({ id, rawTransaction }), {
 			loading: "승인 중...",
 			success: {
 				message: "지갑 분실 처리가 완료되었습니다.",
 				description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
 			},
-			error: {
-				message: "지갑 분실 처리에 실패했습니다.",
-				description: "다시 시도해주세요.",
+			error: (error) => {
+				return {
+					message: "지갑 분실 처리에 실패했습니다.",
+					description: `${error.message}`,
+				};
 			},
 		});
 	};

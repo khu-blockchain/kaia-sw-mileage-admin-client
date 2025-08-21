@@ -69,7 +69,7 @@ function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 			"0x0000000000000000000000000000000000000000000000000000000000000000",
 		]);
 
-		const rawTransaction = await requestSignTransaction({ data });
+		const rawTransaction = await requestSignTransaction(data);
 
 		toast.promise(
 			mutateAsync({
@@ -86,7 +86,12 @@ function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
 						description: "블록체인에 기록되는데 시간이 소요될 수 있습니다.",
 					};
 				},
-				error: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.",
+				error: (error) => {
+					return {
+						message: "에러가 발생했습니다.",
+						description: `${error.message}`,
+					};
+				},
 			},
 		);
 	};

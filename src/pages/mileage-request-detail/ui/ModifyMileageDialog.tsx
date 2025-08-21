@@ -110,7 +110,7 @@ function ModifyMileageDialog({
 
 	const handleMint = async (amount: number) => {
 		const encodeData = encodeMint(studentHash, walletAddress, amount);
-		const rawTransaction = await requestSignTransaction({ data: encodeData });
+		const rawTransaction = await requestSignTransaction(encodeData);
 		toast.promise(
 			mutateMint({
 				id: mileageId,
@@ -127,14 +127,19 @@ function ModifyMileageDialog({
 						description: "블록체인에 기록되는데 시간이 소요될 수 있습니다.",
 					};
 				},
-				error: "마일리지 지급에 실패했습니다.",
+				error: (error) => {
+					return {
+						message: "에러가 발생했습니다.",
+						description: `${error.message}`,
+					};
+				},
 			},
 		);
 	};
 
 	const handleBurn = async (amount: number) => {
 		const encodeData = encodeBurn(studentHash, walletAddress, amount);
-		const rawTransaction = await requestSignTransaction({ data: encodeData });
+		const rawTransaction = await requestSignTransaction(encodeData);
 		toast.promise(
 			mutateBurn({
 				id: mileageId,
@@ -151,7 +156,12 @@ function ModifyMileageDialog({
 						description: "블록체인에 기록되는데 시간이 소요될 수 있습니다.",
 					};
 				},
-				error: "마일리지 회수에 실패했습니다.",
+				error: (error) => {
+					return {
+						message: "에러가 발생했습니다.",
+						description: `${error.message}`,
+					};
+				},
 			},
 		);
 	};

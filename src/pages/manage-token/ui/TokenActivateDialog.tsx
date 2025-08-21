@@ -47,7 +47,7 @@ export function TokenActivationDialog({
 	const handleActivateToken = async () => {
 		const data = encodeAbi("changeMileageToken", [contractAddress]);
 
-		const rawTransaction = await requestSignTransaction({ data });
+		const rawTransaction = await requestSignTransaction(data);
 
 		try {
 			toast.promise(
@@ -61,7 +61,9 @@ export function TokenActivationDialog({
 						message: "토큰이 활성화되었습니다.",
 						description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
 					},
-					error: "에러가 발생했습니다. 다시 시도해주세요.",
+					error: (error) => {
+						return `${error.message}`;
+					},
 				},
 			);
 		} catch (error) {

@@ -41,7 +41,7 @@ export default function CreateTokenForm() {
 				CONTRACT[ContractEnum.STUDENT_MANAGER].address,
 			]);
 
-			const rawTransaction = await requestSignTransaction({ data });
+			const rawTransaction = await requestSignTransaction(data);
 
 			await mutateAsync({
 				...createTokenForm,
@@ -52,8 +52,10 @@ export default function CreateTokenForm() {
 			toast.success("토큰 배포가 완료되었습니다.", {
 				description: "블록체인에 반영되는데 시간이 소요될 수 있습니다.",
 			});
-		} catch (error) {
-			toast.error("토큰 배포에 실패했습니다.");
+		} catch (error: any) {
+			toast.error("토큰 배포에 실패했습니다.", {
+				description: `${error.message}`,
+			});
 		}
 	};
 
