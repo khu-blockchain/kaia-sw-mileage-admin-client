@@ -1,6 +1,6 @@
 import type { Mileage, MileageActivity } from "@shared/api";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { toast } from "sonner";
 
@@ -26,19 +26,15 @@ import { useApproveMileage } from "../api";
 
 type ApproveMileageDialogProps = {
 	mileageDetail: Mileage;
+	mileageActivity: MileageActivity;
 };
 
-function ApproveMileageDialog({ mileageDetail }: ApproveMileageDialogProps) {
+function ApproveMileageDialog({ mileageDetail, mileageActivity }: ApproveMileageDialogProps) {
 	const [open, setOpen] = useState(false);
 	const [extraScore, setExtraScore] = useState("");
 	const { encodeAbi, requestSignTransaction } = useStudentManager();
 
 	const { mutateAsync } = useApproveMileage();
-
-	const mileageActivity = useMemo(
-		() => mileageDetail.mileage_activity,
-		[mileageDetail],
-	) as MileageActivity;
 
 	const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();

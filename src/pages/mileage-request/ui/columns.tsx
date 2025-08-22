@@ -1,7 +1,7 @@
 import { type ColumnDef } from "@tanstack/react-table";
 
 import { mileageStatusParser } from "@entities/mileage";
-import { MILEAGE_STATUS } from "@/shared/api";
+import { MILEAGE_STATUS, TRANSACTION_STATUS } from "@/shared/api";
 import { cn } from "@/shared/lib/style";
 
 export type MileageColumns = {
@@ -13,6 +13,7 @@ export type MileageColumns = {
 	mileageActivityName: string;
 	status: MILEAGE_STATUS;
 	createdAt: string;
+	transactionStatus: TRANSACTION_STATUS;
 };
 
 const statusConfig = (status: MILEAGE_STATUS) => {

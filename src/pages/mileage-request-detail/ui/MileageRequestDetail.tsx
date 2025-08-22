@@ -2,11 +2,12 @@ import type { MileageFile } from "@shared/api";
 
 import { useMemo } from "react";
 
-import { useSuspenseQueries } from "@tanstack/react-query";
+import { useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 
 import { mileageQueries, mileageStatusParser } from "@entities/mileage";
 import { mileagePointHistoryQueries } from "@entities/mileage-point-history";
+import { mileageRubricQueries } from "@entities/mileage-rubric";
 import { MILEAGE_STATUS } from "@shared/api";
 import { parseToFormattedDate } from "@shared/lib";
 import { cn } from "@shared/lib/style";
@@ -36,6 +37,8 @@ const MileageRequestDetail = () => {
 
 	const mileageDetail = mileageDetailData.data;
 	const mileagePointHistories = mileagePointHistoryData.data.data;
+
+	const { data: mileageActivity } = useSuspenseQuery(mileageRubricQueries.getActivity(Number(mileageDetail.mileage_activity_id)));
 
 	const mileageFiles = useMemo(
 		() => mileageDetail.mileage_files,
@@ -191,7 +194,7 @@ const MileageRequestDetail = () => {
 			</div>
 			{mileageDetail.status === MILEAGE_STATUS.REVIEWING && (
 				<div className="flex w-full justify-end items-center gap-4">
-					<ApproveMileageDialog mileageDetail={mileageDetail} />
+					<ApproveMileageDialog mileageDetail={mileageDetail} mileageActivity={mileageActivity} />
 					<RejectMileageDialog mileageDetail={mileageDetail} />
 				</div>
 			)}

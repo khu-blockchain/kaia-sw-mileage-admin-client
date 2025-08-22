@@ -8,6 +8,8 @@ import type {
 	DeleteMileageActivityResponse,
 	DeleteMileageCategoryRequest,
 	DeleteMileageCategoryResponse,
+	GetMileageActivityRequest,
+	GetMileageActivityResponse,
 	GetRubricsResponse,
 	UpdateMileageActivityRequest,
 	UpdateMileageActivityResponse,
@@ -31,6 +33,11 @@ export const mileageRubricApi = {
 		MileageRubricServer.post("activity", {
 			json: request,
 		}).json(),
+
+	getMileageActivity: (
+		request: GetMileageActivityRequest,
+	): APIPromise<GetMileageActivityResponse> =>
+		MileageRubricServer.get(`activity/${request.id}`).json(),
 
 	updateMileageCategory: (
 		request: UpdateMileageCategoryRequest,

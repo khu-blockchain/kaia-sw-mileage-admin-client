@@ -7,6 +7,8 @@ export const mileageRubricQueries = {
 
 	getRubrics: () => [...mileageRubricQueries.all(), "rubrics"] as const,
 
+  activity: (id: number) => [...mileageRubricQueries.all(), "activity", id] as const,
+
 	getRubric: () =>
 		queryOptions({
 			queryKey: [...mileageRubricQueries.getRubrics()],
@@ -14,5 +16,16 @@ export const mileageRubricQueries = {
 				const { data } = await mileageRubricApi.getRubrics();
 				return data;
 			},
+		}),
+  
+  getActivity: (id: number) =>
+		queryOptions({
+			queryKey: [...mileageRubricQueries.activity(id)],
+			queryFn: async () => {
+				const { data } = await mileageRubricApi.getMileageActivity({ id });
+				return data;
+			},
+      staleTime: 0,
+      gcTime: 0,
 		}),
 };

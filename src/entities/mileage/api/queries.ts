@@ -28,6 +28,8 @@ export const mileageQueries = {
 				meta,
 			};
 		},
+    staleTime: 0,
+    gcTime: 0,
 	}),
 
 	getMileageDetail: (id: number) => ({

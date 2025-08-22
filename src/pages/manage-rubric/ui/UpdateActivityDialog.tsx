@@ -64,7 +64,7 @@ function UpdateActivityDialog({
 	const { register, handleSubmit, reset, control, watch, setValue } =
 		useForm<IUpdateActivityForm>({
 			resolver: zodResolver(updateActivitySchema),
-			defaultValues: {
+			values: {
 				name: activity.name,
 				pointDescription: activity.point_description,
 				mileageCategoryId: mileageCategoryId.toString(),
@@ -72,6 +72,9 @@ function UpdateActivityDialog({
 				fixedPoint: activity.fixed_point?.toString() ?? undefined,
 				activityId: activity.id,
 			},
+      resetOptions: {
+        keepDirtyValues: true,
+      }
 		});
 
 	const handleOpen = async (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -11,13 +11,14 @@ import {
 } from "@tanstack/react-table";
 import { useNavigate } from "react-router";
 
-import { MILEAGE_STATUS } from "@shared/api";
+import { MILEAGE_STATUS, TRANSACTION_STATUS } from "@shared/api";
 import { parseToFormattedDate } from "@shared/lib";
 import { mileageQueries } from "@/entities/mileage";
 import { DataTable } from "@/shared/ui";
 
 import { columns } from "./columns.tsx";
 import MileageFilter from "./MileageFilter.tsx";
+import { toast } from "sonner";
 
 const MileageRequestTable = () => {
 	const navigate = useNavigate();
@@ -43,6 +44,8 @@ const MileageRequestTable = () => {
 		}),
 	);
 
+  console.log(data);
+
 	const transformedData = useMemo(
 		() =>
 			data.map((mileage) => ({
@@ -52,6 +55,7 @@ const MileageRequestTable = () => {
 				studentId: mileage.student?.student_id ?? "",
 				mileageCategoryName: mileage.mileage_category_name,
 				mileageActivityName: mileage.mileage_activity_name,
+				transactionStatus: mileage.transaction_status,
 				status: mileage.status,
 				createdAt: parseToFormattedDate(mileage.created_at),
 			})),
@@ -59,6 +63,12 @@ const MileageRequestTable = () => {
 	);
 
 	const onRowClick = (row: Row<MileageColumns>) => {
+    if(row.original.transactionStatus === TRANSACTION_STATUS.PROCESSING) {
+      toast.info("아직 블록체인에 기록되지 않은 요청입니다.", {
+        description: "잠시만 기다려주세요.(잠시 후 새로고침 해주세요.)",
+      })
+      return;
+    }
 		navigate(`/request/${row.original.id}`);
 	};
 

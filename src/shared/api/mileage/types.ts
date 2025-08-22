@@ -1,5 +1,4 @@
 import type { MILEAGE_STATUS, TRANSACTION_STATUS } from "../enum";
-import type { MileageActivity } from "../mileage-rubric";
 import type { Student } from "../student";
 
 type Mileage = {
@@ -15,8 +14,8 @@ type Mileage = {
 	created_at: string;
 	updated_at: string;
 	student?: Student;
-	mileage_activity?: MileageActivity;
 	mileage_files?: MileageFile[];
+  mileage_activity_id: number;
 };
 
 type MileageFile = {

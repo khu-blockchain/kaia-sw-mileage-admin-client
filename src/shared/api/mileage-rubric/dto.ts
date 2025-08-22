@@ -14,6 +14,12 @@ type CreateMileageActivityRequest = {
 	fixedPoint: number | null;
 };
 
+type GetMileageActivityRequest = {
+	id: number;
+};
+
+type GetMileageActivityResponse = MileageActivity;
+
 type UpdateMileageCategoryRequest = {
 	name: string;
 	description: string;
@@ -60,6 +66,8 @@ export type {
 	CreateMileageActivityRequest,
 	CreateMileageActivityResponse,
 	CreateMileageCategoryResponse,
+	GetMileageActivityRequest,
+	GetMileageActivityResponse,
 	UpdateMileageCategoryRequest,
 	UpdateMileageCategoryResponse,
 	GetRubricsResponse,
