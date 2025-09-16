@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-import { CONTRACT, ContractEnum, useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import { ContentContainer } from "@shared/ui";
 import {
 	Button,
@@ -22,7 +26,7 @@ import { createTokenSchema } from "../model";
 export default function CreateTokenForm() {
 	const navigate = useNavigate();
 
-	const { encodeAbi, requestSignTransaction } = useStudentManager();
+	const { encodeAbi, requestSignTransaction } = useKaiaContract();
 
 	const { register, handleSubmit } = useForm<ICreateTokenForm>({
 		resolver: zodResolver(createTokenSchema),
@@ -35,13 +39,20 @@ export default function CreateTokenForm() {
 
 	const onSubmit = async (createTokenForm: ICreateTokenForm) => {
 		try {
-			const data = encodeAbi("deployWithAdmin", [
-				createTokenForm.name,
-				createTokenForm.symbol,
-				CONTRACT[ContractEnum.STUDENT_MANAGER].address,
-			]);
+			const data = encodeAbi({
+				method: "deployWithAdmin",
+				contractType: ContractEnum.STUDENT_MANAGER,
+				args: [
+					createTokenForm.name,
+					createTokenForm.symbol,
+					STUDENT_MANAGER_CONTRACT_ADDRESS,
+				],
+			});
 
-			const rawTransaction = await requestSignTransaction(data);
+			const rawTransaction = await requestSignTransaction({
+				contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+				data,
+			});
 
 			await mutateAsync({
 				...createTokenForm,

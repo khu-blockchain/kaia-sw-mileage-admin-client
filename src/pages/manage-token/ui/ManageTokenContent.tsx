@@ -1,10 +1,14 @@
-import type { MileageToken } from "@shared/api";
 import type { Address } from "@kaiachain/viem-ext";
+import type { MileageToken } from "@shared/api";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { CircleAlert, CircleCheck } from "lucide-react";
 
-import { useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import { mileageTokenQueries } from "@entities/mileage-token";
 import { mileageTokenApi } from "@shared/api";
 import { getToday, parseToFormattedDate } from "@shared/lib";
@@ -16,18 +20,22 @@ import {
 	ContentContainer,
 } from "@/shared/ui";
 
+import ManagerPausedDialog from "./SwitchManagerPausedDialog";
 import TokenInfoTable from "./TokenInfoTable";
 
 const ManageTokenContent = () => {
-	const { call } = useStudentManager();
+	const { call } = useKaiaContract();
 	const { data: swMileageTokenList } = useSuspenseQuery({
 		queryKey: [...mileageTokenQueries.list()],
 		queryFn: async () => {
 			const { data } = await mileageTokenApi.getMileageTokenList();
-			const activeTokenAddress = (await call(
-				"mileageToken",
-				[],
-			)) as Address;
+			const activeTokenAddress = (await call({
+				contractType: ContractEnum.STUDENT_MANAGER,
+				contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+				method: "mileageToken",
+				args: [],
+			})) as Address;
+
 			return data.map((token) => ({
 				...token,
 				is_active: isSameAddress(token.contract_address, activeTokenAddress),
@@ -69,12 +77,33 @@ function NoActiveTokenAlert() {
 }
 
 function ActiveTokenAlert({ activeToken }: { activeToken: MileageToken }) {
+	const { call } = useKaiaContract();
+
+	const { data: isPaused } = useSuspenseQuery({
+		queryKey: [...mileageTokenQueries.paused()],
+		queryFn: async () => {
+			const result = (await call({
+				contractType: ContractEnum.STUDENT_MANAGER,
+				contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+				method: "paused",
+				args: [],
+			})) as boolean;
+
+			return result;
+		},
+	});
+
 	return (
 		<Alert>
 			<CircleCheck color="var(--approved)" className="h-4 w-4" />
 			<AlertTitle>
-				{parseToFormattedDate(getToday().toString())} 기준 활성화 토큰 :{" "}
-				{activeToken.name}
+				<div className="flex w-full justify-between items-center gap-2">
+					<span>
+						{parseToFormattedDate(getToday().toString())} 기준 활성화 토큰 :{" "}
+						{activeToken.name}
+					</span>
+					<ManagerPausedDialog isPaused={isPaused} />
+				</div>
 			</AlertTitle>
 			<AlertDescription>
 				<div className="flex justify-start items-center gap-4">

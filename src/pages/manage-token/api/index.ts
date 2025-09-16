@@ -1,1 +1,5 @@
-export { useActivateMileageToken } from "./queries";
+export {
+	useActivateMileageToken,
+	usePauseMileage,
+	useUnpauseMileage,
+} from "./actions";

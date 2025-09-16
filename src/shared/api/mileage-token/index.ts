@@ -5,5 +5,9 @@ export type {
 	GetMileageTokenListResponse,
 	ActivateMileageTokenRequest,
 	ActivateMileageTokenResponse,
+	PauseMileageRequest,
+	PauseMileageResponse,
+	UnpauseMileageRequest,
+	UnpauseMileageResponse,
 } from "./dto";
 export type { MileageToken, MileageTokenWithActivateStatus } from "./types";

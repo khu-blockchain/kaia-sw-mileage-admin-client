@@ -6,7 +6,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import { mileagePointHistoryQueries } from "@entities/mileage-point-history";
 import { MILEAGE_POINT_HISTORY_TYPE } from "@shared/api";
 import {
@@ -48,7 +52,7 @@ function ModifyMileageDialog({
 	const { mutateAsync: mutateBurn } = useBurnMileage();
 	const { mutateAsync: mutateMint } = useMintMileage();
 
-	const { encodeAbi, requestSignTransaction } = useStudentManager();
+	const { encodeAbi, requestSignTransaction } = useKaiaContract();
 
 	const totalAmount = useMemo(() => {
 		return mileagePointHistories.reduce((acc, curr) => {
@@ -81,7 +85,11 @@ function ModifyMileageDialog({
 		walletAddress: string,
 		amount: number,
 	) => {
-		return encodeAbi("mint", [studentHash, walletAddress, amount]);
+		return encodeAbi({
+			method: "mint",
+			contractType: ContractEnum.STUDENT_MANAGER,
+			args: [studentHash, walletAddress, amount],
+		});
 	};
 
 	const encodeBurn = (
@@ -89,7 +97,11 @@ function ModifyMileageDialog({
 		walletAddress: string,
 		amount: number,
 	): Hex => {
-		return encodeAbi("burnFrom", [studentHash, walletAddress, amount]);
+		return encodeAbi({
+			method: "burnFrom",
+			contractType: ContractEnum.STUDENT_MANAGER,
+			args: [studentHash, walletAddress, amount],
+		});
 	};
 
 	const handleModify = async () => {
@@ -110,7 +122,10 @@ function ModifyMileageDialog({
 
 	const handleMint = async (amount: number) => {
 		const encodeData = encodeMint(studentHash, walletAddress, amount);
-		const rawTransaction = await requestSignTransaction(encodeData);
+		const rawTransaction = await requestSignTransaction({
+			contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+			data: encodeData,
+		});
 		toast.promise(
 			mutateMint({
 				id: mileageId,
@@ -139,7 +154,10 @@ function ModifyMileageDialog({
 
 	const handleBurn = async (amount: number) => {
 		const encodeData = encodeBurn(studentHash, walletAddress, amount);
-		const rawTransaction = await requestSignTransaction(encodeData);
+		const rawTransaction = await requestSignTransaction({
+			contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+			data: encodeData,
+		});
 		toast.promise(
 			mutateBurn({
 				id: mileageId,

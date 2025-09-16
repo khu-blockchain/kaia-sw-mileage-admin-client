@@ -4,7 +4,11 @@ import { useState } from "react";
 
 import { toast } from "sonner";
 
-import { useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import { mileageActivityPointTypeParser } from "@entities/mileage-rubric";
 import { POINT_TYPE } from "@shared/api";
 import {
@@ -29,10 +33,13 @@ type ApproveMileageDialogProps = {
 	mileageActivity: MileageActivity;
 };
 
-function ApproveMileageDialog({ mileageDetail, mileageActivity }: ApproveMileageDialogProps) {
+function ApproveMileageDialog({
+	mileageDetail,
+	mileageActivity,
+}: ApproveMileageDialogProps) {
 	const [open, setOpen] = useState(false);
 	const [extraScore, setExtraScore] = useState("");
-	const { encodeAbi, requestSignTransaction } = useStudentManager();
+	const { encodeAbi, requestSignTransaction } = useKaiaContract();
 
 	const { mutateAsync } = useApproveMileage();
 
@@ -59,13 +66,20 @@ function ApproveMileageDialog({ mileageDetail, mileageActivity }: ApproveMileage
 
 		const amount = calculateAmount(mileageActivity, Number(extraScore));
 
-		const data = encodeAbi("approveDocument", [
-			mileageDetail.doc_index,
-			amount,
-			"0x0000000000000000000000000000000000000000000000000000000000000000",
-		]);
+		const data = encodeAbi({
+			method: "approveDocument",
+			contractType: ContractEnum.STUDENT_MANAGER,
+			args: [
+				mileageDetail.doc_index,
+				amount,
+				"0x0000000000000000000000000000000000000000000000000000000000000000",
+			],
+		});
 
-		const rawTransaction = await requestSignTransaction(data);
+		const rawTransaction = await requestSignTransaction({
+			contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+			data,
+		});
 
 		toast.promise(
 			mutateAsync({

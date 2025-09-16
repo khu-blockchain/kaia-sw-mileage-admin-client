@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { encodePacked, keccak256 } from "viem";
 
-import { useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -31,7 +35,7 @@ function RejectMileageDialog({ mileageDetail }: RejectMileageDialogProps) {
 	const [open, setOpen] = useState(false);
 	const [reason, setReason] = useState("");
 
-	const { encodeAbi, requestSignTransaction } = useStudentManager();
+	const { encodeAbi, requestSignTransaction } = useKaiaContract();
 
 	const { mutateAsync } = useRejectMileage();
 
@@ -43,13 +47,16 @@ function RejectMileageDialog({ mileageDetail }: RejectMileageDialogProps) {
 	const handleConfirm = async () => {
 		const reasonHash = keccak256(encodePacked(["string"], [reason]));
 
-		const data = encodeAbi("approveDocument", [
-			mileageDetail.doc_index,
-			0,
-			reasonHash,
-		]);
+		const data = encodeAbi({
+			method: "approveDocument",
+			contractType: ContractEnum.STUDENT_MANAGER,
+			args: [mileageDetail.doc_index, 0, reasonHash],
+		});
 
-		const rawTransaction = await requestSignTransaction(data);
+		const rawTransaction = await requestSignTransaction({
+			contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+			data,
+		});
 
 		toast.promise(
 			mutateAsync({

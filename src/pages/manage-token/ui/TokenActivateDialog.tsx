@@ -2,7 +2,11 @@ import { useState } from "react";
 
 import { toast } from "sonner";
 
-import { useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -31,7 +35,7 @@ export function TokenActivationDialog({
 }: TokenActivationDialogProps) {
 	const [open, setOpen] = useState(false);
 
-	const { encodeAbi, requestSignTransaction } = useStudentManager();
+	const { encodeAbi, requestSignTransaction } = useKaiaContract();
 
 	const { mutateAsync } = useActivateMileageToken();
 
@@ -45,9 +49,16 @@ export function TokenActivationDialog({
 	};
 
 	const handleActivateToken = async () => {
-		const data = encodeAbi("changeMileageToken", [contractAddress]);
+		const data = encodeAbi({
+			method: "changeMileageToken",
+			contractType: ContractEnum.STUDENT_MANAGER,
+			args: [contractAddress],
+		});
 
-		const rawTransaction = await requestSignTransaction(data);
+		const rawTransaction = await requestSignTransaction({
+			contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+			data,
+		});
 
 		try {
 			toast.promise(

@@ -10,7 +10,11 @@ import {
 } from "@tanstack/react-table";
 import { toast } from "sonner";
 
-import { useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import { walletLostQueries } from "@entities/wallet-lost";
 import { parseToFormattedDate } from "@shared/lib";
 import { DataTable } from "@/shared/ui";
@@ -33,7 +37,7 @@ const MileageRequestTable = () => {
 		}),
 	);
 
-	const { encodeAbi, requestSignTransaction } = useStudentManager();
+	const { encodeAbi, requestSignTransaction } = useKaiaContract();
 
 	const { mutateAsync } = useApproveWalletLost();
 
@@ -57,8 +61,15 @@ const MileageRequestTable = () => {
 		studentHash: string,
 		targetAddress: Address,
 	) => {
-		const data = encodeAbi("changeAccount", [studentHash, targetAddress]);
-		const rawTransaction = await requestSignTransaction(data);
+		const data = encodeAbi({
+			method: "changeAccount",
+			contractType: ContractEnum.STUDENT_MANAGER,
+			args: [studentHash, targetAddress],
+		});
+		const rawTransaction = await requestSignTransaction({
+			contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+			data,
+		});
 		toast.promise(mutateAsync({ id, rawTransaction }), {
 			loading: "승인 중...",
 			success: {

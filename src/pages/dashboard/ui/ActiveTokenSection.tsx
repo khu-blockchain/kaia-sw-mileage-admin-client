@@ -4,7 +4,11 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 
-import { useStudentManager } from "@features/kaia";
+import {
+	ContractEnum,
+	STUDENT_MANAGER_CONTRACT_ADDRESS,
+	useKaiaContract,
+} from "@features/kaia";
 import { mileageTokenQueries } from "@entities/mileage-token";
 import { mileageTokenApi } from "@shared/api";
 import { parseToFormattedDate } from "@shared/lib";
@@ -13,15 +17,17 @@ import { Button } from "@shared/ui";
 
 export default function ActiveTokenSection() {
 	const navigate = useNavigate();
-	const { call } = useStudentManager();
+	const { call } = useKaiaContract();
 	const { data: swMileageTokenList } = useSuspenseQuery({
 		queryKey: [...mileageTokenQueries.list()],
 		queryFn: async () => {
 			const { data } = await mileageTokenApi.getMileageTokenList();
-			const activeTokenAddress = (await call(
-				"mileageToken",
-				[],
-			)) as Address;
+			const activeTokenAddress = (await call({
+				contractType: ContractEnum.STUDENT_MANAGER,
+				contractAddress: STUDENT_MANAGER_CONTRACT_ADDRESS,
+				method: "mileageToken",
+				args: [],
+			})) as Address;
 			return data.map((token) => ({
 				...token,
 				is_active: isSameAddress(token.contract_address, activeTokenAddress),

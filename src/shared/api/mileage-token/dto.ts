@@ -22,10 +22,30 @@ type ActivateMileageTokenResponse = {
 	success: boolean;
 };
 
+type PauseMileageRequest = {
+	rawTransaction: Hex;
+};
+
+type PauseMileageResponse = {
+	success: boolean;
+};
+
+type UnpauseMileageRequest = {
+	rawTransaction: Hex;
+};
+
+type UnpauseMileageResponse = {
+	success: boolean;
+};
+
 export type {
 	CreateMileageTokenRequest,
 	CreateMileageTokenResponse,
 	GetMileageTokenListResponse,
 	ActivateMileageTokenRequest,
 	ActivateMileageTokenResponse,
+	PauseMileageRequest,
+	PauseMileageResponse,
+	UnpauseMileageRequest,
+	UnpauseMileageResponse,
 };

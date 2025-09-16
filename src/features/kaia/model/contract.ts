@@ -1,4 +1,4 @@
-import { STUDENT_MANAGER_ABI } from "./abi";
+import { STUDENT_MANAGER_ABI } from "../config";
 
 export enum ContractEnum {
 	STUDENT_MANAGER = "studentManager",
@@ -6,7 +6,6 @@ export enum ContractEnum {
 
 const ContractParams = {
 	[ContractEnum.STUDENT_MANAGER]: {
-		address: import.meta.env.VITE_STUDENT_MANAGER_CONTRACT_ADDRESS,
 		abi: STUDENT_MANAGER_ABI,
 	},
 };
