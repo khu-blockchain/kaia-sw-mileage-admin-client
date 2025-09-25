@@ -1,4 +1,4 @@
-import type { Hex } from "@kaiachain/viem-ext";
+//import type { Hex } from "@kaiachain/viem-ext";
 
 import { useState } from "react";
 
