@@ -1,5 +1,3 @@
-import type { Hex } from "@kaiachain/viem-ext";
-
 import { useState } from "react";
 
 import { toast } from "sonner";
@@ -112,7 +110,7 @@ export function ManagerPausedDialog({ isPaused }: ManagerPausedDialogProps) {
 		<AlertDialog open={open} onOpenChange={setOpen}>
 			<AlertDialogTrigger asChild>
 				<div className="flex gap-2 items-center cursor-pointer">
-          <span className="text-xs text-destructive">마일리지 시스템 제어</span>
+					<span className="text-xs text-destructive">마일리지 시스템 제어</span>
 					<Switch
 						id="switch-paused"
 						checked={!isPaused}

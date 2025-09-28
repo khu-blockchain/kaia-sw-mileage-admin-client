@@ -10,7 +10,7 @@ import { useKaiaWallet } from "./useKaiaWallet";
 
 export const useKaiaContract = () => {
 	const { currentAccount } = useKaiaAccount();
-	const { provider, connectKaiaWallet } = useKaiaWallet();
+	const { provider } = useKaiaWallet();
 	const { publicClient, createBrowserWalletClient } = useKaiaClient();
 
 	const getContractInstance = (contractEnum: ContractEnum) => {
