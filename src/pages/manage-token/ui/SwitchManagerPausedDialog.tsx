@@ -110,7 +110,9 @@ export function ManagerPausedDialog({ isPaused }: ManagerPausedDialogProps) {
 		<AlertDialog open={open} onOpenChange={setOpen}>
 			<AlertDialogTrigger asChild>
 				<div className="flex gap-2 items-center cursor-pointer">
-					<span className="text-xs text-destructive">마일리지 시스템 제어</span>
+					<span className="text-xs text-body">
+						{isPaused ? "시스템 상태: Off" : "시스템 상태: On"}
+					</span>
 					<Switch
 						id="switch-paused"
 						checked={!isPaused}
@@ -123,7 +125,7 @@ export function ManagerPausedDialog({ isPaused }: ManagerPausedDialogProps) {
 			{!isPaused && (
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>시스템을 일시정지 하시겠어요?</AlertDialogTitle>
+						<AlertDialogTitle>시스템을 일시 정지 하시겠어요?</AlertDialogTitle>
 						<AlertDialogDescription className="break-keep">
 							시스템이 일시정지되며, 마일리지 신청을 받을 수 없습니다.
 						</AlertDialogDescription>
@@ -131,7 +133,7 @@ export function ManagerPausedDialog({ isPaused }: ManagerPausedDialogProps) {
 					<AlertDialogFooter>
 						<AlertDialogCancel>취소</AlertDialogCancel>
 						<AlertDialogAction onClick={handleSwitchPaused}>
-							일시정지
+							일시 정지
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>
@@ -139,15 +141,15 @@ export function ManagerPausedDialog({ isPaused }: ManagerPausedDialogProps) {
 			{isPaused && (
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>시스템을 재시작 하시겠어요?</AlertDialogTitle>
+						<AlertDialogTitle>시스템을 활성화 하시겠어요?</AlertDialogTitle>
 						<AlertDialogDescription className="break-keep">
-							시스템이 재시작되며, 마일리지 신청을 받을 수 있습니다.
+							시스템이 활성화되며, 마일리지 신청을 받을 수 있습니다.
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel>취소</AlertDialogCancel>
 						<AlertDialogAction onClick={handleSwitchPaused}>
-							재시작
+							활성화
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>

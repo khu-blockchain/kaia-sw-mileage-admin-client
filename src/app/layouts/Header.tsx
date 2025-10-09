@@ -43,8 +43,8 @@ export function Header() {
 						</span>
 					</div>
 				)}
-				<Button variant="ghost" size="icon" onClick={() => mutate()}>
-					<LogOut className="w-5 h-5 text-body" />
+				<Button variant="ghost" size="icon" style={{ width: "32px", height: "32px" }} onClick={() => mutate()}>
+					<LogOut className="w-4 h-4 text-body" />
 				</Button>
 			</div>
 		</header>
