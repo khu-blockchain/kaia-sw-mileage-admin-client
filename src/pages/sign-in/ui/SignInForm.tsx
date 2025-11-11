@@ -88,14 +88,14 @@ const SignInForm = () => {
 				<Button type="submit" className="w-full">
 					로그인
 				</Button>
-				<Separator />
+				{/* <Separator /> */}
 			</div>
-			<div className="text-center text-sm">
+			{/* <div className="text-center text-sm">
 				계정이 없으신가요?{" "}
 				<a href="/sign-up" className="text-link">
 					회원가입
 				</a>
-			</div>
+			</div> */}
 		</form>
 	);
 };

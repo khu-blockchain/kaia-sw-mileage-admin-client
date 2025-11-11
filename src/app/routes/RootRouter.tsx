@@ -21,7 +21,7 @@ export default function RootRouter() {
 		<Routes>
 			<Route element={<InitGuard />}>
 				<Route path="sign-in" element={<SignInPage />} />
-				<Route path="sign-up" element={<SignUpPage />} />
+				{/* <Route path="sign-up" element={<SignUpPage />} /> */}
 			</Route>
 			<Route element={<AuthGuard />}>
 				<Route element={<MainLayout />}>
