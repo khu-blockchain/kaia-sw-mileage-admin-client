@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-import { Button, Input, Label, Separator } from "@/shared/ui";
+import { Button, Input, Label } from "@/shared/ui";
 
 import { useAdminSignIn } from "../api";
 import { signInSchema } from "../model";

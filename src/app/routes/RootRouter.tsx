@@ -10,7 +10,6 @@ import { DashboardPage } from "@/pages/dashboard";
 import { ManageStudentPage } from "@/pages/manage-student";
 import { ManageTokenPage } from "@/pages/manage-token";
 import { SignInPage } from "@/pages/sign-in";
-import { SignUpPage } from "@/pages/sign-up";
 import { WalletLostRequestPage } from "@/pages/wallet-lost-request";
 
 import { AuthGuard, InitGuard } from "../guards";
