@@ -10,15 +10,15 @@ import { defineConfig } from "vite";
 export default defineConfig(() => {
 	return {
 		plugins: [react(), tailwindcss()],
-		// server: {
-		// 	proxy: {
-		// 		"/api": {
-		// 			target: "http://localhost:8080/api/v1/",
-		// 			changeOrigin: true,
-		// 			rewrite: (path) => path.replace(/^\/api/, ""),
-		// 		},
-		// 	},
-		// },
+		server: {
+			proxy: {
+				"/api": {
+					target: "http://localhost:8080/api/v1/",
+					changeOrigin: true,
+					rewrite: (path) => path.replace(/^\/api/, ""),
+				},
+			},
+		},
 		build: {
 			// 번들 크기 경고 임계값 증가 (임시)
 			chunkSizeWarningLimit: 1000,
