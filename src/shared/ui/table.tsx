@@ -1,12 +1,12 @@
 import * as React from "react"
 
-import { cn } from "@/shared/utils/tailwind.utils"
+import { cn } from "@/shared/lib/style/index"
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto "
+      className="relative w-full overflow-x-auto"
     >
       <table
         data-slot="table"

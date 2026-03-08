@@ -1,0 +1,1 @@
+export { STUDENT_MANAGER_ABI } from "./student-manager.abi";

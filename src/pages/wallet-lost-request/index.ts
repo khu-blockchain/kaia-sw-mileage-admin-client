@@ -1,0 +1,1 @@
+export { WalletLostRequestPage } from "./ui";

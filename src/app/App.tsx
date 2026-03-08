@@ -1,30 +1,19 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router";
-import RootRouter from "./RootRouter";
-import { Toaster } from "@/shared/ui";
 
+import { Toaster } from "@shared/ui/sonner";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      throwOnError: true,
-      staleTime: 1000 * 60 * 5,
-    },
-  },
-});
+import { QueryProvider } from "./providers";
+import { RootRouter } from "./routes";
 
 function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <BrowserRouter>
-        <RootRouter />
-      </BrowserRouter>
-    </QueryClientProvider>
-  );
+	return (
+		<QueryProvider>
+			<Toaster />
+			<BrowserRouter>
+				<RootRouter />
+			</BrowserRouter>
+		</QueryProvider>
+	);
 }
 
 export default App;
