@@ -96,7 +96,7 @@ export default function CreateTokenForm() {
 						</div>
 						<Input
 							className="w-full"
-							id="name"
+							id="symbol"
 							type="text"
 							maxLength={10}
 							required

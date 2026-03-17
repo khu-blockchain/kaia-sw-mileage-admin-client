@@ -10,7 +10,7 @@ import { DashboardPage } from "@/pages/dashboard";
 import { ManageStudentPage } from "@/pages/manage-student";
 import { ManageTokenPage } from "@/pages/manage-token";
 import { SignInPage } from "@/pages/sign-in";
-import { SignUpPage } from "@/pages/sign-up";
+// import { SignUpPage } from "@/pages/sign-up";
 import { WalletLostRequestPage } from "@/pages/wallet-lost-request";
 
 import { AuthGuard, InitGuard } from "../guards";
@@ -21,7 +21,7 @@ export default function RootRouter() {
 		<Routes>
 			<Route element={<InitGuard />}>
 				<Route path="sign-in" element={<SignInPage />} />
-				<Route path="sign-up" element={<SignUpPage />} />
+				{/* <Route path="sign-up" element={<SignUpPage />} /> */}
 			</Route>
 			<Route element={<AuthGuard />}>
 				<Route element={<MainLayout />}>
