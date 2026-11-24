@@ -43,7 +43,9 @@ FSD 레이어 규칙: 상위 레이어만 하위 레이어를 import 가능 (Ste
 ## API 구조
 
 - `shared/api/client.ts`: `apiClient` (비인증), `authClient` (토큰 주입 + 401 리프레시)
-- `shared/api/route.ts`: baseURL → `http://khunggum.khu.ac.kr:8080/api/v1/`
+- `shared/api/route.ts`: baseURL → `/api/v1/` (상대 경로)
+- 운영: nginx가 `/api/`, `/public/`을 백엔드로 전달
+- 개발: vite proxy가 `/api`를 `http://localhost:8080`으로 전달
 - `shared/api/middleware.ts`: beforeRequest(토큰 주입), afterResponse(401 → 리프레시 → 재시도)
 - 각 도메인별 모듈: `api.ts`(HTTP), `types.ts`(응답 타입), `dto.ts`(요청/응답 DTO)
 - Entity 레이어에서 React Query 통합: `entities/*/api/queries.ts`
@@ -98,9 +100,3 @@ VITE_NETWORK_RPC_URL=<Kairos RPC>
 ## 테스트
 
 테스트 프레임워크 미설정
-
-## 머지 전 체크리스트
-
-- develop/main 머지 시 로컬 개발용 proxy 설정을 반드시 원복할 것:
-  - `vite.config.ts`: proxy 설정 주석 처리
-  - `src/shared/api/route.ts`: baseURL을 프로덕션 URL(`http://khunggum.khu.ac.kr:8080/api/v1/`)로 원복
