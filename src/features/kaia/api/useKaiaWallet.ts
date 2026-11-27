@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 
+import { withWalletRequestToast } from "../lib";
+
 export const useKaiaWallet = () => {
 	const provider = window.klaytn;
 	const isInstalled = useMemo(() => !!provider, [provider]);
@@ -10,17 +12,19 @@ export const useKaiaWallet = () => {
 
 	const switchToKairosNetwork = async () => {
 		try {
-			return await provider.request({
-				method: "wallet_switchKlaytnChain",
-				params: [{ chainId: "0x3e9" }],
-			});
+			return await withWalletRequestToast(() =>
+				provider.request({
+					method: "wallet_switchKlaytnChain",
+					params: [{ chainId: "0x3e9" }],
+				}),
+			);
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	const connectKaiaWallet = async () => {
-		await provider.enable();
+		await withWalletRequestToast(() => provider.enable());
 	};
 
   
